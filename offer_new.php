@@ -18,6 +18,8 @@ $offer = stripslashes(urldecode($_REQUEST['offer']));
 $timestamp = time() * 1000;
 $accessToken = $_SESSION['access_token'];
 
+var_dump($offer);
+
 $result = OpenAPI::offerNew($offer, $timestamp, $accessToken);
 
 if ($result->result->success) {
