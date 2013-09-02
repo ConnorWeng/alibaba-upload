@@ -8,6 +8,5 @@ $state = stripslashes($_REQUEST['state']);
 $signedUrl = Util::authSign($state);
 
 header('Location: '.$signedUrl);
-//echo($signedUrl);
 
 ?>

@@ -35,6 +35,4 @@ $offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"tr
 
 header('Location: '.'offer_new.php?offer='.urlencode($offer));
 
-//header('Location: offer_new.php?offer=%7b%22bizType%22%3a%221%22%2c%22categoryID%22%3a%221037264%22%2c%22supportOnlineTrade%22%3atrue%2c%22pictureAuthOffer%22%3afalse%2c%22priceAuthOffer%22%3afalse%2c%22mixWholeSale%22%3atrue%2c%22subject%22%3a%22'.$title.'%22%2c%22freightType%22%3a%22F%22%2c%22sendGoodsAddressId%22%3a%22840222%22%2c%22freightTemplateId%22%3a%221%22%2c%22amountOnSale%22%3a1000%2c%22priceRanges%22%3a%22100%3a21.33%601000%3a14.15%602000%3a13.48%22%2c%22offerWeight%22%3a0.05%7d');
-
 ?>
