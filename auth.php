@@ -29,10 +29,57 @@ $categoryId = '1037264';//$taobaoItem->cid;
 $price = $taobaoItem->price;
 $detail = addslashes($taobaoItem->desc);
 $title = $taobaoItem->title;
+$num = $taobaoItem->num;
 $picUrl = '["'.$taobaoItem->pic_url.'"]';
+$freightType = 'F';
 
-$offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"false","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$title.'","imageUriList":'.$picUrl.',"freightType":"F"}';
+$offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"false","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$title.'","imageUriList":'.$picUrl.',"freightType":"'.$freightType.'"}';
 
-header('Location: '.'offer_new.php?offer='.urlencode($offer));
+$searchResult = OpenAPI::categorySearch($title)->result;
+$catIDs = '';
+if ($searchResult->total > 0) {
+    foreach ($searchResult->toReturn as $val) {
+        $catIDs = $catIDs.$val.',';
+    }
+}
+if (stripos($catIDs, ',')) {
+    $catIDs = substr($catIDs, 0, strlen($catIDs) - 1);
+}
+$catList = OpenAPI::getPostCatList($catIDs)->result->toReturn;
+
+//header('Location: '.'offer_new.php?offer='.urlencode($offer));
 
 ?>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+input {
+  width: 400px;
+}
+</style>
+<script>
+</script>
+</head>
+<body>
+<center>
+<div>
+<form name="mainform" action="offer_new.php" method="POST">
+    标题：<input type="text" name="title" value="<?php echo($title); ?>"></input><br/>
+    分类：<select name="categoryId">
+        <?php
+        foreach ($catList as $cat) {
+            echo('<option value="'.$cat->catsId.'">'.$cat->catsName.'</option>');
+        }
+        ?>
+        </select><br/>
+    价格：<input type="text" name="price" value="<?php echo($price); ?>"></input><br/>
+    数量：<input type="text" name="amount" value="<?php echo($num); ?>"></input><br/>
+    详情：<textarea name="detail" value="<?php echo($detail); ?>"></textarea><br/>
+    运输：<input type="text" name="freightType" value="<?php echo($freightType); ?>"></input><br/>
+    <input type="submit" value="一键上传宝贝"/>
+</form>
+</div>
+<center>
+</body>
+</html>

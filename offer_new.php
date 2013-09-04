@@ -20,7 +20,7 @@ $accessToken = $_SESSION['access_token'];
 
 var_dump($offer);
 
-$result = OpenAPI::offerNew($offer, $timestamp, $accessToken);
+$result = OpenAPI::offerNew($offer);
 
 if ($result->result->success) {
     echo('上传成功');

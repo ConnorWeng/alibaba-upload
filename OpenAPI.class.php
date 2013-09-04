@@ -7,28 +7,50 @@ require_once 'taobao-sdk/TopSdk.php';
 
 class OpenAPI {
 
-    public static function offerNewURL($offer, $timestamp, $accessToken) {
-        $offerEncoded = urlencode($offer);
+    public static function offerNew($offer) {
         $api = 'param2/1/cn.alibaba.open/offer.new';
-        $url = Config::get('open_url').'/'.$api.'/'.Config::get('app_id').'?'.'offer='.$offerEncoded.
-               '&_aop_timestamp='.$timestamp.'&access_token='.$accessToken.'&_aop_signature='.
-               Util::signDefault(Config::get('open_url'), $api, array('offer' => $offer,
-                                                                      '_aop_timestamp' => $timestamp,
-                                                                      'access_token' => $accessToken));
-        return $url;
+        return self::callOpenAPI($api, array('offer' => urlencode($offer)));
     }
 
-    public static function offerNew($offer, $timestamp, $accessToken) {
+    public static function categorySearch($keyWord) {
+        $api = 'param2/1/cn.alibaba.open/category.search';
+        return self::callOpenAPI($api, array('keyWord' => $keyWord));
+    }
+
+    public static function getPostCatList($catIDs) {
+        $api = 'param2/1/cn.alibaba.open/category.getPostCatList';
+        return self::callOpenAPI($api, array('catIDs' => $catIDs));
+    }
+
+    private static function callOpenAPI($api, $params) {
+        $url = self::makeUrl($api, $params);
+        $data = self::sendRequest($url);
+        return json_decode($data);
+    }
+
+    private static function sendRequest($url) {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, self::offerNewURL($offer, $timestamp, $accessToken));
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, '');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $data = curl_exec($ch);
         curl_close($ch);
 
-        var_dump($data);
+        return $data;
+    }
 
-        return json_decode($data);
+    private static function makeUrl($api, $paramsArray) {
+        $timestamp = time() * 1000;
+        $accessToken = $_SESSION['access_token'];
+        $params = '';
+        foreach ($paramsArray as $key => $val) {
+            $params = $params.$key.'='.$val.'&';
+        }
+        $url = Config::get('open_url').'/'.$api.'/'.Config::get('app_id').'?'.$params.'_aop_timestamp='.
+               $timestamp.'&access_token='.$accessToken.'&_aop_signature='.
+               Util::signDefault(Config::get('open_url'), $api, array_merge($paramsArray, array('_aop_timestamp' => $timestamp, 'access_token' => $accessToken)));
+
+        return $url;
     }
 
     public static function getTaobaoItem($numIid) {
@@ -42,7 +64,7 @@ class OpenAPI {
 
         return $resp->item;
     }
-    
+
 }
 
 ?>
