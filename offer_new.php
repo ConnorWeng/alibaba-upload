@@ -13,14 +13,18 @@ session_start();
 <body>
 
 <?php
-        
-$offer = stripslashes(urldecode($_REQUEST['offer']));
-$timestamp = time() * 1000;
-$accessToken = $_SESSION['access_token'];
 
-var_dump($offer);
+$categoryId = $_REQUEST['categoryId'];
+$price = $_REQUEST['price'];
+$detail = '';//$_REQUEST['detail'];
+$title = $_REQUEST['title'];
+$picUrl = '[]';
+$freightType = $_REQUEST['freightType'];
 
-$result = OpenAPI::offerNew($offer);
+$offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"false","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$title.'","imageUriList":'.$picUrl.',"freightType":"'.$freightType.'"}';
+
+$result = OpenAPI::offerNew(stripslashes($offer));
+var_dump($result);
 
 if ($result->result->success) {
     echo('上传成功');

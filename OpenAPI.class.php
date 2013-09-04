@@ -9,21 +9,21 @@ class OpenAPI {
 
     public static function offerNew($offer) {
         $api = 'param2/1/cn.alibaba.open/offer.new';
-        return self::callOpenAPI($api, array('offer' => urlencode($offer)));
+        return self::callOpenAPI($api, array('offer' => $offer), true);
     }
 
     public static function categorySearch($keyWord) {
         $api = 'param2/1/cn.alibaba.open/category.search';
-        return self::callOpenAPI($api, array('keyWord' => $keyWord));
+        return self::callOpenAPI($api, array('keyWord' => $keyWord), false);
     }
 
     public static function getPostCatList($catIDs) {
         $api = 'param2/1/cn.alibaba.open/category.getPostCatList';
-        return self::callOpenAPI($api, array('catIDs' => $catIDs));
+        return self::callOpenAPI($api, array('catIDs' => $catIDs), false);
     }
 
-    private static function callOpenAPI($api, $params) {
-        $url = self::makeUrl($api, $params);
+    private static function callOpenAPI($api, $params, $urlencode) {
+        $url = self::makeUrl($api, $params, $urlencode);
         $data = self::sendRequest($url);
         return json_decode($data);
     }
@@ -39,12 +39,16 @@ class OpenAPI {
         return $data;
     }
 
-    private static function makeUrl($api, $paramsArray) {
+    private static function makeUrl($api, $paramsArray, $urlencode) {
         $timestamp = time() * 1000;
         $accessToken = $_SESSION['access_token'];
         $params = '';
         foreach ($paramsArray as $key => $val) {
-            $params = $params.$key.'='.$val.'&';
+            $value = $val;
+            if ($urlencode) {
+                $value = urlencode($val);
+            }
+            $params = $params.$key.'='.$value.'&';
         }
         $url = Config::get('open_url').'/'.$api.'/'.Config::get('app_id').'?'.$params.'_aop_timestamp='.
                $timestamp.'&access_token='.$accessToken.'&_aop_signature='.

@@ -58,12 +58,11 @@ input {
   width: 400px;
 }
 </style>
-<script>
-</script>
+<script src="ckeditor/ckeditor.js"></script>
 </head>
 <body>
 <center>
-<div>
+<div style="width:800px;">
 <form name="mainform" action="offer_new.php" method="POST">
     标题：<input type="text" name="title" value="<?php echo($title); ?>"></input><br/>
     分类：<select name="categoryId">
@@ -81,5 +80,9 @@ input {
 </form>
 </div>
 <center>
+<script>
+var editor = CKEDITOR.replace('detail');
+editor
+</script>           
 </body>
 </html>
