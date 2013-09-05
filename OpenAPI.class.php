@@ -22,6 +22,11 @@ class OpenAPI {
         return self::callOpenAPI($api, array('catIDs' => $catIDs), false);
     }
 
+    public static function offerPostFeatures($categoryId) {
+        $api = 'param2/1/cn.alibaba.open/offerPostFeatures.get';
+        return self::callOpenAPI($api, array('categoryID' => $categoryId), false);
+    }
+
     private static function callOpenAPI($api, $params, $urlencode) {
         $url = self::makeUrl($api, $params, $urlencode);
         $data = self::sendRequest($url);

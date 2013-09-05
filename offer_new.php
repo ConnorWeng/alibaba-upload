@@ -16,15 +16,22 @@ session_start();
 
 $categoryId = $_REQUEST['categoryId'];
 $price = $_REQUEST['price'];
-$detail = '';//$_REQUEST['detail'];
+$detail = addslashes($_REQUEST['detail']);
 $title = $_REQUEST['title'];
 $picUrl = '[]';
 $freightType = $_REQUEST['freightType'];
 
-$offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"false","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$title.'","imageUriList":'.$picUrl.',"freightType":"'.$freightType.'"}';
+$productFeatures = '{';
+foreach ($_REQUEST as $key=>$val) {
+    if (strstr($key, '%%%%%%')) {
+        $productFeatures = $productFeatures.'"'.substr($key, 6).'":"'.$val.'",';
+    }
+}
+$productFeatures = substr($productFeatures, 0, strlen($productFeatures) - 1).'}';
+
+$offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"false","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$title.'","imageUriList":'.$picUrl.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.'}';
 
 $result = OpenAPI::offerNew(stripslashes($offer));
-var_dump($result);
 
 if ($result->result->success) {
     echo('上传成功');

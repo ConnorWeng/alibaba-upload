@@ -21,21 +21,14 @@ $current = time() * 1000;
 $_SESSION['access_token'] = $result->access_token;
 $_SESSION['refresh_token'] = $result->refresh_token;
 
-$numIid = $_REQUEST['state'];
+var_dump($_SESSION['access_token']);
+var_dump($_SESSION['refresh_token']);
 
-$taobaoItem = OpenAPI::getTaobaoItem($numIid);
+$taobaoItem = OpenAPI::getTaobaoItem($_REQUEST['state']);
 
-$categoryId = '1037264';//$taobaoItem->cid;
-$price = $taobaoItem->price;
-$detail = addslashes($taobaoItem->desc);
 $title = $taobaoItem->title;
-$num = $taobaoItem->num;
-$picUrl = '["'.$taobaoItem->pic_url.'"]';
-$freightType = 'F';
-
-$offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"false","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$title.'","imageUriList":'.$picUrl.',"freightType":"'.$freightType.'"}';
-
 $searchResult = OpenAPI::categorySearch($title)->result;
+
 $catIDs = '';
 if ($searchResult->total > 0) {
     foreach ($searchResult->toReturn as $val) {
@@ -47,15 +40,15 @@ if (stripos($catIDs, ',')) {
 }
 $catList = OpenAPI::getPostCatList($catIDs)->result->toReturn;
 
-//header('Location: '.'offer_new.php?offer='.urlencode($offer));
 
 ?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>           
 <style>
 input {
-  width: 400px;
+
 }
 </style>
 <script src="ckeditor/ckeditor.js"></script>
@@ -63,26 +56,21 @@ input {
 <body>
 <center>
 <div style="width:800px;">
-<form name="mainform" action="offer_new.php" method="POST">
-    标题：<input type="text" name="title" value="<?php echo($title); ?>"></input><br/>
+<form name="mainform" action="edit.php" method="POST">
+    <input type="hidden" name="state" value="<?php echo($_REQUEST['state']); ?>"/>
     分类：<select name="categoryId">
-        <?php
-        foreach ($catList as $cat) {
-            echo('<option value="'.$cat->catsId.'">'.$cat->catsName.'</option>');
-        }
-        ?>
-        </select><br/>
-    价格：<input type="text" name="price" value="<?php echo($price); ?>"></input><br/>
-    数量：<input type="text" name="amount" value="<?php echo($num); ?>"></input><br/>
-    详情：<textarea name="detail" value="<?php echo($detail); ?>"></textarea><br/>
-    运输：<input type="text" name="freightType" value="<?php echo($freightType); ?>"></input><br/>
-    <input type="submit" value="一键上传宝贝"/>
+         <?php
+         foreach ($catList as $cat) {
+             echo('<option value="'.$cat->catsId.'">'.$cat->catsName.'</option>');
+         }
+         ?>
+         </select><br/>
+         <input type="submit" value="下一步"></input>
 </form>
 </div>
 <center>
 <script>
 var editor = CKEDITOR.replace('detail');
-editor
 </script>           
 </body>
 </html>
