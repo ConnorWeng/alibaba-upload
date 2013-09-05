@@ -21,9 +21,6 @@ $current = time() * 1000;
 $_SESSION['access_token'] = $result->access_token;
 $_SESSION['refresh_token'] = $result->refresh_token;
 
-var_dump($_SESSION['access_token']);
-var_dump($_SESSION['refresh_token']);
-
 $taobaoItem = OpenAPI::getTaobaoItem($_REQUEST['state']);
 
 $title = $taobaoItem->title;
