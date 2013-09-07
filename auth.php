@@ -20,10 +20,16 @@ $current = time() * 1000;
 
 $_SESSION['access_token'] = $result->access_token;
 $_SESSION['refresh_token'] = $result->refresh_token;
+echo($result->refresh_token);
 
-$taobaoItem = OpenAPI::getTaobaoItem($_REQUEST['state']);
+$title = '';
+if (!isset($_REQUEST['title'])) {
+    $taobaoItem = OpenAPI::getTaobaoItem($_REQUEST['state']);
+    $title = $taobaoItem->title;
+} else {
+    $title = $_REQUEST['title'];
+}
 
-$title = $taobaoItem->title;
 $searchResult = OpenAPI::categorySearch($title)->result;
 
 $catIDs = '';
@@ -54,20 +60,35 @@ input {
 <center>
 <div style="width:800px;">
 <form name="mainform" action="edit.php" method="POST">
+    <input type="hidden" name="code" value="<?php echo($_REQUEST['code']); ?>"/>
     <input type="hidden" name="state" value="<?php echo($_REQUEST['state']); ?>"/>
-    分类：<select name="categoryId">
+    标题:<input style="width:400px;" type="text" name="title" value="<?php echo($title); ?>" />
+    <input type="button" name="search" value="搜索分类" onclick="searchCategories()"/><br />
+    分类:<select name="categoryId">
          <?php
          foreach ($catList as $cat) {
              echo('<option value="'.$cat->catsId.'">'.$cat->catsName.'</option>');
          }
          ?>
          </select><br/>
-         <input type="submit" value="下一步"></input>
+         <input type="button" value="下一步" onclick="next();"></input>
 </form>
 </div>
 <center>
 <script>
-var editor = CKEDITOR.replace('detail');
+function searchCategories() {
+    document.mainform.action = 'auth.php';
+    document.mainform.submit();
+}
+
+function next() {
+    if (document.mainform.categoryId.value == "") {
+        alert('请选择合适的分类');
+    } else {
+        document.mainform.action = 'edit.php';
+        document.mainform.submit();
+    }
+}
 </script>           
 </body>
 </html>

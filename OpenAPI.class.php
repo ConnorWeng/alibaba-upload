@@ -27,6 +27,11 @@ class OpenAPI {
         return self::callOpenAPI($api, array('categoryID' => $categoryId), false);
     }
 
+    public static function ibankAlbumList($albumType) {
+        $api = 'param2/1/cn.alibaba.open/ibank.album.list';
+        return self::callOpenAPI($api, array('albumType' => $albumType), false);
+    }
+
     private static function callOpenAPI($api, $params, $urlencode) {
         $url = self::makeUrl($api, $params, $urlencode);
         $data = self::sendRequest($url);

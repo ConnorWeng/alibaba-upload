@@ -17,6 +17,9 @@ $num = $taobaoItem->num;
 $picUrl = '["'.$taobaoItem->pic_url.'"]';
 $freightType = 'F';
 
+$myAlbumList = OpenAPI::ibankAlbumList('MY')->result->toReturn;
+$customAlbumList = OpenAPI::ibankAlbumList('CUSTOM')->result->toReturn;
+
 ?>
 <html>
 <head>
@@ -29,6 +32,19 @@ $freightType = 'F';
 <div style="width:800px;">
 <form name="mainform" action="offer_new.php" method="POST">
     标题：<input style="width:400px" type="text" name="title" value="<?php echo($title); ?>"></input><br/>
+    产品主图：<br/>
+    放置相册：<select name="albumId">
+    <?php
+       foreach ($myAlbumList as $myAlbum) {
+           echo('<option value="'.$myAlbum->id.'">'.$myAlbum->name.'</option>');
+       }
+       foreach ($customAlbumList as $customAlbum) {
+           echo('<option value="'.$customAlbum->id.'">'.$customAlbum->name.'</option>');
+       }
+    ?>
+    </select><br />
+    <img src="<?php echo($taobaoItem->pic_url); ?>"/>
+    <input type="hidden" name="picUrl" value="<?php echo($picUrl); ?>"><br/>
     产品属性：<br/>
          <?php
             $features = OpenAPI::offerPostFeatures($categoryId)->result->toReturn;
