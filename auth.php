@@ -20,7 +20,6 @@ $current = time() * 1000;
 
 $_SESSION['access_token'] = $result->access_token;
 $_SESSION['refresh_token'] = $result->refresh_token;
-echo($result->refresh_token);
 
 $title = '';
 if (!isset($_REQUEST['title'])) {
