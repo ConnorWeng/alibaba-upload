@@ -14,7 +14,7 @@ $price = $taobaoItem->price;
 $detail = addslashes($taobaoItem->desc);
 $title = $taobaoItem->title;
 $num = $taobaoItem->num;
-$picUrl = '["'.$taobaoItem->pic_url.'"]';
+$picUrl = $taobaoItem->pic_url;
 $freightType = 'F';
 
 $myAlbumList = OpenAPI::ibankAlbumList('MY')->result->toReturn;

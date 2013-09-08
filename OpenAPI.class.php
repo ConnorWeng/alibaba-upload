@@ -32,6 +32,30 @@ class OpenAPI {
         return self::callOpenAPI($api, array('albumType' => $albumType), false);
     }
 
+    public static function ibankImageUpload($albumId, $name, $imageBytes) {
+        $api = 'param2/1/cn.alibaba.open/ibank.image.upload';
+        $url = self::makeUrl($api, array('albumId' => $albumId,
+                                         'name' => $name,
+                                         'imageBytes' => $imageBytes), false);
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, array('imageBytes' => $imageBytes));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $data = curl_exec($ch);
+        curl_close($ch);
+
+        return json_decode($data);
+    }
+
+    public static function downloadImage($picUrl) {
+        $tmpFile = dirname(__FILE__).'/upload/'.uniqid().'.jpg';
+        $content = file_get_contents($picUrl);
+        file_put_contents($tmpFile, $content);
+
+        return $tmpFile;
+    }
+
     private static function callOpenAPI($api, $params, $urlencode) {
         $url = self::makeUrl($api, $params, $urlencode);
         $data = self::sendRequest($url);
