@@ -49,32 +49,74 @@ $catList = OpenAPI::getPostCatList($catIDs)->result->toReturn;
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>           
-<style>
-input {
-
-}
-</style>
 <script src="ckeditor/ckeditor.js"></script>
+<link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+<style>
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 600px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  width: 400px;
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-label {
+  width: 60px;
+}
+</style>           
 </head>
 <body>
-<center>
-<div style="width:800px;">
-<form name="mainform" action="edit.php" method="POST">
+<div class="container">
+<form class="form-signin" name="mainform" action="edit.php" method="POST">
+    <h3 class="form-signin-heading">如果搜索不到类目，请手动删除掉部分修饰词!</h3>
     <input type="hidden" name="code" value="<?php echo($_REQUEST['code']); ?>"/>
-    <input type="hidden" name="state" value="<?php echo($_REQUEST['state']); ?>"/>
-    标题:<input style="width:400px;" type="text" name="title" value="<?php echo($title); ?>" />
-    <input type="button" name="search" value="搜索分类" onclick="searchCategories()"/><br />
-    分类:<select name="categoryId">
+    <input type="hidden" name="state" value="<?php echo($_REQUEST['state']); ?>"/>         
+    <table>
+    <tr>
+      <td class="form-label">标题:</td>
+      <td><input class="form-control" type="text" name="title" value="<?php echo($title); ?>" /></td>
+      <td><input class="btn btn-default" type="button" name="search" value="搜索分类" onclick="searchCategories()"/></td>
+    </tr>
+    <tr>
+      <td class="form-label">分类:</td>
+      <td><select name="categoryId">
          <?php
          foreach ($catList as $cat) {
              echo('<option value="'.$cat->catsId.'">'.$cat->catsName.'</option>');
          }
          ?>
-         </select><br/>
-         <input type="button" value="下一步" onclick="next();"></input>
+      </select></td>
+    <tr>
+    </table>
+    <input class="btn btn-lg btn-primary btn-block" type="button" value="下一步" onclick="next();"></input>
 </form>
 </div>
-<center>
 <script>
 function searchCategories() {
     document.mainform.action = 'auth.php';
