@@ -6,23 +6,27 @@ require_once 'OpenAPI.class.php';
 
 session_start();
 
-$url = 'https://gw.open.1688.com/openapi/http/1/system.oauth2/getToken/1006478?grant_type=authorization_code&need_refresh_token=true&client_id=1006478&client_secret=C7OMfhfK3C!T&redirect_uri='.urlencode(Config::get('redirect_uri')).'&code=' . $_REQUEST['code'];
+$isPostBack = isset($_REQUEST['title']);
 
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_POSTFIELDS, '');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$data = curl_exec($ch);
-curl_close($ch);
-$result = json_decode($data);
+if (!$isPostBack) {
+    $url = 'https://gw.open.1688.com/openapi/http/1/system.oauth2/getToken/1006478?grant_type=authorization_code&need_refresh_token=true&client_id=1006478&client_secret=C7OMfhfK3C!T&redirect_uri='.urlencode(Config::get('redirect_uri')).'&code=' . $_REQUEST['code'];
 
-$current = time() * 1000;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, '');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $data = curl_exec($ch);
+    curl_close($ch);
+    $result = json_decode($data);
 
-$_SESSION['access_token'] = $result->access_token;
-$_SESSION['refresh_token'] = $result->refresh_token;
+    $current = time() * 1000;
+
+    $_SESSION['access_token'] = $result->access_token;
+    $_SESSION['refresh_token'] = $result->refresh_token;
+}
 
 $title = '';
-if (!isset($_REQUEST['title'])) {
+if (!$isPostBack) {
     $taobaoItem = OpenAPI::getTaobaoItem($_REQUEST['state']);
     $title = $taobaoItem->title;
 } else {
