@@ -9,7 +9,7 @@ session_start();
 $isPostBack = isset($_REQUEST['title']);
 
 if (!$isPostBack) {
-    $url = 'https://gw.open.1688.com/openapi/http/1/system.oauth2/getToken/1006478?grant_type=authorization_code&need_refresh_token=true&client_id=1006478&client_secret=C7OMfhfK3C!T&redirect_uri='.urlencode(Config::get('redirect_uri')).'&code=' . $_REQUEST['code'];
+    $url = 'https://gw.open.1688.com/openapi/http/1/system.oauth2/getToken/'.Config::get('app_id').'?grant_type=authorization_code&need_refresh_token=true&client_id='.Config::get('app_id').'&client_secret='.Config::get('secret_id').'&redirect_uri='.urlencode(Config::get('redirect_uri')).'&code=' . $_REQUEST['code'];
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
