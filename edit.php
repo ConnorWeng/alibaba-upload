@@ -11,7 +11,6 @@ $categoryId = $_REQUEST['categoryId'];
 
 $taobaoItem = OpenAPI::getTaobaoItem($numIid);
 $price = $taobaoItem->price;
-$detail = addslashes($taobaoItem->desc);
 $title = $taobaoItem->title;
 $num = $taobaoItem->num;
 $picUrl = $taobaoItem->pic_url;

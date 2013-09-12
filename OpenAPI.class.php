@@ -42,6 +42,7 @@ class OpenAPI {
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, array('imageBytes' => $imageBytes));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $data = curl_exec($ch);
         curl_close($ch);
 
@@ -67,6 +68,7 @@ class OpenAPI {
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, '');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $data = curl_exec($ch);
         curl_close($ch);
 

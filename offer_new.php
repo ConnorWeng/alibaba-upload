@@ -16,7 +16,11 @@ session_start();
 
 $categoryId = $_REQUEST['categoryId'];
 $price = $_REQUEST['price'];
-$detail = addslashes($_REQUEST['detail']);
+if (get_magic_quotes_gpc() == 0) {
+    $detail = addslashes(addslashes($_REQUEST['detail']));
+} else {
+    $detail = addslashes($_REQUEST['detail']);
+}
 $title = $_REQUEST['title'];
 $freightType = $_REQUEST['freightType'];
 
