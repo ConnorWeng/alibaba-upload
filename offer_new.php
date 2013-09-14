@@ -33,11 +33,30 @@ $uploadResult = OpenAPI::ibankImageUpload($albumId, uniqid(), $localImgFile)->re
 unlink(substr($localImgFile,1));
 $imageUriList = '["http://img.china.alibaba.com/'.$uploadResult->url.'"]';
 
+$featuresMap = array();
 $productFeatures = '{';
 foreach ($_REQUEST as $key=>$val) {
-    if (strstr($key, '%%%%%%')) {
-        $productFeatures = $productFeatures.'"'.substr($key, 6).'":"'.$val.'",';
+    $parts = explode('-', $key);
+    if ($parts[0] == 'feature') {
+        if (count($parts) == 2) {
+            $productFeatures = $productFeatures.'"'.substr($key, 8).'":"'.$val.'",';
+        } else if (count($parts) == 3) {
+            if (check($_REQUEST[$key]) == 'true') {
+                if (array_key_exists($parts[1], $featuresMap)) {
+                    array_push($featuresMap[$parts[1]], $parts[2]);
+                } else {
+                    $featuresMap[$parts[1]] = array($parts[2]);
+                }
+            }
+        }
     }
+}
+foreach ($featuresMap as $key=>$val) {
+    $vals = '';
+    foreach ($val as $k=>$v) {
+        $vals .= $v.';';
+    }
+    $productFeatures .= '"'.$key.'":"'.substr($vals, 0, strlen($vals) - 1).'",';
 }
 $productFeatures = substr($productFeatures, 0, strlen($productFeatures) - 1).'}';
 

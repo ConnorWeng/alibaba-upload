@@ -61,16 +61,36 @@ body {
       </tr>
       <?php
          foreach ($features as $feature) {
-             if (count($feature->featureIdValues) > 0) {
-                echo('<tr><td></td><td class="form-edit-property-label">');
-                echo($feature->name.'</td><td>');
-                echo('<select name="%%%%%%'.$feature->fid.'">');
-                foreach ($feature->featureIdValues as $value) {
-                    echo('<option value="'.$value->value.'">'.$value->value.'</option>');
-                }
-                echo('</select>');
-                echo('</td></tr>');
+             echo('<tr><td></td><td class="form-edit-property-label">');
+             echo($feature->name.'</td><td>');
+
+             switch($feature->showType) {
+                 case -1:
+                     echo('<input type="number" name="feature-'.$feature->fid.'"/>');
+                     break;
+                 case 0:
+                     echo('<input type="text" name="feature-'.$feature->fid.'"/>');
+                     break;
+                 case 1:
+                     echo('<select name="feature-'.$feature->fid.'">');
+                     foreach ($feature->featureIdValues as $value) {
+                         echo('<option value="'.$value->value.'">'.$value->value.'</option>');
+                     }
+                     echo('</select>');
+                     break;
+                 case 2:
+                     foreach ($feature->featureIdValues as $value) {
+                         echo('<input type="checkbox" name="feature-'.$feature->fid.'-'.$value->value.'">'.$value->value.'</input>');
+                     }
+                     break;
+                 case 3:
+                     foreach ($feature->featureIdValues as $value) {
+                         echo('<input type="radio" name="feature-'.$feature->fid.'" value="'.$value.'"/>');
+                     }
+                     break;
              }
+
+             echo('</td></tr>');
          }
       ?>
     </table>

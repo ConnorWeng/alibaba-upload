@@ -52,7 +52,7 @@ $catList = OpenAPI::getPostCatList($catIDs)->result->toReturn;
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>           
+<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
 <script src="ckeditor/ckeditor.js"></script>
 <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 <style>
@@ -93,14 +93,14 @@ body {
 .form-label {
   width: 60px;
 }
-</style>           
+</style>
 </head>
 <body>
 <div class="container">
 <form class="form-signin" name="mainform" action="edit.php" method="POST">
     <h3 class="form-signin-heading">如果搜索不到类目，请手动删除掉部分修饰词!</h3>
     <input type="hidden" name="code" value="<?php echo($_REQUEST['code']); ?>"/>
-    <input type="hidden" name="state" value="<?php echo($_REQUEST['state']); ?>"/>         
+    <input type="hidden" name="state" value="<?php echo($_REQUEST['state']); ?>"/>
     <table>
     <tr>
       <td class="form-label">标题:</td>
@@ -135,6 +135,6 @@ function next() {
         document.mainform.submit();
     }
 }
-</script>           
+</script>
 </body>
 </html>
