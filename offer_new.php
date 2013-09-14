@@ -23,6 +23,7 @@ if (get_magic_quotes_gpc() == 0) {
 }
 $title = $_REQUEST['title'];
 $freightType = $_REQUEST['freightType'];
+$mixWholeSale = check($_REQUEST['mixWholeSale']);
 
 /* upload image */
 $picUrl = $_REQUEST['picUrl'];
@@ -40,7 +41,7 @@ foreach ($_REQUEST as $key=>$val) {
 }
 $productFeatures = substr($productFeatures, 0, strlen($productFeatures) - 1).'}';
 
-$offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"false","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$title.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.'}';
+$offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"'.$mixWholeSale.'","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$title.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.'}';
 
 $result = OpenAPI::offerNew(stripslashes($offer));
 
@@ -48,6 +49,14 @@ if ($result->result->success) {
     echo('上传成功');
 } else {
     echo($result->message[0]);
+}
+
+function check($v) {
+    if ($v == 'on') {
+        return 'true';
+    } else {
+        return 'false';
+    }
 }
 
 ?>

@@ -57,7 +57,7 @@ body {
       </tr>
       <tr>
         <td>产品属性:</td>
-        <td colspan="2"></td>        
+        <td colspan="2"></td>
       </tr>
       <?php
          foreach ($features as $feature) {
@@ -85,7 +85,7 @@ body {
       </tr>
       <tr>
         <td>数量:</td>
-        <td><input style="width: 600px;" type="text" name="amount" value="<?php echo($num); ?>"/></td>        
+        <td><input style="width: 600px;" type="text" name="amount" value="<?php echo($num); ?>"/></td>
       </tr>
     </table>
   </div>
@@ -110,7 +110,7 @@ body {
                }
             ?>
           </select>
-        </td>        
+        </td>
       </tr>
       <tr>
         <td></td>
@@ -134,11 +134,21 @@ body {
       </tr>
     </table>
   </div>
-  
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">特色服务</div>
+    <table class="table">
+      <tr>
+        <td>混批:</td>
+        <td style="width:600px"><input type="checkbox" name="mixWholeSale"/>支持混批</td>
+      </tr>
+    </table>
+  </div>
+
   <input type="hidden" name="picUrl" value="<?php echo($picUrl); ?>"><br/>
   <input type="hidden" name="categoryId" value="<?php echo($categoryId); ?>"/>
   <input class="btn btn-lg btn-success btn-block" type="submit" value="一键上传宝贝"/>
-  
+
 </form>
 </div>
 <script>
