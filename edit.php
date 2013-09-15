@@ -19,6 +19,8 @@ $freightType = 'F';
 $myAlbumList = OpenAPI::ibankAlbumList('MY')->result->toReturn;
 $customAlbumList = OpenAPI::ibankAlbumList('CUSTOM')->result->toReturn;
 $features = OpenAPI::offerPostFeatures($categoryId)->result->toReturn;
+$sendGoodsAddressList = OpenAPI::getSendGoodsAddressList()->result->toReturn;
+$freightTemplateList = OpenAPI::getFreightTemplateList()->result->toReturn;
 
 ?>
 <html>
@@ -42,6 +44,11 @@ body {
 .form-edit-property-label {
   text-align: right;
   width: 100px;
+}
+.checkbox-wrapper {
+  width: 100px;
+  float: left;
+  overflow: hidden;
 }
 </style>
 </head>
@@ -80,7 +87,7 @@ body {
                      break;
                  case 2:
                      foreach ($feature->featureIdValues as $value) {
-                         echo('<input type="checkbox" name="feature-'.$feature->fid.'-'.$value->value.'">'.$value->value.'</input>');
+                         echo('<div class="checkbox-wrapper"><input type="checkbox" name="feature-'.$feature->fid.'-'.$value->value.'">'.$value->value.'</input></div>');
                      }
                      break;
                  case 3:
@@ -149,8 +156,38 @@ body {
     <div class="panel-heading">物流运费信息</div>
     <table class="table">
       <tr>
-        <td>运输:</td>
-        <td><input style="width: 600px;" type="text" name="freightType" value="<?php echo($freightType); ?>"/></td>
+        <td>发货地址:</td>
+        <td style="width: 600px;">
+          <select name="sendGoodsAddressId">
+            <?php
+               foreach ($sendGoodsAddressList as $address) {
+                   echo('<option value="'.$address->deliveryAddressId.'">'.$address->location.' '.$address->address.'</option>');
+               }
+            ?>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>运费设置:</td>
+        <td>
+          <select name="freightType">
+            <option value="T">运费模版</option>
+            <option value="F">卖家承担运费</option>
+          </select>
+          <select name="freightTemplateId">
+            <?php
+               foreach ($freightTemplateList as $template) {
+                   echo('<option value="'.$template->id.'">'.$template->templateName.'</option>');
+               }
+            ?>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>单位重量:</td>
+        <td>
+          <input type="text" name="offerWeight"/>公斤/每件
+        </td>
       </tr>
     </table>
   </div>

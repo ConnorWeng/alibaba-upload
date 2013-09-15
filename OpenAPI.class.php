@@ -32,12 +32,23 @@ class OpenAPI {
         return self::callOpenAPI($api, array('albumType' => $albumType), false);
     }
 
+    public static function getSendGoodsAddressList() {
+        $api = 'param2/1/cn.alibaba.open/trade.freight.sendGoodsAddressList.get';
+        return self::callOpenAPI($api, array('memberId' => $_SESSION['member_id'],
+                                             'returnFields' => 'deliveryAddressId,isCommonUse,location,address'), false);
+    }
+
+    public static function getFreightTemplateList() {
+        $api = 'param2/1/cn.alibaba.open/trade.freight.freightTemplateList.get';
+        return self::callOpenAPI($api, array('memberId' => $_SESSION['member_id']), false);
+    }
+
     public static function ibankImageUpload($albumId, $name, $imageBytes) {
         $api = 'param2/1/cn.alibaba.open/ibank.image.upload';
         $url = self::makeUrl($api, array('albumId' => $albumId,
                                          'name' => $name,
                                          'imageBytes' => $imageBytes), false);
-        
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, array('imageBytes' => $imageBytes));
@@ -97,10 +108,10 @@ class OpenAPI {
         $c = new TopClient;
         $c->appkey = Config::get('taobao_app_key');
         $c->secretKey = Config::get('taobao_secret_key');
-	$req = new ItemGetRequest;
-	$req->setFields("detail_url,num_iid,title,nick,type,cid,seller_cids,props,input_pids,input_str,desc,pic_url,num,valid_thru,list_time,delist_time,stuff_status,location,price,post_fee,express_fee,ems_fee,has_discount,freight_payer,has_invoice,has_warranty,has_showcase,modified,increment,approve_status,postage_id,product_id,auction_point,property_alias,item_img,prop_img,sku,video,outer_id,is_virtual");
-	$req->setNumIid($numIid);
-	$resp = $c->execute($req, null);
+        $req = new ItemGetRequest;
+        $req->setFields("detail_url,num_iid,title,nick,type,cid,seller_cids,props,input_pids,input_str,desc,pic_url,num,valid_thru,list_time,delist_time,stuff_status,location,price,post_fee,express_fee,ems_fee,has_discount,freight_payer,has_invoice,has_warranty,has_showcase,modified,increment,approve_status,postage_id,product_id,auction_point,property_alias,item_img,prop_img,sku,video,outer_id,is_virtual");
+        $req->setNumIid($numIid);
+        $resp = $c->execute($req, null);
 
         return $resp->item;
     }

@@ -24,6 +24,7 @@ if (!$isPostBack) {
 
     $_SESSION['access_token'] = $result->access_token;
     $_SESSION['refresh_token'] = $result->refresh_token;
+    $_SESSION['member_id'] = $result->memberId;
 }
 
 $title = '';
