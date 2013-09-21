@@ -27,6 +27,7 @@ $freightTemplateList = OpenAPI::getFreightTemplateList()->result->toReturn;
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/tradetable.js"></script>
 <script src="ckeditor/ckeditor.js"></script>
 <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 <style>
@@ -67,7 +68,8 @@ body {
         <td colspan="2"></td>
       </tr>
       <?php
-         foreach ($features as $feature) {
+
+         function echoInputTableRow($feature, $isSpec) {
              echo('<tr><td></td><td class="form-edit-property-label">');
              echo($feature->name.'</td><td>');
 
@@ -87,7 +89,7 @@ body {
                      break;
                  case 2:
                      foreach ($feature->featureIdValues as $value) {
-                         echo('<div class="checkbox-wrapper"><input type="checkbox" name="feature-'.$feature->fid.'-'.$value->value.'">'.$value->value.'</input></div>');
+                         echo('<div class="checkbox-wrapper"><input '.($isSpec?'class="spec-checkbox" ':'').'type="checkbox" fname="'.$feature->name.'" name="feature-'.$feature->fid.'-'.$value->value.'">'.$value->value.'</input></div>');
                      }
                      break;
                  case 3:
@@ -99,20 +101,63 @@ body {
 
              echo('</td></tr>');
          }
+
+         $specFeatures = array();
+         $tradeFeatures = array();
+         $specExtendedFeatures = array();
+
+         foreach ($features as $feature) {
+             if ($feature->isSpecExtendedAttr) {
+                 array_push($specExtendedFeatures, $feature);
+             }
+             if ($feature->isSpecAttr) {
+                 array_push($specFeatures, $feature);
+                 continue;
+             }
+             if ($feature->aspect == '3;') {
+                 array_push($tradeFeatures, $feature);
+                 continue;
+             }
+
+             echoInputTableRow($feature, false);
+         }
+
+         echo('<br/>');
+      ?>
+      <tr>
+        <td>产品规格:</td>
+        <td colspan="2"></td>
+      </tr>
+      <?php
+         foreach ($specFeatures as $spec) {
+             echoInputTableRow($spec, true);
+         }
       ?>
     </table>
   </div>
 
   <div class="panel panel-primary">
     <div class="panel-heading">产品销售信息</div>
-    <table class="table">
+    <table class="table spec-table">
       <tr>
-        <td>价格:</td>
-        <td><input style="width: 600px;" type="text" name="price" value="<?php echo($price); ?>"/></td>
+        <td>计量单位:</td>
+        <td style="width: 600px;">
+        <?php
+          foreach ($tradeFeatures as $trade) {
+              if ($trade->name == "计量单位") {
+                  echo('<select name="feature-'.$trade->fid.'">');
+                  foreach ($trade->featureIdValues as $value) {
+                      echo('<option value="'.$value->value.'">'.$value->value.'</option>');
+                  }
+                  echo('</select>');
+              }
+          }
+        ?>
+        </td>
       </tr>
       <tr>
-        <td>数量:</td>
-        <td><input style="width: 600px;" type="text" name="amount" value="<?php echo($num); ?>"/></td>
+        <td>规格报价:</td>
+        <td class="spec-prices"></td>
       </tr>
     </table>
   </div>
@@ -204,12 +249,74 @@ body {
 
   <input type="hidden" name="picUrl" value="<?php echo($picUrl); ?>"><br/>
   <input type="hidden" name="categoryId" value="<?php echo($categoryId); ?>"/>
+  <input type="hidden" name="skuList"/>
   <input class="btn btn-lg btn-success btn-block" type="submit" value="一键上传宝贝"/>
 
 </form>
 </div>
 <script>
-var editor = CKEDITOR.replace('detail');
+$(function() {
+    var editor = CKEDITOR.replace('detail');
+
+    $('.spec-checkbox').on('click', function() {
+        var selectedSpecs = [],
+            specExtendedAttrs = [{name: '单价(元)', fname: 'price'}, {name: '可售数量', fname: 'amountOnSale'}, {name: '建议零售价', fname: 'retailPrice'}, {name: '单品货号', fname: 'cargoNumber'}],
+            ttable;
+
+        $('.spec-checkbox:checked').each(function (index, element) {
+            var $e = $(element),
+                parts = $e.attr('name').split('-');
+                fid = parts[1];
+                value = parts[2];
+                name = $e.attr('fname'),
+                isNewSpec = true;
+
+            for (var i in selectedSpecs) {
+                if (selectedSpecs[i]['fid'] === fid) {
+                    isNewSpec = false;
+                    selectedSpecs[i]['values'].push(value);
+                }
+            }
+
+            if (isNewSpec) {
+                selectedSpecs.push({fid: fid, name: name, values: [value]});
+            }
+        });
+
+        ttable = new tradetable($('.spec-prices'), selectedSpecs, specExtendedAttrs);
+        ttable.removeAll();
+        ttable.createTable();
+    });
+
+    $('.form-edit').on('submit', function() {
+        var skuList = '[';
+
+        $('.spec-row').each(function(index, element) {
+            var $e = $(element);
+
+            skuList += '{"specAttributes":{';
+            $e.find('.spec-attr').each(function(index, element) {
+                var $ee = $(element);
+                skuList += '"' + $ee.attr('fid') + '":"' + $ee.text() + '",';
+            });
+            skuList = skuList.substr(0, skuList.length - 1);
+            skuList += '},';
+
+            $e.find('.spec-extend-attr').each(function(index, element) {
+                var $eee = $(element);
+                skuList += '"' + $eee.attr('fname') + '":' + '"' + $eee.val() + '",'
+            });
+            skuList = skuList.substr(0, skuList.length - 1);
+
+            skuList += '},';
+        });
+
+        skuList = skuList.substr(0, skuList.length - 1) + ']';
+        document.mainform.skuList.value = skuList;
+
+        return true;
+    });
+});
 </script>
 </body>
 </html>
