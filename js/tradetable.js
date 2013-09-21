@@ -88,6 +88,8 @@ $(function ($) {
         },
 
         setStyle: function (styles) {
+            this.$table.find('input').css('width', '140px');
+
             if (styles) {
                 this.$table.css(styles);
             } else {
