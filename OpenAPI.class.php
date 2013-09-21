@@ -9,7 +9,7 @@ class OpenAPI {
 
     public static function offerNew($offer) {
         $api = 'param2/1/cn.alibaba.open/offer.new';
-        return self::callOpenAPI($api, array('offer' => $offer), true);
+        return self::callOpenAPIWithShortUrl($api, array('offer' => $offer));
     }
 
     public static function categorySearch($keyWord) {
@@ -98,6 +98,35 @@ class OpenAPI {
             $params = $params.$key.'='.$value.'&';
         }
         $url = Config::get('open_url').'/'.$api.'/'.Config::get('app_id').'?'.$params.'_aop_timestamp='.
+               $timestamp.'&access_token='.$accessToken.'&_aop_signature='.
+               Util::signDefault(Config::get('open_url'), $api, array_merge($paramsArray, array('_aop_timestamp' => $timestamp, 'access_token' => $accessToken)));
+
+        return $url;
+    }
+
+    private static function callOpenAPIWithShortUrl($api, $params) {
+        $url = self::makeShortUrl($api, $params);
+        $data = self::sendRequestWithShortUrl($url, $params);
+
+        return json_decode($data);
+    }
+
+    private static function sendRequestWithShortUrl($url, $params) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $data = curl_exec($ch);
+        curl_close($ch);
+
+        return $data;
+    }
+
+    private static function makeShortUrl($api, $paramsArray) {
+        $timestamp = time() * 1000;
+        $accessToken = $_SESSION['access_token'];
+        $url = Config::get('open_url').'/'.$api.'/'.Config::get('app_id').'?_aop_timestamp='.
                $timestamp.'&access_token='.$accessToken.'&_aop_signature='.
                Util::signDefault(Config::get('open_url'), $api, array_merge($paramsArray, array('_aop_timestamp' => $timestamp, 'access_token' => $accessToken)));
 
