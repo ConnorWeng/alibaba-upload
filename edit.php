@@ -314,8 +314,37 @@ $(function() {
         skuList = skuList.substr(0, skuList.length - 1) + ']';
         document.mainform.skuList.value = skuList;
 
-        return true;
+        var result = validate();
+        if (result === '') {
+            return true;
+        } else {
+            alert(result);
+            return false;
+        }
     });
+
+    function validate() {
+        var msg = '',
+            $inputs = $('.trade-table input');
+
+        if ($('.trade-table').length === 0) {
+            msg += '请勾选相应的产品规格.';
+        }
+
+        for (var i = 0; i < $inputs.length; i++) {
+            var $input = $($inputs[i]);
+            if ($input.val() === '') {
+                msg += '产品销售信息中的“规格报价”尚未填写完整.';
+                break;
+            }
+        }
+
+        if (document.mainform.offerWeight.value === '') {
+            msg += '请填写物流运费信息中的“单位重量”.';
+        }
+
+        return msg;
+    }
 });
 </script>
 </body>
