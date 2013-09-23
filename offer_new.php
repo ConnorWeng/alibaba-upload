@@ -28,6 +28,7 @@ $freightTemplateId = $_REQUEST['freightTemplateId'];
 $offerWeight = $_REQUEST['offerWeight'];
 $mixWholeSale = check($_REQUEST['mixWholeSale']);
 $skuList = $_REQUEST['skuList'];
+$periodOfValidity = $_REQUEST['periodOfValidity'];
 
 /* upload image */
 $picUrl = $_REQUEST['picUrl'];
@@ -64,7 +65,7 @@ foreach ($featuresMap as $key=>$val) {
 }
 $productFeatures = substr($productFeatures, 0, strlen($productFeatures) - 1).'}';
 
-$offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"'.$mixWholeSale.'","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$title.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.',"sendGoodsAddressId":"'.$sendGoodsAddressId.'","freightTemplateId":"'.$freightTemplateId.'","offerWeight":"'.$offerWeight.'","skuList":'.$skuList.'}';
+$offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"'.$mixWholeSale.'","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$title.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.',"sendGoodsAddressId":"'.$sendGoodsAddressId.'","freightTemplateId":"'.$freightTemplateId.'","offerWeight":"'.$offerWeight.'","skuList":'.$skuList.',"periodOfValidity":'.$periodOfValidity.'}';
 
 
 $result = OpenAPI::offerNew(stripslashes($offer));

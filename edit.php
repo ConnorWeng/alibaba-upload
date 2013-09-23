@@ -247,6 +247,20 @@ body {
     </table>
   </div>
 
+  <div class="panel panel-primary">
+    <div class="panel-heading">其他信息</div>
+    <table class="table">
+      <tr>
+        <td>信息有效期:</td>
+        <td style="width:600px">
+          <input type="radio" name="periodOfValidity" value="10"/>10天
+          <input type="radio" name="periodOfValidity" value="20"/>20天
+          <input type="radio" name="periodOfValidity" value="30" checked="true"/>一个月
+        </td>
+      </tr>
+    </table>
+  </div>
+
   <input type="hidden" name="picUrl" value="<?php echo($picUrl); ?>"><br/>
   <input type="hidden" name="categoryId" value="<?php echo($categoryId); ?>"/>
   <input type="hidden" name="skuList"/>
