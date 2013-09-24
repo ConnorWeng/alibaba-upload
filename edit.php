@@ -70,8 +70,14 @@ body {
       <?php
 
          function echoInputTableRow($feature, $isSpec) {
+             if ($feature->required) {
+                 $requiredPrefix = '<span style="color:red">* </span>';
+             } else {
+                 $requiredPrefix = '';
+             }
+
              echo('<tr><td></td><td class="form-edit-property-label">');
-             echo($feature->name.'</td><td>');
+             echo($requiredPrefix.$feature->name.'</td><td>');
 
              switch($feature->showType) {
                  case -1:
@@ -109,6 +115,7 @@ body {
          foreach ($features as $feature) {
              if ($feature->isSpecExtendedAttr) {
                  array_push($specExtendedFeatures, $feature);
+                 continue;
              }
              if ($feature->isSpecAttr) {
                  array_push($specFeatures, $feature);
@@ -156,7 +163,7 @@ body {
         </td>
       </tr>
       <tr>
-        <td>规格报价:</td>
+        <td><span style="color:red">* </span>规格报价:</td>
         <td class="spec-prices"></td>
       </tr>
     </table>
@@ -201,7 +208,7 @@ body {
     <div class="panel-heading">物流运费信息</div>
     <table class="table">
       <tr>
-        <td>发货地址:</td>
+        <td><span style="color:red">* </span>发货地址:</td>
         <td style="width: 600px;">
           <select name="sendGoodsAddressId">
             <?php
@@ -213,7 +220,7 @@ body {
         </td>
       </tr>
       <tr>
-        <td>运费设置:</td>
+        <td><span style="color:red">* </span>运费设置:</td>
         <td>
           <select name="freightType">
             <option value="T">运费模版</option>
@@ -229,7 +236,7 @@ body {
         </td>
       </tr>
       <tr>
-        <td>单位重量:</td>
+        <td><span style="color:red">* </span>单位重量:</td>
         <td>
           <input type="text" name="offerWeight"/>公斤/每件
         </td>
@@ -251,7 +258,7 @@ body {
     <div class="panel-heading">其他信息</div>
     <table class="table">
       <tr>
-        <td>信息有效期:</td>
+        <td><span style="color:red">* </span>信息有效期:</td>
         <td style="width:600px">
           <input type="radio" name="periodOfValidity" value="10"/>10天
           <input type="radio" name="periodOfValidity" value="20"/>20天
