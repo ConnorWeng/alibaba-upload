@@ -10,10 +10,10 @@ $numIid = $_REQUEST['state'];
 $categoryId = $_REQUEST['categoryId'];
 
 $taobaoItem = OpenAPI::getTaobaoItem($numIid);
-$price = $taobaoItem->price;
 $title = $taobaoItem->title;
-$num = $taobaoItem->num;
 $picUrl = $taobaoItem->pic_url;
+$desc = $taobaoItem->desc;
+$skus = $taobaoItem->skus->sku;
 $freightType = 'F';
 
 $myAlbumList = OpenAPI::ibankAlbumList('MY')->result->toReturn;
@@ -21,6 +21,18 @@ $customAlbumList = OpenAPI::ibankAlbumList('CUSTOM')->result->toReturn;
 $features = OpenAPI::offerPostFeatures($categoryId)->result->toReturn;
 $sendGoodsAddressList = OpenAPI::getSendGoodsAddressList()->result->toReturn;
 $freightTemplateList = OpenAPI::getFreightTemplateList()->result->toReturn;
+
+function querySpec($name, $value) {
+    $count = count($GLOBALS['skus']);
+    for ($i = 0; $i < $count; $i += 1) {
+        if (stripos($GLOBALS['skus'][$i]->properties_name[0], $name)) {
+            if (stripos($GLOBALS['skus'][$i]->properties_name[0], $value)) {
+                return $GLOBALS['skus'][$i];
+            }
+        }
+    }
+    return null;
+}
 
 ?>
 <html>
@@ -95,7 +107,10 @@ body {
                      break;
                  case 2:
                      foreach ($feature->featureIdValues as $value) {
-                         echo('<div class="checkbox-wrapper"><input '.($isSpec?'class="spec-checkbox" ':'').'type="checkbox" fname="'.$feature->name.'" name="feature-'.$feature->fid.'-'.$value->value.'">'.$value->value.'</input></div>');
+                         $spec = querySpec($feature->name, $value->value);
+                         echo('<div class="checkbox-wrapper">'.
+                                  '<input '.($spec != null?'checked="true" ':' ').($isSpec?'class="spec-checkbox" ':'').'type="checkbox" fname="'.$feature->name.'" name="feature-'.$feature->fid.'-'.$value->value.'">'.$value->value.'</input>'.
+                              '</div>');
                      }
                      break;
                  case 3:
@@ -194,12 +209,12 @@ body {
       <tr>
         <td></td>
         <td>
-          <img style="width: 300px; height: 300px;" src="<?php echo($taobaoItem->pic_url); ?>"/>
+          <img style="width: 300px; height: 300px;" src="<?php echo($picUrl); ?>"/>
         </td>
       </tr>
       <tr>
         <td>详情：</td>
-        <td><textarea name="detail" value="<?php echo($taobaoItem->desc); ?>"></textarea></td>
+        <td><textarea name="detail" value="<?php echo($desc); ?>"></textarea></td>
       </tr>
     </table>
   </div>
@@ -279,35 +294,9 @@ body {
 $(function() {
     var editor = CKEDITOR.replace('detail');
 
-    $('.spec-checkbox').on('click', function() {
-        var selectedSpecs = [],
-            specExtendedAttrs = [{name: '单价(元)', fname: 'price'}, {name: '可售数量', fname: 'amountOnSale'}, {name: '建议零售价', fname: 'retailPrice'}, {name: '单品货号', fname: 'cargoNumber'}],
-            ttable;
+    createSpecTable();
 
-        $('.spec-checkbox:checked').each(function (index, element) {
-            var $e = $(element),
-                parts = $e.attr('name').split('-');
-                fid = parts[1];
-                value = parts[2];
-                name = $e.attr('fname'),
-                isNewSpec = true;
-
-            for (var i in selectedSpecs) {
-                if (selectedSpecs[i]['fid'] === fid) {
-                    isNewSpec = false;
-                    selectedSpecs[i]['values'].push(value);
-                }
-            }
-
-            if (isNewSpec) {
-                selectedSpecs.push({fid: fid, name: name, values: [value]});
-            }
-        });
-
-        ttable = new tradetable($('.spec-prices'), selectedSpecs, specExtendedAttrs);
-        ttable.removeAll();
-        ttable.createTable();
-    });
+    $('.spec-checkbox').on('click', createSpecTable);
 
     $('.form-edit').on('submit', function() {
         var skuList = '[';
@@ -343,6 +332,36 @@ $(function() {
             return false;
         }
     });
+
+    function createSpecTable() {
+        var selectedSpecs = [],
+        specExtendedAttrs = [{name: '单价(元)', fname: 'price'}, {name: '可售数量', fname: 'amountOnSale'}, {name: '建议零售价', fname: 'retailPrice'}, {name: '单品货号', fname: 'cargoNumber'}],
+        ttable;
+
+        $('.spec-checkbox:checked').each(function (index, element) {
+            var $e = $(element),
+                parts = $e.attr('name').split('-');
+                fid = parts[1];
+                value = parts[2];
+                name = $e.attr('fname'),
+                isNewSpec = true;
+
+            for (var i in selectedSpecs) {
+                if (selectedSpecs[i]['fid'] === fid) {
+                    isNewSpec = false;
+                    selectedSpecs[i]['values'].push(value);
+                }
+            }
+
+            if (isNewSpec) {
+                selectedSpecs.push({fid: fid, name: name, values: [value]});
+            }
+        });
+
+        ttable = new tradetable($('.spec-prices'), selectedSpecs, specExtendedAttrs);
+        ttable.removeAll();
+        ttable.createTable();
+    }
 
     function validate() {
         var msg = '',
