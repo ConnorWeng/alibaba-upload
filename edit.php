@@ -13,7 +13,7 @@ $taobaoItem = OpenAPI::getTaobaoItem($numIid);
 $title = $taobaoItem->title;
 $picUrl = $taobaoItem->pic_url;
 $desc = $taobaoItem->desc;
-$skus = $taobaoItem->skus->sku;
+$skus = Util::parseSkus($taobaoItem->skus->sku);
 $freightType = 'F';
 
 $myAlbumList = OpenAPI::ibankAlbumList('MY')->result->toReturn;
@@ -25,8 +25,8 @@ $freightTemplateList = OpenAPI::getFreightTemplateList()->result->toReturn;
 function querySpec($name, $value) {
     $count = count($GLOBALS['skus']);
     for ($i = 0; $i < $count; $i += 1) {
-        if (stripos($GLOBALS['skus'][$i]->properties_name[0], $name)) {
-            if (stripos($GLOBALS['skus'][$i]->properties_name[0], $value)) {
+        if (stripos($GLOBALS['skus'][$i]->propertiesName, $name)) {
+            if (stripos($GLOBALS['skus'][$i]->propertiesName, $value)) {
                 return $GLOBALS['skus'][$i];
             }
         }
@@ -336,7 +336,8 @@ $(function() {
     function createSpecTable() {
         var selectedSpecs = [],
         specExtendedAttrs = [{name: '单价(元)', fname: 'price'}, {name: '可售数量', fname: 'amountOnSale'}, {name: '建议零售价', fname: 'retailPrice'}, {name: '单品货号', fname: 'cargoNumber'}],
-        ttable;
+        ttable,
+        skus = <?php echo(json_encode($skus)) ?>;
 
         $('.spec-checkbox:checked').each(function (index, element) {
             var $e = $(element),
@@ -358,7 +359,7 @@ $(function() {
             }
         });
 
-        ttable = new tradetable($('.spec-prices'), selectedSpecs, specExtendedAttrs);
+        ttable = new tradetable($('.spec-prices'), selectedSpecs, specExtendedAttrs, skus);
         ttable.removeAll();
         ttable.createTable();
     }
