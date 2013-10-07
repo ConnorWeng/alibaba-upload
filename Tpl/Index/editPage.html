@@ -1,0 +1,2079 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript"
+    src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
+<import type="js" file="Js.ckeditor.ckeditor" basepath="{$basepath}"/>
+<import type="js" file="Js.tradetable" basepath="{$basepath}"/>
+<import type="css" file="Css.alibaba-edit" basepath="{$basepath}"/>
+</head>
+<body>
+<form name="mainform" class="mainform" action="{:U('Index/offerNew')}" method="POST">
+<input type="hidden" name="productFeatures" id="productFeatures"/>
+<input type="hidden" name="skuList" id="skuList"/>
+    <div id="doc"
+        data-doc-config='{"isProcessing":"false","offerScoreUrl":"http://offer.1688.com/offer/increment/calculate_score.htm?_input_charset=UTF-8","draftSubmitUrl":"http://offer.1688.com/offer/draft/save.htm?_input_charset=UTF-8","submitUrl":"http://offer.1688.com/offer/post/fill_product_info.htm","submitData":{"_widget_data_post_":true,"site":"","featureFilter":false,"catType":"0","_csrf_token":"3a1203d336ab038359e9f952a3a038b0","action":"OfferPostAction","offerDraftId":"","tradeType":"1","topCategoryId":"3","secondCategoryId":"10166","thirdCategoryId":"1031919","operator":"new","fromWhere":"","adGroupId":"","productId":""}}'>
+        <div id="header" class="header">
+            <!--div class="ali-logo">
+                <h1>
+                    <a href="http://exodus.1688.com/"
+                        title="全球最大的采购批发市场">阿里巴巴</a>
+                </h1>
+            </div-->
+            <div class="ali-search">
+                <span>你好，alitestforisv01</span> <!--span class="bor">[<a
+                    class="signout" target="_self"
+                    href="http://exodus.1688.com/member/signout.htm"
+                    title="退出">退出</a>]
+                </span> <span class="bor"><a
+                    href="http://work.1688.com/" title="我的阿里">我的阿里</a></span--> <span><a
+                    href="http://rule.1688.com/xize/01.html?tracelog=aliguize_offer_publish_rule"
+                    title="信息发布规则">信息发布规则</a></span>
+            </div>
+        </div>
+        <div id="content" class="content">
+            <div class="content-tit">
+                <div class="layout">
+                    <div class="fd-left">
+                        <h2>发布产品信息</h2>
+                    </div>
+                    <div class="fd-right guide">
+                        <span>选择类目</span> <span class="arrow">&gt;</span>
+                        <span class="current">填写产品详情</span> <span
+                            class="arrow">&gt;</span> <span>提交成功，等待审核</span>
+                    </div>
+                </div>
+            </div>
+            <div class="layout">
+                <!--提交后错误信息提示-->
+                <!--信息提示，如导入、TBD等-->
+                <div class="mod mod-offer-post-info sys-info"
+                    data-mod-config=''></div>
+            </div>
+            <div class="content-con fd-clr">
+                <div class="main-content">
+                    <div class="mod mod-offer-post-assistant"
+                        data-mod-config='{"formGroup":"assistant"}'>
+                        <div class="float-holder"></div>
+                        <div class="float-noshow noride"></div>
+                        <div id="assistant"
+                            class="fd-hide float-main assistant">
+                            <div class="mod-tit fd-clr">
+                                <span class="mod-title">发布助手</span> <span
+                                    class="fd-right"> <a
+                                    id="assistant-menu-link"
+                                    class="assistant-menu-link" href="#">帮助目录</a>
+                                    <a class="icon-menu-unfold" href="#"
+                                    title="收起发布助手">收起发布助手</a>
+                                </span>
+                            </div>
+                            <div class="mod-con">
+                                <div id="post-error"
+                                    class="post-error fd-hide">
+                                    <div class="error fd-clr">
+                                        <span class="icon-error"></span>
+                                        <span class="error-txt">您有必填信息未填或填写错误，请按照提示修改。</span>
+                                    </div>
+                                    <ul class="err-list"></ul>
+                                </div>
+                                <div id="assistant-menu"
+                                    class="assistant-menu">
+                                    <ul>
+                                        <li><a href="#title-info"
+                                            data-dec-type="title"
+                                            target="_self">信息标题</a></li>
+                                        <li><a href="#properties"
+                                            data-dec-type="properties"
+                                            target="_self">产品属性</a></li>
+                                        <li><a href="#speca-props"
+                                            data-dec-type="speca-props"
+                                            target="_self">产品规格</a></li>
+                                        <li><a href="#uppic"
+                                            data-dec-type="uppic"
+                                            target="_self">产品图片</a></li>
+                                        <li class="menu-fold current"><span>销售信息</span><em
+                                            class="icon-fold"></em></li>
+                                        <li class="sub-menu">
+                                            <ul>
+                                                <li><a
+                                                    href="#trade-info"
+                                                    data-dec-type="online-y"
+                                                    target="_self">支持网上订购</a></li>
+                                                <li><a
+                                                    href="#trade-info"
+                                                    data-dec-type="online-n"
+                                                    target="_self">不支持网上订购</a></li>
+                                                <li><a
+                                                    href="#trade-info"
+                                                    data-dec-type="quotation-num"
+                                                    target="_self">按产品数量报价</a></li>
+                                                <li><a
+                                                    href="#trade-info"
+                                                    data-dec-type="quotation-sku"
+                                                    target="_self">按产品规格报价</a></li>
+                                                <li><a
+                                                    href="#trade-info"
+                                                    data-dec-type="sales-type"
+                                                    target="_self">销售方式</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#detail"
+                                            data-dec-type="detail"
+                                            target="_self">详细说明</a></li>
+                                        <li><a
+                                            href="#marketing-info"
+                                            data-dec-type="mixbatch"
+                                            target="_self">混批</a></li>
+                                        <li><a
+                                            href="#marketing-info"
+                                            data-dec-type="private"
+                                            target="_self">私密</a></li>
+                                    </ul>
+                                </div>
+                                <div id="dec-title"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">标题信息</div>
+                                    <div class="module-con">
+                                        <div class="dec">
+                                            <p>标题是信息内容核心浓缩表述清晰并且包含关键信息的标题能让用户更容易掌握产品具体情况，从而引起买家更多的兴趣。</p>
+                                            <p>标题也是买家搜索到您的重要因素。字数不应太多，要尽量准确、完整、简洁。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="dec-properties"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">产品属性</div>
+                                    <div class="module-con">
+                                        <div class="dec">
+                                            <p>产品属性是买家选择商品的重要依据，买家在搜索时会根据某些属性进行进一步的筛选，正确的填写产品属性可以提高信息在搜索时的命中率，大大提高曝光机率，也能够让买家在第一时间全面的了解产品。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="dec-speca-props"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">产品规格</div>
+                                    <div class="module-con">
+                                        <div class="dec">
+                                            <p>产品规格可以帮助你更加完整的描述同一商品不同规格特征，同时支持买家根据不同产品规格进行购买。</p>
+                                            <p>您可以对规格属性设定适用于自己的自定义属性值。</p>
+                                            <p>每个产品规格最多支持20个属性值。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="dec-online-y"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">支持网上订购</div>
+                                    <div class="module-con">
+                                        <div class="dec">
+                                            <p>支持网上订购的产品，会在详细信息页面上显示立即订购何加入进货单按钮，买家可以直接在线下单</p>
+                                        </div>
+                                        <div class="more-info">
+                                            <dl class="exp-img">
+                                                <dt>示例图</dt>
+                                                <dd>
+                                                    <span
+                                                        class="cover-span"></span>
+                                                    <span class="img"><em
+                                                        class="img-online-y"></em></span>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="dec-online-n"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">不支持网上订购</div>
+                                    <div class="module-con">
+                                        <div class="dec">
+                                            <p>不支持网上订购的产品，会在详细信息上面显示“和我联系”的按钮，买家不能在线进行交易。</p>
+                                        </div>
+                                        <div class="more-info">
+                                            <dl class="exp-img">
+                                                <dt>示例图</dt>
+                                                <dd>
+                                                    <span
+                                                        class="cover-span"></span>
+                                                    <span class="img"><em
+                                                        class="img-online-n"></em></span>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="dec-quotation-num"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">按产品数量报价</div>
+                                    <div class="module-con">
+                                        <div class="dec">
+                                            <p>可根据买家采购的数量设置区间价，填写2个及以上价格区间，体现量大价优的批发特性，更能吸引买家选择您的产品。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="dec-quotation-sku"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">按产品规格报价</div>
+                                    <div class="module-con">
+                                        <div class="dec">
+                                            <p>根据产品的不同规格设置不同的价格和可售数量。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="dec-sales-type"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">销售方式</div>
+                                    <div class="module-con">
+                                        <div class="dec">
+                                            <p>普通售卖：根据计量单位进行售卖。</p>
+                                            <p>批量售卖：商品并不按照计量单位进行售卖，而是“整手”、“整箱”、“整打”的售卖方式，需要设置销售单位和换算关系。</p>
+                                            <p>设置批量售卖方式后，用户只能按照销售单位的倍数购买。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="dec-uppic"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">产品图片</div>
+                                    <div class="module-con">
+                                        <div class="dec nobor">
+                                            <p>图片质量的好坏直接影响到您的产品对买家的吸引力，好的图片拥有更多的曝光几率好的图片应该满足以下标准：</p>
+                                            <ul class="dec-list">
+                                                <li><em class="dot"></em>首张产品图请提供750*750像素以上大图</li>
+                                                <li><em class="dot"></em>第二、三张产品图提供310*310像素以上图片</li>
+                                                <li><em class="dot"></em>图片的长边和短边比例不超过4:3，正方形最佳</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="dec-detail"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">详细说明</div>
+                                    <div class="module-con">
+                                        <div class="dec nobor">
+                                            <p>详细说明可以通过文字详细介绍产品的相关信息，并运用产品图片强有力的视觉吸引力，展现产品各个角度和细节的真实情况，彰显产品的专业品质和企业实力，让买家对产品更了解，对服务更放心。</p>
+                                            <ul class="dec-list">
+                                                <li>1、插入图片时请勿盗用他人图片、以免引起纠纷。</li>
+                                                <li>2、您可添加阿里巴巴内部链接（阿里巴巴、淘宝、支付宝、雅虎），加入其它网站链接系统将自动过滤。</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="dec-private"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">私密</div>
+                                    <div class="module-con">
+                                        <div class="dec">
+                                            <p>买家可以在产品详情页面中申请会员，取得价格和图片查看权限。您可以设置一些会员专享的权限。</p>
+                                        </div>
+                                        <div class="more-info">
+                                            <dl class="exp-img">
+                                                <dt>图片仅对会员可见</dt>
+                                                <dd class="bor">
+                                                    <span
+                                                        class="cover-span"></span>
+                                                    <span class="img">
+                                                        <span
+                                                        class="img-info">选择“图片只对会员可见”的产品，在搜索列表中图片将会经过特殊处理，显示“锁图＋授权可见”</span>
+                                                        <em
+                                                        class="img-private-pic"></em>
+                                                    </span>
+                                                </dd>
+                                                <dt>价格仅对会员可见</dt>
+                                                <dd>
+                                                    <span
+                                                        class="cover-span"></span>
+                                                    <span class="img">
+                                                        <span
+                                                        class="img-info">选择“价格只对会员可见”的产品，价格会被隐藏，显示“授权可见”</span>
+                                                        <em
+                                                        class="img-private-price"></em>
+                                                    </span>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="dec-mixbatch"
+                                    class="module-dec fd-hide">
+                                    <div class="module-tit">混批</div>
+                                    <div class="module-con">
+                                        <div class="dec">
+                                            <p>混批指不限产品的种类和样式，买家只要采购总价（或总量）达到或高于设置金额（或数量），即可不受单个货品采购的起批量限制，享受批发价格。</p>
+                                            <p>混批起批量：本商品加入混批时，仍然需要保证购买数量大于卖家设置的混批起批量。</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="offerscan"
+                                    class="offerscan-box fd-hide">
+                                    <div class="offerscan-level">
+                                        <p>您现在的质量星级为：</p>
+                                        <p class="fd-clr">
+                                            <span
+                                                class="offerscan-star fd-clr"><span
+                                                class="l-v0">star</span></span>
+                                        </p>
+                                    </div>
+                                    <div id="offerscan-info"
+                                        class="offerscan-info fd-hide">恭喜您，信息质量已达到5星！</div>
+                                    <dl id="offerscan-suggestion"
+                                        class="offerscan-suggestion fd-hide">
+                                        <dt>优化建议</dt>
+                                        <dd class="suggestion-list"></dd>
+                                        <dd>
+                                            <p>修改完毕后，请再次计算星级</p>
+                                        </dd>
+                                    </dl>
+                                    <dl id="obrules-suggestion"
+                                        class="offerscan-suggestion fd-hide">
+                                        <dt>违规修改建议</dt>
+                                        <dd class="obrules-list"></dd>
+                                    </dl>
+                                </div>
+                                <div class="menu-bottom">
+                                    <a class="alicow"
+                                        href="http://exodus.1688.com/member/sso/sso.do?to_url=http%3A%2F%2Fportal.manjushri.alibaba.com%2Fportal%2Fportal%2Finit.jspa%3FinstanceCode%3DALIR00000161%26scenceCode%3DSCEN00001228%26digest%3D99a600c4c1b709a143444f8068d680b2&unlogin_url=http%3A%2F%2Fportal.manjushri.alibaba.com%2Fportal%2Fportal%2Finit.jspa%3FinstanceCode%3DALIR00000161%26scenceCode%3DSCEN00001228%26digest%3D99a600c4c1b709a143444f8068d680b2">在线咨询</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="assistant-mini"
+                            class="assistant-mini float-main">
+                            <a href="#" class="icon-menu-fold"><span>发布助手</span></a>
+                        </div>
+                    </div>
+                    <div class="layout-top">
+                        <div id="logistics-draft"
+                            data-mod-config='{"canSaveDraft":true,"draftManageUrl":"http://offer.1688.com/offer/draft_manage.htm?action=OfferDraftAction&event_submit_do_list=true"}'
+                            class="mod mod-offer-post-logistics-draft"
+                            style="display: none">
+                            <div
+                                class="quality-degree-holder float-holder">
+                            </div>
+                            <div
+                                class="quality-degree-noshow float-noshow noride">
+                                <div class="op-tips"
+                                    style="display: none; position: relative;"></div>
+                            </div>
+                            <div
+                                class="quality-degree float-main offerscan-box">
+                                <div class="mod-con fd-clr">
+                                    <div class="fd-left">
+                                        <span
+                                            class="quality-degree-note">质量星级：</span>
+                                        <span
+                                            class="offerscan-render fd-hide">
+                                            <span class="offerscan-star"><span
+                                                class="l-v0">star</span></span>
+                                            <a
+                                            id="offerscan-suggestion-link"
+                                            class="offerscan-suggestion-link"
+                                            href="#">优化建议</a>
+                                        </span> <a
+                                            class="dpl-btn dpl-btn-s btn-offerscan">计算质量星级</a>
+                                    </div>
+                                    <div class="fd-right">
+                                        <span id="quality-degree-time"
+                                            class="integrity-box-time">
+                                            <ul>
+                                                <li class="current">&nbsp;</li>
+                                                <li class="next">&nbsp;</li>
+                                            </ul>
+                                        </span>
+                                        <!-- save button -->
+                                        <span id="quality-degree-save"
+                                            class="integrity-box-save">
+                                            <a
+                                            class="dpl-btn dpl-btn-s dpl-btn-disabled"
+                                            href="#">
+                                                <button type="submit"
+                                                    disabled="disabled">已保存</button>
+                                        </a>
+                                        </span>
+                                        <div id="quality-degree-tip"
+                                            class="tips-c">
+                                            <span class="arrow"></span>
+                                            <div class="content">
+                                                <p class="info"></p>
+                                            </div>
+                                        </div>
+                                        <!-- tips ends -->
+                                    </div>
+                                </div>
+                                <!-- notification -->
+                                <div class="op-tips"
+                                    style="display: none; position: relative;"></div>
+                                <!-- notification ends -->
+                            </div>
+                        </div>
+                        <div class="mod mod-offer-post-draft-dialog"
+                            style="display: none">
+                            <div
+                                class="dialog-reselect widget-dialog dpl-dialog dpl-dialog-simple"
+                                style="display: none">
+                                <div class="dpl-t dialog-tit-reselect">
+                                    <h3 class="dpl-title">返回重选类目</h3>
+                                    <a target="_self" title="关闭"
+                                        class="btn-close dpl-close"
+                                        href="#"></a>
+                                </div>
+                                <div class="dpl-d fd-clr">
+                                    <div class="dpl-m">
+                                        <span class="dpl-ico-doubt"></span>
+                                        <span>重选类目可能会导致已填信息丢失，是否继续？</span>
+                                    </div>
+                                    <div class="dpl-b fd-clr">
+                                        <span
+                                            class="stars-memory fd-left"
+                                            style="display: none;">
+                                            <input type="checkbox"
+                                            name="memory" id="memory">
+                                            <label for="memory">一天内不再提醒</label>
+                                        </span> <span class="fd-right">
+                                            <a title="保存"
+                                            class="dpl-btn dpl-btn-s btn-submit"
+                                            href="#">保存</a> <a
+                                            title="不保存"
+                                            class="dpl-btn dpl-btn-s btn-redirect"
+                                            href="#">不保存</a> <a
+                                            title="取消"
+                                            class="dpl-btn dpl-btn-s btn-close"
+                                            href="#">取消</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="dialog-warning widget-dialog dpl-dialog"
+                                style="display: none">
+                                <div class="dpl-t dialog-tit-warning">
+                                    <h3 class="dpl-title">保存失败</h3>
+                                    <a target="_self" title="关闭"
+                                        class="btn-close dpl-close"
+                                        href="#"></a>
+                                </div>
+                                <div class="dpl-d fd-clr">
+                                    <div class="dpl-m">
+                                        <span class="dpl-ico-serious"></span>
+                                        <span>保存超时，可能是网络问题，请关闭后重试</span>
+                                    </div>
+                                    <div class="dpl-b fd-clr">
+                                        <span
+                                            class="stars-memory fd-left"
+                                            style="display: none;">
+                                            <input type="checkbox"
+                                            name="memory" id="memory">
+                                            <label for="memory">一天内不再提醒</label>
+                                        </span> <span class="fd-right">
+                                            <a title="关闭"
+                                            class="dpl-btn dpl-btn-s btn-close"
+                                            href="#">关闭</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="top-tit fd-clr">
+                            <div class="fd-left">
+                                <span>您选择的类目：</span> <span
+                                    class="cur-cate"> {$categoryName} </span> <span
+                                    class="mod mod-offer-post-recate"
+                                    data-mod-config='{"canSaveDraft":true,"isGroupOffer":"false"}'>
+                                    <a
+                                    class="recate-link dpl-btn dpl-btn-s"
+                                    href="#" title="返回重选类目">返回重选类目</a>
+                                    <form class="fd-hide" target="_self"
+                                        name="returnChooseCategoryForm"
+                                        action="http://offer.1688.com/offer/post/choose_category.htm"
+                                        method="post">
+                                        <input name='_csrf_token'
+                                            type='hidden'
+                                            value='3a1203d336ab038359e9f952a3a038b0'>
+                                        <input type="hidden"
+                                            name="tradeType" value="1" />
+                                        <input type="hidden"
+                                            name="topCategoryId"
+                                            id="topCategoryId" value="3" />
+                                        <input type="hidden"
+                                            name="secondCategoryId"
+                                            id="secondCategoryId"
+                                            value="10166" /> <input
+                                            type="hidden"
+                                            name="thirdCategoryId"
+                                            id="thirdCategoryId"
+                                            value="1031919" /> <input
+                                            type="hidden"
+                                            name="operator" value="new" />
+                                        <input type="hidden"
+                                            name="offerId" value="" /> <input
+                                            type="hidden"
+                                            name="productId" value="" />
+                                        <input type="hidden"
+                                            name="fromWhere" value="" />
+                                        <input type="hidden"
+                                            name="adGroupId" value="" />
+                                        <input type="hidden"
+                                            name="offerDraftId"
+                                            id="offerDraftId" value="" />
+                                        <input type="hidden" name="site"
+                                            id="site" value="" />
+                                    </form>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="layout">
+                        <div class="tit">
+                            <div class="fd-left">
+                                <h3 class="icon-title icon-base">填写基本信息</h3>
+                                <span class="note">对本类目下产品属性和计量单位有改进建议，</span>
+                                <a
+                                    class="icon-feedback feedback-default"
+                                    href="http://club.1688.com/forum/thread/add.html?tracelog=offerPostCategoryTips&forum_id=100757&hint=%B7%FE%D7%B0%26nbsp%3B%26gt%3B%26nbsp%3B%C5%AE%D7%B0%26nbsp%3B%26gt%3B%26nbsp%3B%C5%AE%CA%BDT%D0%F4%3Cbr%3E%CE%D2%B6%D4%B5%B1%C7%B0%C0%E0%C4%BF%B5%C4%BD%A8%D2%E9%CA%C7%3A&subjectTitle=%CE%D2%B6%D4%B7%FE%D7%B0+%A3%BE+%C5%AE%D7%B0+%A3%BE+%C5%AE%CA%BDT%D0%F4%C0%E0%C4%BF%B5%C4%BD%A8%D2%E9">我要反馈</a>
+                            </div>
+                        </div>
+                        <div id="title-info"
+                            class="info-title fd-clr mod mod-offer-post-title"
+                            data-mod-config='{"formGroup":"title","isIndustryPlastic":false,"showCount":true,"leafCategoryName":"女式T恤","validateDanger":"http://offer.1688.com/offer/asyn/validate_result.json","titleValidateUrl":"http://labs.rank.1688.com:25000/"}'>
+                            <div class="form-line">
+                                <div class="form-title">
+                                    <span class="icon-must">信息标题：</span>
+                                    <span class="note">建议在标题中包含产品名称和相应关键词</span>
+                                    <a class="anchor-dec"
+                                        data-dec-type="title" href="#"
+                                        target="_self">怎样填更好？</a>
+                                </div>
+                                <div class="form-context">
+                                    <div class="fd-left">
+                                        <input name="subject"
+                                            class="info-title-txt txt desc-change-txt"
+                                            type="text" value="{$infoTitle}">
+                                    </div>
+                                    <!--div class="num">
+                                        <span class="current-num">0</span>/<span
+                                            class="total-num">30</span>
+                                    </div-->
+                                </div>
+                            </div>
+                            <div class="form-line">
+                                <div class="err">请填写 信息标题</div>
+                            </div>
+                            <input type="hidden" name="title_widget"
+                                value="true" />
+                        </div>
+                        <div id="properties"
+                            class="mod mod-offer-post-properties fd-clr "
+                            data-mod-config='{"formGroup":"properties","isIndustryPlastic": false,"isCheckNeeded":true,"leafCategoryName":"女式T恤","tradeType":"1","categoryId":"1031919","levelInfoUrl":"http://spu.1688.com/spu/ajax/get_level_info_by_path.htm","spuInfoUrl":"http://spu.1688.com/spu/ajax/get_spu_info_by_key_attr.htm","diySuggestionUrl":"http://pubsuggest.1688.com/bin/publishsuggest.htm","suggestionUrl": "http://pubsuggest.1688.com/bin/spu_suggest.htm" ,"productFeatureList":[{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[7108,100017842],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;现货&quot;,&quot;vid&quot;:46874},{&quot;value&quot;:&quot;订货&quot;,&quot;vid&quot;:3261229}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:100000691,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;Y&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;货源类别&quot;,&quot;order&quot;:1,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;东莞&quot;,&quot;vid&quot;:84746},{&quot;value&quot;:&quot;广州&quot;,&quot;vid&quot;:29407},{&quot;value&quot;:&quot;中山&quot;,&quot;vid&quot;:31962},{&quot;value&quot;:&quot;杭州&quot;,&quot;vid&quot;:29412},{&quot;value&quot;:&quot;大连&quot;,&quot;vid&quot;:29405},{&quot;value&quot;:&quot;青岛&quot;,&quot;vid&quot;:29422},{&quot;value&quot;:&quot;其他&quot;,&quot;vid&quot;:20213}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:346,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;Y&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;产地&quot;,&quot;order&quot;:6,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;全棉&quot;,&quot;vid&quot;:105206},{&quot;value&quot;:&quot;棉类混纺&quot;,&quot;vid&quot;:44427519},{&quot;value&quot;:&quot;麻类混纺&quot;,&quot;vid&quot;:52571896},{&quot;value&quot;:&quot;化纤类混纺&quot;,&quot;vid&quot;:63074530},{&quot;value&quot;:&quot;涤纶棉&quot;,&quot;vid&quot;:31239708},{&quot;value&quot;:&quot;雪纺/乔其纱&quot;,&quot;vid&quot;:20879148},{&quot;value&quot;:&quot;蕾丝&quot;,&quot;vid&quot;:28386},{&quot;value&quot;:&quot;锦纶/尼龙&quot;,&quot;vid&quot;:58013177},{&quot;value&quot;:&quot;真丝&quot;,&quot;vid&quot;:28348},{&quot;value&quot;:&quot;羊毛&quot;,&quot;vid&quot;:28352},{&quot;value&quot;:&quot;羊绒&quot;,&quot;vid&quot;:28351},{&quot;value&quot;:&quot;其他&quot;,&quot;vid&quot;:20213}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:1991,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;Y&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;面料&quot;,&quot;order&quot;:8,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;休闲&quot;,&quot;vid&quot;:29535},{&quot;value&quot;:&quot;运动&quot;,&quot;vid&quot;:1628},{&quot;value&quot;:&quot;嘻哈&quot;,&quot;vid&quot;:3329741},{&quot;value&quot;:&quot;韩版&quot;,&quot;vid&quot;:28105},{&quot;value&quot;:&quot;日式&quot;,&quot;vid&quot;:67958},{&quot;value&quot;:&quot;欧美&quot;,&quot;vid&quot;:125200612},{&quot;value&quot;:&quot;英伦&quot;,&quot;vid&quot;:3291373},{&quot;value&quot;:&quot;瑞丽&quot;,&quot;vid&quot;:29920},{&quot;value&quot;:&quot;OL通勤/正装&quot;,&quot;vid&quot;:31603681},{&quot;value&quot;:&quot;唐装/中式&quot;,&quot;vid&quot;:143709681},{&quot;value&quot;:&quot;复古&quot;,&quot;vid&quot;:43747},{&quot;value&quot;:&quot;朋克&quot;,&quot;vid&quot;:29931},{&quot;value&quot;:&quot;民族&quot;,&quot;vid&quot;:29935},{&quot;value&quot;:&quot;波西米亚&quot;,&quot;vid&quot;:29930},{&quot;value&quot;:&quot;海军&quot;,&quot;vid&quot;:3360029},{&quot;value&quot;:&quot;简约&quot;,&quot;vid&quot;:109835873},{&quot;value&quot;:&quot;嬉皮&quot;,&quot;vid&quot;:14279793},{&quot;value&quot;:&quot;文艺&quot;,&quot;vid&quot;:12571527},{&quot;value&quot;:&quot;公主&quot;,&quot;vid&quot;:3380267},{&quot;value&quot;:&quot;中性&quot;,&quot;vid&quot;:29923},{&quot;value&quot;:&quot;军装&quot;,&quot;vid&quot;:9402698},{&quot;value&quot;:&quot;乡村&quot;,&quot;vid&quot;:3277844},{&quot;value&quot;:&quot;洛丽塔&quot;,&quot;vid&quot;:3506815},{&quot;value&quot;:&quot;森女&quot;,&quot;vid&quot;:57738700},{&quot;value&quot;:&quot;摇滚&quot;,&quot;vid&quot;:3271861},{&quot;value&quot;:&quot;宫廷&quot;,&quot;vid&quot;:122521258},{&quot;value&quot;:&quot;波普&quot;,&quot;vid&quot;:3800111},{&quot;value&quot;:&quot;田园&quot;,&quot;vid&quot;:29933},{&quot;value&quot;:&quot;学院&quot;,&quot;vid&quot;:3267765},{&quot;value&quot;:&quot;甜美&quot;,&quot;vid&quot;:3267776},{&quot;value&quot;:&quot;街头&quot;,&quot;vid&quot;:29934},{&quot;value&quot;:&quot;淑女&quot;,&quot;vid&quot;:29919},{&quot;value&quot;:&quot;其他&quot;,&quot;vid&quot;:20213}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:973,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;Y&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;风格&quot;,&quot;order&quot;:10,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;套头&quot;,&quot;vid&quot;:103422},{&quot;value&quot;:&quot;开衫&quot;,&quot;vid&quot;:103423},{&quot;value&quot;:&quot;假二件套&quot;,&quot;vid&quot;:30626427},{&quot;value&quot;:&quot;二件套&quot;,&quot;vid&quot;:3309493}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:1811,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;Y&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;款式&quot;,&quot;order&quot;:11,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;无袖&quot;,&quot;vid&quot;:29446},{&quot;value&quot;:&quot;短袖&quot;,&quot;vid&quot;:29445},{&quot;value&quot;:&quot;五分袖/中袖&quot;,&quot;vid&quot;:3216780},{&quot;value&quot;:&quot;七分&quot;,&quot;vid&quot;:4722239},{&quot;value&quot;:&quot;九分&quot;,&quot;vid&quot;:6531689},{&quot;value&quot;:&quot;长袖&quot;,&quot;vid&quot;:29444}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:7001,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;Y&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;袖长&quot;,&quot;order&quot;:16,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;实拍有模特&quot;,&quot;vid&quot;:92012},{&quot;value&quot;:&quot;实拍无模特&quot;,&quot;vid&quot;:92013},{&quot;value&quot;:&quot;官方图片&quot;,&quot;vid&quot;:92014},{&quot;value&quot;:&quot;其他来源&quot;,&quot;vid&quot;:3226294}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:20418023,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;Y&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;主图来源&quot;,&quot;order&quot;:19,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;黑色&quot;,&quot;vid&quot;:28341},{&quot;value&quot;:&quot;绿色&quot;,&quot;vid&quot;:28335},{&quot;value&quot;:&quot;灰色&quot;,&quot;vid&quot;:28334},{&quot;value&quot;:&quot;紫色&quot;,&quot;vid&quot;:28329},{&quot;value&quot;:&quot;红色&quot;,&quot;vid&quot;:317400777},{&quot;value&quot;:&quot;黄色&quot;,&quot;vid&quot;:28324},{&quot;value&quot;:&quot;粉色&quot;,&quot;vid&quot;:28323},{&quot;value&quot;:&quot;卡其色&quot;,&quot;vid&quot;:28331},{&quot;value&quot;:&quot;白色&quot;,&quot;vid&quot;:28320}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:3216,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:2,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;Y&quot;,&quot;isSpecAttr&quot;:true,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:true,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:true,&quot;name&quot;:&quot;颜色&quot;,&quot;order&quot;:21,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;XXS&quot;,&quot;vid&quot;:28381},{&quot;value&quot;:&quot;XS&quot;,&quot;vid&quot;:28313},{&quot;value&quot;:&quot;S&quot;,&quot;vid&quot;:28314},{&quot;value&quot;:&quot;M&quot;,&quot;vid&quot;:28315},{&quot;value&quot;:&quot;L&quot;,&quot;vid&quot;:28316},{&quot;value&quot;:&quot;XL&quot;,&quot;vid&quot;:28317},{&quot;value&quot;:&quot;XXL&quot;,&quot;vid&quot;:28318},{&quot;value&quot;:&quot;XXXL&quot;,&quot;vid&quot;:28319},{&quot;value&quot;:&quot;XXXXL&quot;,&quot;vid&quot;:8342617},{&quot;value&quot;:&quot;均码&quot;,&quot;vid&quot;:28383}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:450,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:2,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;Y&quot;,&quot;isSpecAttr&quot;:true,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:true,&quot;name&quot;:&quot;尺码&quot;,&quot;order&quot;:22,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:1398,&quot;fieldType&quot;:&quot;string&quot;,&quot;inputType&quot;:0,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;货号&quot;,&quot;order&quot;:5,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;素度&quot;,&quot;vid&quot;:219960606},{&quot;value&quot;:&quot;new sunny&quot;,&quot;vid&quot;:28567664},{&quot;value&quot;:&quot;心恋尼&quot;,&quot;vid&quot;:96819892},{&quot;value&quot;:&quot;FLENKIY芙兰奇&quot;,&quot;vid&quot;:126989962},{&quot;value&quot;:&quot;艾雨晴&quot;,&quot;vid&quot;:212212613},{&quot;value&quot;:&quot;川夏紫蝶&quot;,&quot;vid&quot;:13956180},{&quot;value&quot;:&quot;星言&quot;,&quot;vid&quot;:14445841},{&quot;value&quot;:&quot;丽涵尔&quot;,&quot;vid&quot;:173794111},{&quot;value&quot;:&quot;金莱丝顿&quot;,&quot;vid&quot;:81360938},{&quot;value&quot;:&quot;heygirl黑格儿&quot;,&quot;vid&quot;:252878905},{&quot;value&quot;:&quot;PUGSHOP啪歌&quot;,&quot;vid&quot;:256078726},{&quot;value&quot;:&quot;莹欣儿&quot;,&quot;vid&quot;:222552431},{&quot;value&quot;:&quot;牧场牛仔&quot;,&quot;vid&quot;:192822882},{&quot;value&quot;:&quot;樱野3+2&quot;,&quot;vid&quot;:212948720},{&quot;value&quot;:&quot;帕思美尔&quot;,&quot;vid&quot;:261190814},{&quot;value&quot;:&quot;11street&quot;,&quot;vid&quot;:111460774},{&quot;value&quot;:&quot;GOEFIR歌菲尔&quot;,&quot;vid&quot;:135247373},{&quot;value&quot;:&quot;欣缘木子&quot;,&quot;vid&quot;:135869876},{&quot;value&quot;:&quot;艾琳沃&quot;,&quot;vid&quot;:212498729},{&quot;value&quot;:&quot;R.SUMA素玛&quot;,&quot;vid&quot;:212056933},{&quot;value&quot;:&quot;LP DaieR&quot;,&quot;vid&quot;:136514488},{&quot;value&quot;:&quot;韩红纺&quot;,&quot;vid&quot;:142275610},{&quot;value&quot;:&quot;莎米姿&quot;,&quot;vid&quot;:103507780},{&quot;value&quot;:&quot;其他&quot;,&quot;vid&quot;:20213}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:2176,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;品牌&quot;,&quot;order&quot;:7,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:100019076,&quot;fieldType&quot;:&quot;string&quot;,&quot;inputType&quot;:0,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;面料成分&quot;,&quot;order&quot;:9,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;修身型&quot;,&quot;vid&quot;:3267162},{&quot;value&quot;:&quot;直筒型&quot;,&quot;vid&quot;:4049881},{&quot;value&quot;:&quot;宽松型&quot;,&quot;vid&quot;:4042331}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:42842855,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;版型&quot;,&quot;order&quot;:12,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;超短款(衣长&le;40cm)&quot;,&quot;vid&quot;:325014493},{&quot;value&quot;:&quot;短款(40cm＜衣长&le;50cm)&quot;,&quot;vid&quot;:203150795},{&quot;value&quot;:&quot;普通款(50cm＜衣长&le;65cm)&quot;,&quot;vid&quot;:150649458},{&quot;value&quot;:&quot;中长款(65cm＜衣长&le;80cm)&quot;,&quot;vid&quot;:94995275},{&quot;value&quot;:&quot;长款(80cm＜衣长&le;100cm)&quot;,&quot;vid&quot;:176532203},{&quot;value&quot;:&quot;加长款(100cm＜衣长)&quot;,&quot;vid&quot;:325016437}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:31610,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;衣长&quot;,&quot;order&quot;:13,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;圆领&quot;,&quot;vid&quot;:29447},{&quot;value&quot;:&quot;V字领&quot;,&quot;vid&quot;:20529247},{&quot;value&quot;:&quot;立领&quot;,&quot;vid&quot;:29541},{&quot;value&quot;:&quot;高领&quot;,&quot;vid&quot;:29546},{&quot;value&quot;:&quot;一字领&quot;,&quot;vid&quot;:29917},{&quot;value&quot;:&quot;方领&quot;,&quot;vid&quot;:29538},{&quot;value&quot;:&quot;堆堆领&quot;,&quot;vid&quot;:7486925},{&quot;value&quot;:&quot;海军领&quot;,&quot;vid&quot;:57658638},{&quot;value&quot;:&quot;翻领/POLO领&quot;,&quot;vid&quot;:145646104},{&quot;value&quot;:&quot;斜领&quot;,&quot;vid&quot;:29482962},{&quot;value&quot;:&quot;半开领&quot;,&quot;vid&quot;:30066992},{&quot;value&quot;:&quot;娃娃领&quot;,&quot;vid&quot;:27316112},{&quot;value&quot;:&quot;围巾领&quot;,&quot;vid&quot;:28867202},{&quot;value&quot;:&quot;半高领&quot;,&quot;vid&quot;:29075742},{&quot;value&quot;:&quot;西装领&quot;,&quot;vid&quot;:3267189},{&quot;value&quot;:&quot;荷叶领&quot;,&quot;vid&quot;:9977673},{&quot;value&quot;:&quot;双层领&quot;,&quot;vid&quot;:3267194},{&quot;value&quot;:&quot;连帽/帽领&quot;,&quot;vid&quot;:148605857},{&quot;value&quot;:&quot;其他&quot;,&quot;vid&quot;:20213}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:20602,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;领型&quot;,&quot;order&quot;:14,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;常规袖&quot;,&quot;vid&quot;:27924515},{&quot;value&quot;:&quot;灯笼袖&quot;,&quot;vid&quot;:7216758},{&quot;value&quot;:&quot;泡泡袖&quot;,&quot;vid&quot;:5618747},{&quot;value&quot;:&quot;公主袖&quot;,&quot;vid&quot;:11245515},{&quot;value&quot;:&quot;荷叶袖&quot;,&quot;vid&quot;:27414678},{&quot;value&quot;:&quot;花瓣袖&quot;,&quot;vid&quot;:42625521},{&quot;value&quot;:&quot;飞飞袖&quot;,&quot;vid&quot;:95316670},{&quot;value&quot;:&quot;堆堆袖&quot;,&quot;vid&quot;:145654279},{&quot;value&quot;:&quot;插肩袖&quot;,&quot;vid&quot;:27414630},{&quot;value&quot;:&quot;牛角袖&quot;,&quot;vid&quot;:33331631},{&quot;value&quot;:&quot;衬衫袖&quot;,&quot;vid&quot;:27414723},{&quot;value&quot;:&quot;喇叭袖&quot;,&quot;vid&quot;:19306903},{&quot;value&quot;:&quot;蝙蝠袖&quot;,&quot;vid&quot;:7576170},{&quot;value&quot;:&quot;包袖&quot;,&quot;vid&quot;:27414703},{&quot;value&quot;:&quot;其他&quot;,&quot;vid&quot;:20213}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:2917380,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;袖型&quot;,&quot;order&quot;:15,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;印花&quot;,&quot;vid&quot;:129555},{&quot;value&quot;:&quot;碎花&quot;,&quot;vid&quot;:107622},{&quot;value&quot;:&quot;格纹&quot;,&quot;vid&quot;:3226330},{&quot;value&quot;:&quot;条纹&quot;,&quot;vid&quot;:29452},{&quot;value&quot;:&quot;几何&quot;,&quot;vid&quot;:4034189},{&quot;value&quot;:&quot;纯色&quot;,&quot;vid&quot;:29454},{&quot;value&quot;:&quot;动物&quot;,&quot;vid&quot;:596},{&quot;value&quot;:&quot;豹纹&quot;,&quot;vid&quot;:3255041},{&quot;value&quot;:&quot;斑马纹&quot;,&quot;vid&quot;:3666157},{&quot;value&quot;:&quot;头像&quot;,&quot;vid&quot;:40785},{&quot;value&quot;:&quot;卡通&quot;,&quot;vid&quot;:31755},{&quot;value&quot;:&quot;字母&quot;,&quot;vid&quot;:45576},{&quot;value&quot;:&quot;花朵&quot;,&quot;vid&quot;:99819},{&quot;value&quot;:&quot;手绘&quot;,&quot;vid&quot;:29455},{&quot;value&quot;:&quot;蝴蝶结&quot;,&quot;vid&quot;:115772},{&quot;value&quot;:&quot;骷髅头&quot;,&quot;vid&quot;:3346764},{&quot;value&quot;:&quot;笑脸&quot;,&quot;vid&quot;:119898},{&quot;value&quot;:&quot;波点&quot;,&quot;vid&quot;:3503346},{&quot;value&quot;:&quot;其他&quot;,&quot;vid&quot;:20213}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:2900,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;图案&quot;,&quot;order&quot;:17,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;蝴蝶结&quot;,&quot;vid&quot;:115772},{&quot;value&quot;:&quot;荷叶边&quot;,&quot;vid&quot;:130316},{&quot;value&quot;:&quot;荧光色&quot;,&quot;vid&quot;:14462393},{&quot;value&quot;:&quot;撞色&quot;,&quot;vid&quot;:130568},{&quot;value&quot;:&quot;植绒&quot;,&quot;vid&quot;:3267928},{&quot;value&quot;:&quot;流苏&quot;,&quot;vid&quot;:115777},{&quot;value&quot;:&quot;破洞&quot;,&quot;vid&quot;:3267932},{&quot;value&quot;:&quot;镂空&quot;,&quot;vid&quot;:115771},{&quot;value&quot;:&quot;勾花镂空&quot;,&quot;vid&quot;:148585986},{&quot;value&quot;:&quot;褶皱&quot;,&quot;vid&quot;:112602},{&quot;value&quot;:&quot;抽褶&quot;,&quot;vid&quot;:41118856},{&quot;value&quot;:&quot;肩章&quot;,&quot;vid&quot;:130138},{&quot;value&quot;:&quot;亮丝&quot;,&quot;vid&quot;:7573005},{&quot;value&quot;:&quot;镶钻&quot;,&quot;vid&quot;:3332415},{&quot;value&quot;:&quot;钉珠&quot;,&quot;vid&quot;:29958},{&quot;value&quot;:&quot;贴布&quot;,&quot;vid&quot;:130845},{&quot;value&quot;:&quot;纱网&quot;,&quot;vid&quot;:26325697},{&quot;value&quot;:&quot;蕾丝&quot;,&quot;vid&quot;:28386},{&quot;value&quot;:&quot;露背&quot;,&quot;vid&quot;:7600710},{&quot;value&quot;:&quot;透视&quot;,&quot;vid&quot;:4257441},{&quot;value&quot;:&quot;铆钉&quot;,&quot;vid&quot;:115776},{&quot;value&quot;:&quot;链条&quot;,&quot;vid&quot;:4015931},{&quot;value&quot;:&quot;拉链&quot;,&quot;vid&quot;:115481},{&quot;value&quot;:&quot;木耳&quot;,&quot;vid&quot;:42536},{&quot;value&quot;:&quot;口袋&quot;,&quot;vid&quot;:3243112},{&quot;value&quot;:&quot;系带/腰带&quot;,&quot;vid&quot;:148585987},{&quot;value&quot;:&quot;绑带&quot;,&quot;vid&quot;:3705386},{&quot;value&quot;:&quot;背带&quot;,&quot;vid&quot;:100343},{&quot;value&quot;:&quot;螺纹&quot;,&quot;vid&quot;:8611558},{&quot;value&quot;:&quot;亮片&quot;,&quot;vid&quot;:29959},{&quot;value&quot;:&quot;纽扣&quot;,&quot;vid&quot;:3693451},{&quot;value&quot;:&quot;燕尾&quot;,&quot;vid&quot;:6061030},{&quot;value&quot;:&quot;扎花&quot;,&quot;vid&quot;:17665110},{&quot;value&quot;:&quot;不对称&quot;,&quot;vid&quot;:7642045},{&quot;value&quot;:&quot;波浪&quot;,&quot;vid&quot;:3424792},{&quot;value&quot;:&quot;扎染&quot;,&quot;vid&quot;:5145675},{&quot;value&quot;:&quot;印花/印染&quot;,&quot;vid&quot;:148618719},{&quot;value&quot;:&quot;立体装饰&quot;,&quot;vid&quot;:32971735},{&quot;value&quot;:&quot;3D/立体图案&quot;,&quot;vid&quot;:148618369},{&quot;value&quot;:&quot;拼贴/拼接&quot;,&quot;vid&quot;:148617201},{&quot;value&quot;:&quot;刺绣/绣花&quot;,&quot;vid&quot;:58828099},{&quot;value&quot;:&quot;做旧&quot;,&quot;vid&quot;:112597},{&quot;value&quot;:&quot;高温定型&quot;,&quot;vid&quot;:71254299},{&quot;value&quot;:&quot;油漆喷溅&quot;,&quot;vid&quot;:141823124},{&quot;value&quot;:&quot;手工磨破&quot;,&quot;vid&quot;:148585979},{&quot;value&quot;:&quot;乱针修补&quot;,&quot;vid&quot;:148585996},{&quot;value&quot;:&quot;锈斑处理&quot;,&quot;vid&quot;:148585997},{&quot;value&quot;:&quot;树脂固色&quot;,&quot;vid&quot;:148585998},{&quot;value&quot;:&quot;酵磨漂&quot;,&quot;vid&quot;:148585983},{&quot;value&quot;:&quot;高锰酸洗&quot;,&quot;vid&quot;:148585985},{&quot;value&quot;:&quot;其他&quot;,&quot;vid&quot;:20213}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:18560353,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:2,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;流行元素/工艺&quot;,&quot;order&quot;:18,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;},{&quot;attrType&quot;:0,&quot;childrenFids&quot;:[],&quot;featureIdValues&quot;:[{&quot;value&quot;:&quot;2012春季&quot;,&quot;vid&quot;:135673293},{&quot;value&quot;:&quot;2012夏季&quot;,&quot;vid&quot;:137020832},{&quot;value&quot;:&quot;2012秋季&quot;,&quot;vid&quot;:148625542},{&quot;value&quot;:&quot;2012冬季&quot;,&quot;vid&quot;:146108112},{&quot;value&quot;:&quot;2013春季&quot;,&quot;vid&quot;:205104233},{&quot;value&quot;:&quot;2013夏季&quot;,&quot;vid&quot;:212141000},{&quot;value&quot;:&quot;2013秋季&quot;,&quot;vid&quot;:212168001},{&quot;value&quot;:&quot;2013冬季&quot;,&quot;vid&quot;:210104115},{&quot;value&quot;:&quot;其他&quot;,&quot;vid&quot;:20213}],&quot;featureType&quot;:&quot;0;&quot;,&quot;fid&quot;:20666,&quot;fieldType&quot;:&quot;enum&quot;,&quot;inputType&quot;:1,&quot;isKeyAttr&quot;:false,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isSpecAttr&quot;:false,&quot;isSpecExtendedAttr&quot;:false,&quot;isSpecPicAttr&quot;:false,&quot;isSuggestion&quot;:false,&quot;isSupportDefinedValues&quot;:false,&quot;name&quot;:&quot;上市年份/季节&quot;,&quot;order&quot;:20,&quot;precomment&quot;:&quot;&quot;,&quot;standardType&quot;:&quot;&quot;,&quot;standardUnit&quot;:&quot;&quot;}], "productFeatureValues":{&quot;Filter&quot;:&quot;false&quot;}, "diyFeature":[]}'>
+                            <div class="form-line fd-clr">
+                                <div class="form-title">
+                                    <span>产品属性：</span>
+                                </div>
+                                <div class="form-context">
+                                    <div class="product-props">
+                                        <div class="loading-box">正在加载属性信息，请稍候..</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="speca-props"
+                                class="form-line fd-clr submod-product-speca-props">
+                                <div class="form-title">
+                                    <span>产品规格：</span>
+                                </div>
+                                <div class="form-context">
+                                    <div class="product-speca-props"></div>
+                                </div>
+                            </div>
+                            <!--div id="custom-props"
+                                class="form-line fd-clr submod-product-speca-props">
+                                <div class="form-title">
+                                    <span>可定制属性：</span><span
+                                        class="note">请填写可生产的全部内容，方便买家浏览和选择</span>
+                                </div>
+                                <div class="form-context">
+                                    <div class="product-custom-props"></div>
+                                </div>
+                            </div-->
+                            <input type="hidden" id="isApplySpu"
+                                name="isApplySpu" value="false" /> <input
+                                type="hidden" id="hasUseSpu"
+                                name="hasUseSpu" value="false" /> <input
+                                type="hidden" id="isStandardSpu"
+                                name="isStandardSpu" value="false" /> <input
+                                type="hidden" id="spuId" name="spuId"
+                                value="0" />
+                            <!--
+    产品库二期加入，标识用户产品库中待发布状态的spu,oldSpuId保存从产品库跳转过来的原始spuId，
+    而spuId为最终提交发布时的spuId（如果匹配SPU的话）,mySpuPkId为用户待发布产品库中的主键
+    -->
+                            <input type="hidden" id="oldSpuId"
+                                name="oldSpuId" value="0" /> <input
+                                type="hidden" id="mySpuPkId"
+                                name="mySpuPkId" value="0" />
+                            <!-- end -->
+                            <input type="hidden" name="categoryId"
+                                value="{$categoryId}" /> <input type="hidden"
+                                name="product_feature_widget"
+                                value="true" />
+                        </div>
+                        <!--匹配图片-->
+                        <div
+                            class="mod mod-offer-post-picture-matching fd-clr fd-hide"
+                            data-mod-config='{"formGroup":"pictureMatching","true":false,"_csrf_token":"3a1203d336ab038359e9f952a3a038b0","uploadUrl":"http://picman.1688.com/","imageUrl":"http://img.china.alibaba.com/","hasWinport":true,"matchingPicInfo": {}}'>
+                            <div class="form-line fd-clr">
+                                <div class="form-title">
+                                    <span>匹配图片：</span>
+                                </div>
+                                <div class="form-context">
+                                    <div class="unit-pic-preview-box">
+                                        <span class="preview-icon">预览</span>
+                                        <div class="preview-pic">
+                                            <img src="" />
+                                        </div>
+                                        <div class="preview-suggestion"></div>
+                                    </div>
+                                    <div class="matching-pic-table"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--匹配图片end-->
+                    </div>
+                    <div class="layout">
+                        <div class="tit">
+                            <div class="fd-left">
+                                <h3 class="icon-title icon-trade">产品销售信息</h3>
+                            </div>
+                        </div>
+                        <div id="trade-info"
+                            class="mod mod-offer-post-trade-info"
+                            data-mod-config='{"formGroup":"tradeInfo","money":"元","standardUnit":""}'>
+                            <div
+                                class="submod support-online-trade fd-clr "
+                                data-mod-config='{"submod":"supportAlipay","vAccountId":"b2b-1623492085","getCreditProfileUrl":"http://levit.1688.com/profile/credit_profile.json","isBindAlipay":"true","isRelate":"true","id":"support-online","fieldType":"boolean","isNeeded":"Y","name":"是否支持网上订购","value":""}'>
+                                <div class="form-line">
+                                    <div class="form-title">
+                                        <span class="icon-must">是否支持网上订购：</span>
+                                    </div>
+                                    <div class="form-context fd-clr">
+                                        <ul class="support-trade fd-clr">
+                                            <li><input
+                                                class="ipt online-y"
+                                                type="radio"
+                                                name="support-online"
+                                                id="online-y" value="Y" />
+                                                <label for="online-y">支持网上订购</label>
+                                                <span
+                                                class="tips-realname fd-hide">（请先<a
+                                                    href="#"
+                                                    title="满足发布条件">满足发布条件</a>）
+                                            </span></li>
+                                            <li><input
+                                                class="ipt online-n"
+                                                type="radio"
+                                                name="support-online"
+                                                id="online-n" value="N" />
+                                                <label for="online-n">不支持网上订购</label>
+                                            </li>
+                                        </ul>
+                                        <div
+                                            class="no-support-trade fd-hide">
+                                            当前类目暂不支持网上订购</div>
+                                        <div
+                                            class="support-type fd-hide icon-info">
+                                            <dl class="fd-clr">
+                                                <dt>您支持的收款方式有：</dt>
+                                                <dd
+                                                    class="support-alipay-guarantee">
+                                                    <span class="">支付宝担保交易收款</span>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div
+                                            class="support-online-not fd-hide icon-info">买家更信任支持网上订购的卖家，建议根据产品实际情况，选择支持在线订购！</div>
+                                    </div>
+                                </div>
+                                <div class="form-line fd-hide">
+                                    <div class="err">请选择是否支持网上订购</div>
+                                </div>
+                            </div>
+                            <div class="trade-box">
+
+                                <div class="submod trade-unit fd-clr"
+                                    data-mod-config='{"submod":"unit","id":"trade-unit","fieldType":"enum","isNeeded":"N","name":"计量单位","value":""}'>
+                                    <div class="form-line">
+                                        <div class="form-title">
+                                            <span>计量单位：</span>
+                                        </div>
+                                        <div class="form-context">
+                                            <select name="feature1459"
+                                                data-field-name="trade-unit"
+                                                class="sel sel-unit">
+                                                <option value="件"
+                                                    data-standard-unit="0.0">件</option>
+                                            </select>
+                                            <p
+                                                class="standard-set fd-hide">
+                                                <span class="txt-num">1</span>
+                                                <span class="unit"></span>
+                                                <span class="equal">=</span>
+                                                <input
+                                                    data-field-name="standard-unit-quotiety"
+                                                    name="standardUnitQuotiety"
+                                                    class="txt txt-standard-unit-quotiety"
+                                                    data-custom-unit=""
+                                                    data-custom-quotiety=""
+                                                    type="text"
+                                                    maxlength="10" /> <span
+                                                    class="standard-unit"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-line fd-hide">
+                                        <div class="err"></div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="submod quotation fd-hide fd-clr"
+                                    data-mod-config='{"submod":"quotation","id":"quotation","fieldType":"boolean","isNeeded":"N","name":"报价方式","value":true}'>
+                                    <div class="form-line">
+                                        <div class="form-title">
+                                            <span>报价方式：</span>
+                                        </div>
+                                        <div class="form-context">
+                                            <ul class="support-trade">
+                                                <li><input
+                                                    class="ipt"
+                                                    id="quotation-num"
+                                                    name="isSkuTradeSupported"
+                                                    type="radio"
+                                                    value="false"
+                                                    data-field-name="quotation" />
+
+                                                    <label
+                                                    for="quotation-num">
+                                                        按产品数量报价 </label> <span
+                                                    class="icon-help quotation-num"></span>
+
+                                                </li>
+                                                <li><input
+                                                    class="ipt"
+                                                    id="quotation-sku"
+                                                    name="isSkuTradeSupported"
+                                                    type="radio"
+                                                    value="true"
+                                                    data-field-name="quotation" /><label
+                                                    for="quotation-sku">按产品规格报价</label>
+                                                    <span
+                                                    class="icon-help quotation-sku"></span>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-line fd-hide">
+                                        <div class="err"></div>
+                                    </div>
+                                    <input type="hidden"
+                                        name="quoBeforeChange"
+                                        value="true" />
+                                </div>
+
+                                <div
+                                    class="submod price-interval fd-hide fd-clr"
+                                    data-mod-config='{"submod":"priceInterval","isWholeSalePop":true,"beginAmountValue":1,"id":"feature4341","fieldType":"string","isNeeded":"N","name":"价格区间","value":[]}'>
+                                    <div class="form-line">
+                                        <div class="form-title">
+                                            <span>价格区间：</span>
+                                        </div>
+                                        <div class="form-context">
+                                            <div
+                                                class="price-interval-box">
+                                                <div
+                                                    class="price-interval-form">
+                                                    <input
+                                                        name="feature4341"
+                                                        type="hidden"
+                                                        value="" />
+                                                    <table
+                                                        class="tb-price-interval">
+                                                        <thead>
+                                                            <tr>
+                                                                <th
+                                                                    class="t-1">购买数量</th>
+                                                                <th
+                                                                    class="t-2">产品单价</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr
+                                                                class="price-interval-line">
+                                                                <td>购买<input
+                                                                    type="text"
+                                                                    class="txt"
+                                                                    data-field-name="price-interval-num-0"
+                                                                    name="wb"
+                                                                    maxlength="10" /><span
+                                                                    class="unit"></span>及以上：
+                                                                </td>
+                                                                <td>
+                                                                    <input
+                                                                    type="text"
+                                                                    class="txt"
+                                                                    data-field-name="price-interval-price-0"
+                                                                    name="wprice"
+                                                                    maxlength="10" /><span
+                                                                    class="price-unit"></span><span
+                                                                    class="per">/</span><span
+                                                                    class="unit"></span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr
+                                                                class="error-box fd-hide">
+                                                                <td
+                                                                    colspan="2">
+                                                                    <div
+                                                                        class="error"></div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr
+                                                                class="info-box fd-hide">
+                                                                <td
+                                                                    colspan="2">
+                                                                    <div
+                                                                        class="info"></div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr
+                                                                class="price-interval-line fd-hide">
+                                                                <td>购买<input
+                                                                    type="text"
+                                                                    class="txt"
+                                                                    data-field-name="price-interval-num-1"
+                                                                    name="wb"
+                                                                    maxlength="10" /><span
+                                                                    class="unit"></span>及以上：
+                                                                </td>
+                                                                <td><input
+                                                                    type="text"
+                                                                    class="txt"
+                                                                    data-field-name="price-interval-price-1"
+                                                                    name="wprice"
+                                                                    maxlength="10" /><span
+                                                                    class="price-unit"></span><span
+                                                                    class="per">/</span><span
+                                                                    class="unit"></span>
+                                                                    <a
+                                                                    href="#"
+                                                                    class="del"
+                                                                    title="删除">删除</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr
+                                                                class="error-box fd-hide">
+                                                                <td
+                                                                    colspan="2"><div
+                                                                        class="error"></div></td>
+                                                            </tr>
+                                                            <tr
+                                                                class="price-interval-line fd-hide">
+                                                                <td>购买<input
+                                                                    type="text"
+                                                                    class="txt"
+                                                                    data-field-name="price-interval-num-2"
+                                                                    name="wb"
+                                                                    maxlength="10" /><span
+                                                                    class="unit"></span>及以上：
+                                                                </td>
+                                                                <td><input
+                                                                    type="text"
+                                                                    class="txt"
+                                                                    data-field-name="price-interval-price-2"
+                                                                    name="wprice"
+                                                                    maxlength="10" /><span
+                                                                    class="price-unit"></span><span
+                                                                    class="per">/</span><span
+                                                                    class="unit"></span>
+                                                                    <a
+                                                                    href="#"
+                                                                    class="del"
+                                                                    title="删除">删除</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr
+                                                                class="error-box fd-hide">
+                                                                <td
+                                                                    colspan="2"><div
+                                                                        class="error"></div></td>
+                                                            </tr>
+                                                            <tr
+                                                                class="add-box">
+                                                                <td
+                                                                    colspan="2"
+                                                                    class="last"><a
+                                                                    href="#"
+                                                                    class="btn-add icon-add"
+                                                                    title="增加价格区间"
+                                                                    target="_self">增加价格区间</a></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div
+                                                    class="unit-trade-preview preview-box">
+                                                    <div
+                                                        class="trade-preview-tit">预览</div>
+                                                    <div
+                                                        class="trade-preview-con noprice note">可根据买家采购的不同数量设置不同价格</div>
+                                                    <div
+                                                        class="trade-preview-con pricescan fd-hide">
+                                                        <table
+                                                            class="tb-pricescan">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td
+                                                                        class="td-scan"></td>
+                                                                    <td
+                                                                        class="td-price"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td
+                                                                        class="td-scan"></td>
+                                                                    <td
+                                                                        class="td-price"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td
+                                                                        class="td-scan"></td>
+                                                                    <td
+                                                                        class="td-price"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="submod speca-quotation fd-clr"
+                                    data-mod-config='{"submod":"specaQuotation","id":"speca-quotation","isEdit":false,"fieldType":"boolean","isNeeded":"N","name":"规格报价","skuInfo":[],"specExtAttributes":{&quot;amount&quot;:{&quot;aspect&quot;:&quot;3;&quot;,&quot;attrType&quot;:0,&quot;categoryId&quot;:1031919,&quot;defaultValueId&quot;:0,&quot;feature&quot;:&quot;供货总量&quot;,&quot;featureOrder&quot;:25,&quot;featureType&quot;:&quot;3;&quot;,&quot;fid&quot;:1150,&quot;fidLong&quot;:1150,&quot;fieldFlag&quot;:&quot;amount&quot;,&quot;fieldType&quot;:&quot;int&quot;,&quot;id&quot;:1150,&quot;inputType&quot;:0,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isNote&quot;:&quot;N&quot;,&quot;isSelected&quot;:&quot;N&quot;,&quot;name&quot;:&quot;供货总量&quot;,&quot;offerType&quot;:2,&quot;order&quot;:25,&quot;required&quot;:false,&quot;showType&quot;:-1,&quot;sign&quot;:32},&quot;cargonumber&quot;:{&quot;aspect&quot;:&quot;3;&quot;,&quot;attrType&quot;:0,&quot;categoryId&quot;:1031919,&quot;defaultValueId&quot;:0,&quot;feature&quot;:&quot;单品货号&quot;,&quot;featureOrder&quot;:28,&quot;featureType&quot;:&quot;3;&quot;,&quot;fid&quot;:101428437,&quot;fidLong&quot;:101428437,&quot;fieldFlag&quot;:&quot;cargonumber&quot;,&quot;fieldType&quot;:&quot;string&quot;,&quot;id&quot;:101428437,&quot;inputType&quot;:0,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isNote&quot;:&quot;N&quot;,&quot;isSelected&quot;:&quot;N&quot;,&quot;name&quot;:&quot;单品货号&quot;,&quot;offerType&quot;:2,&quot;order&quot;:28,&quot;required&quot;:false,&quot;showType&quot;:0,&quot;sign&quot;:32},&quot;pricerange&quot;:{&quot;aspect&quot;:&quot;3;&quot;,&quot;attrType&quot;:0,&quot;categoryId&quot;:1031919,&quot;defaultValueId&quot;:0,&quot;feature&quot;:&quot;价格区间&quot;,&quot;featureOrder&quot;:24,&quot;featureType&quot;:&quot;3;&quot;,&quot;fid&quot;:4341,&quot;fidLong&quot;:4341,&quot;fieldFlag&quot;:&quot;pricerange&quot;,&quot;fieldType&quot;:&quot;string&quot;,&quot;id&quot;:4341,&quot;inputType&quot;:0,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isNote&quot;:&quot;N&quot;,&quot;isSelected&quot;:&quot;N&quot;,&quot;name&quot;:&quot;价格区间&quot;,&quot;offerType&quot;:2,&quot;order&quot;:24,&quot;required&quot;:false,&quot;showType&quot;:0,&quot;sign&quot;:32,&quot;unit&quot;:&quot;元&quot;},&quot;retailprice&quot;:{&quot;aspect&quot;:&quot;3;&quot;,&quot;attrType&quot;:0,&quot;categoryId&quot;:1031919,&quot;defaultValueId&quot;:0,&quot;feature&quot;:&quot;建议零售价&quot;,&quot;featureOrder&quot;:26,&quot;featureType&quot;:&quot;3;&quot;,&quot;fid&quot;:8021,&quot;fidLong&quot;:8021,&quot;fieldFlag&quot;:&quot;retailprice&quot;,&quot;fieldType&quot;:&quot;string&quot;,&quot;id&quot;:8021,&quot;inputType&quot;:0,&quot;isNeeded&quot;:&quot;N&quot;,&quot;isNote&quot;:&quot;N&quot;,&quot;isSelected&quot;:&quot;N&quot;,&quot;name&quot;:&quot;建议零售价&quot;,&quot;offerType&quot;:2,&quot;order&quot;:26,&quot;required&quot;:false,&quot;showType&quot;:0,&quot;sign&quot;:32,&quot;unit&quot;:&quot;元&quot;}}}'>
+                                    <div class="form-line">
+                                        <div class="form-title">
+                                            <span>规格报价：</span>
+                                        </div>
+                                        <div
+                                            class="form-context dpl-tip-block">
+                                            <input
+                                                name="speca-quotation"
+                                                type="hidden" value="" />
+                                            <div class="warn">
+                                                <span
+                                                    class="dpl-ico-serious"></span>
+                                                <div class="warn-txt">
+                                                    <h4>无法使用该功能</h4>
+                                                    <p>
+                                                        请完成<a
+                                                            target="_self"
+                                                            href="#speca-props"
+                                                            title="产品规格">产品规格</a>的选择,方可使用该功能。
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="sku-box"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="submod standard-unit-price fd-hide fd-clr"
+                                    data-mod-config='{"submod":"standardUnitPrice"}'>
+                                    <div class="form-line">
+                                        <div class="form-title">
+                                            <span>价格：</span>
+                                        </div>
+                                        <div class="form-context">
+                                            <span class="standard-area">
+                                                <span
+                                                class="standard-price">0.00</span>
+                                                <span class="price-unit"></span>
+                                                <span class="per">/</span>
+                                                <span
+                                                class="standard-unit"></span>
+                                            </span> <span class="standard-text">(统一单位)</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-line fd-hide">
+                                        <div class="err"></div>
+                                    </div>
+                                </div>
+                                <div class="submod selling fd-clr"
+                                    data-mod-config='{"submod":"selling","isEdit":false,"bookedAmount":"0","id":"total-num","fieldType":"int","isNeeded":"N","name":"可售数量","value":""}'>
+                                    <div class="form-line">
+                                        <div class="form-title">
+                                            <span>可售数量：</span>
+                                        </div>
+                                        <div class="form-context">
+                                            <div class="default-selling">
+                                                <input
+                                                    data-field-name="total-num"
+                                                    name="onSaleAmount"
+                                                    class="txt txt-selling"
+                                                    type="text"
+                                                    maxlength="80" /><span
+                                                    class="unit"></span>
+                                                <span
+                                                    class="booked-amount">
+                                                    <span
+                                                    class="all-sold"><span>累计订购数量：</span><em></em><span
+                                                        class="unit"></span></span><span
+                                                    class="help-icon all-sold-tip"></span>
+                                                    <span class="amount"><span>供货总量：</span><em></em><span
+                                                        class="unit"></span></span><span
+                                                    class="help-icon selling-tip"></span>
+                                                </span> <span class="note"></span>
+                                            </div>
+                                            <div
+                                                class="sku-selling fd-hide">
+                                                <span
+                                                    class="selling-num"><em>0</em><span
+                                                    class="unit"></span></span>
+                                                <span
+                                                    class="booked-amount">
+                                                    <span
+                                                    class="all-sold"><span>累计订购数量：</span><em>0</em><span
+                                                        class="unit"></span></span>
+                                                    <span class="amount"><span>供货总量：</span><em>0</em><span
+                                                        class="unit"></span></span>
+                                                </span> <span
+                                                    class="amount-note">可售总量是各规格可售数量的总和</span>
+                                            </div>
+                                            <input class="total"
+                                                type="hidden" value=""
+                                                name="totalAmount" />
+                                        </div>
+                                    </div>
+                                    <div class="form-line fd-hide">
+                                        <div class="err"></div>
+                                    </div>
+                                </div>
+                                <div class="submod sales-type fd-clr"
+                                    data-mod-config='{"submod":"salesType","beginAmount":"","id":"sellunit","fieldType":"string","isNeeded":"N","name":"销售方式","value":"","salesUnit":"","batchNum":""}'>
+                                    <div class="form-line">
+                                        <div class="form-title">
+                                            <span>销售方式：</span>
+                                        </div>
+                                        <div class="form-context">
+                                            <ul>
+                                                <li class="fd-clr">
+                                                    <input class="ipt"
+                                                    type="radio"
+                                                    value="false"
+                                                    name="sales-type"
+                                                    id="sales-type-default" /><label
+                                                    for="sales-type-default">普通售卖</label>
+                                                    <input class="ipt"
+                                                    type="radio"
+                                                    value="true"
+                                                    checked="checked"
+                                                    name="sales-type"
+                                                    id="sales-type-batch" /><label
+                                                    for="sales-type-batch">批量售卖</label>
+                                                </li>
+                                                <li id="sales-batch-box"
+                                                    class="sales-batch-box fd-hide">
+                                                    <div
+                                                        class="sales-batch-form">
+                                                        <dl>
+                                                            <dt>买家只能按销售单位的倍数购买</dt>
+                                                            <dd>
+                                                                <span
+                                                                    class="form-tit"><span
+                                                                    class="icon-must">销售单位：</span></span><select
+                                                                    id="sales-unit"
+                                                                    data-proname="销售单位"
+                                                                    class="sel"
+                                                                    name="sellunit">
+                                                                    <option
+                                                                        value="手">手</option>
+                                                                    <option
+                                                                        value="打">打</option>
+                                                                    <option
+                                                                        value="箱">箱</option>
+                                                                </select>
+                                                            </dd>
+                                                            <dd
+                                                                class="fd-clr">
+                                                                <span
+                                                                    class="form-tit"><span
+                                                                    class="icon-must">1<span
+                                                                        class="sales-unit">手</span>等于：
+                                                                </span></span><input
+                                                                    id="batch-num"
+                                                                    data-proname="换算关系"
+                                                                    class="txt txt-batch-num"
+                                                                    name="scale"
+                                                                    value="" /><span
+                                                                    class="unit"></span>
+                                                            </dd>
+                                                            <dd
+                                                                class="fd-clr">
+                                                                <span
+                                                                    class="err"></span>
+                                                            </dd>
+                                                        </dl>
+                                                        <div
+                                                            class="unit-trade-preview show-exp">
+                                                            <div
+                                                                class="trade-preview-tit">示例说明</div>
+                                                            <div
+                                                                class="trade-preview-con">
+                                                                <div
+                                                                    class="exp-info">请在“产品规格”处正确填写规格属性</div>
+                                                                <div
+                                                                    class="exp-img">
+                                                                    <img
+                                                                        src="http://i04.c.aliimg.com/cms/upload/offer/postoffer/exmp.png" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="submod retailprice fd-clr"
+                                    data-mod-config='{"submod":"retailprice","id":"retailprice","fieldType":"string","isNeeded":"N","name":"建议零售价","value":""}'>
+                                    <div class="form-line">
+                                        <div class="form-title">
+                                            <span>建议零售价：</span>
+                                        </div>
+                                        <div class="form-context">
+                                            <input
+                                                class="txt txt-retailprice"
+                                                type="text"
+                                                data-field-name="retailprice"
+                                                name="feature8021"
+                                                maxlength="10" /><span
+                                                class="price-unit"></span>
+                                            <span class="note">让您的买家了解货品的市场行情</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-line fd-hide">
+                                        <div class="err">请填写 建议零售价</div>
+                                    </div>
+                                </div>
+                                <div class="submod beginamount fd-clr"
+                                    data-mod-config='{"submod":"beginamount","id":"begin-amount","fieldType":"string","isNeeded":"N","name":"最小起订量","value":""}'>
+                                    <div class="form-line">
+                                        <div class="form-title">
+                                            <span>最小起订量：</span>
+                                        </div>
+                                        <div class="form-context">
+                                            <input
+                                                data-field-name="begin-amount"
+                                                name="feature3939"
+                                                class="txt txt-beginamount"
+                                                type="text"
+                                                maxlength="80" /><span
+                                                class="unit"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-line fd-hide">
+                                        <div class="err"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <input id="bd_form_priceunit"
+                                name="featurePriceUnit" type="hidden"
+                                value="元" /> <input type="hidden"
+                                name="trade_feature_widget" value="true" />
+                        </div>
+                    </div>
+                    <div class="layout">
+                        <div class="tit">
+                            <div class="fd-left">
+                                <h3 class="icon-title icon-pic">请给您的产品添加生动的图片和详细的说明</h3>
+                            </div>
+                        </div>
+                        <div id="uppic"
+                            class="product-pics fd-clr mod mod-offer-post-uppic"
+                            data-mod-config='{"formGroup":"uppic","hasWatermark":true,"isCheckImg":true,"isPictureRequired":false,"isTP":true,"_csrf_token":"3a1203d336ab038359e9f952a3a038b0","uploadUrl":"http://picman.1688.com/","hasWinport":true}'>
+                            <div class="form-line">
+                                <div class="form-title">
+                                    <span>产品图片：</span>
+                                </div>
+                                <div class="form-context">
+                                    <div class="up-pic-ctrl fd-clr">
+                                        <select id="albumId" name="albumId"></select>
+                                        <!--a href="#"
+                                            class="dpl-btn dpl-btn-s up-btn">上传图片</a>
+                                        <a class="anchor-dec"
+                                            data-dec-type="uppic"
+                                            href="#" target="_self">什么样的图片效果最好？</a-->
+                                    </div>
+                                    <div class="oup-preview"
+                                        id="oup-preview">
+                                        <div class="ttl">
+                                            <h3>上传产品图片</h3>
+
+                                            <label>(上传产品图片有助于买家直观了解您的产品细节)</label>
+                                        </div>
+                                        <ol class="imgs">
+                                            <li class="pic-list full">
+                                                <div class="img-cont">
+                                                    <span></span><img
+                                                        class="cont-img" src="{$picUrl}" style="margin-left: -50px; margin-top:-50px; weight:100px; height:100px;"/>
+                                                </div>
+                                                <div class="ctrl">
+                                                    <a href="#remove"
+                                                        title="删除">删除</a>
+                                                </div>
+                                            </li>
+                                            <!--li class="pic-list">
+                                                <div
+                                                    class="img-cont second">
+                                                    <span></span><img
+                                                        class="cont-img" />
+                                                </div>
+                                                <div class="ctrl">
+                                                    <a href="#remove"
+                                                        title="删除">删除</a>
+                                                </div>
+                                            </li>
+                                            <li class="pic-list">
+                                                <div
+                                                    class="img-cont third">
+                                                    <span></span><img
+                                                        class="cont-img" />
+                                                </div>
+                                                <div class="ctrl">
+                                                    <a href="#remove"
+                                                        title="删除">删除</a>
+                                                </div>
+                                            </li-->
+                                        </ol>
+                                        <div
+                                            class="unit-pic-preview-box">
+                                            <span class="preview-icon">预览</span>
+                                            <div class="preview-pic">
+                                                <img src="">
+                                            </div>
+                                            <div
+                                                class="preview-suggestion"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="picture1"
+                                name="picUrl" value="{$picUrl}" /> <input
+                                type="hidden" id="picture2"
+                                name="pictureUrl" value="" /> <input
+                                type="hidden" id="picture3"
+                                name="pictureUrl" value="" /> <input
+                                type="hidden" name="picture_widget"
+                                value="true" />
+                        </div>
+
+
+                        <div id="detail"
+                            class="detail-info fd-clr mod mod-offer-post-detail"
+                            data-mod-config='{"formGroup":"detail","outLink":false,"editorWidth":"100%","editorHeight":"500","hasFlash":true, "appListUrl":"http://media.1688.com/media/media/list_flash_app.do",  "mediaListUrl":"http://gw.open.1688.com/openapi/jsonp2/1/cn.alibaba.open/media.list/55057","uploadUrl":"http://picman.1688.com/","hasWinport":true,"hasWatermark":true,"_csrf_token":"3a1203d336ab038359e9f952a3a038b0","showTitle":true, "templateUrl":"http://offer.1688.com/offer/asyn/offer_detailTemplate.do","site":"","offerTemplateCatUrl":"http://spu.1688.com/spu/ajax/get_offer_template_cat.htm","offerTemplateByCatIdUrl":"http://spu.1688.com/spu/ajax/get_offer_template_by_cat_id.htm","categoryId":"1031919"}'>
+
+                            <div class="form-line ">
+                                <div class="form-title fd-clr">
+                                    <span>详细说明：</span> <span
+                                        class="note">请从产品性能、用途、包装、售后服务等方面来描述，建议您在详细说明中插入产品细节图<a
+                                        href="#" class="anchor-dec"
+                                        data-dec-type="detail"
+                                        target="_self">怎么填更好？</a></span>
+                                </div>
+                                <div class="form-context ">
+                                    <div class="loading-box">正在加载属性信息，请稍候..</div>
+                                    <div class="form_editor">
+                                        <textarea id="offer-content"
+                                            name="details" value=""
+                                            data-proname="详细说明">{$offerDetail}</textarea>
+                                    </div>
+                                    <div class="detail-err"></div>
+                                    <div class="note">
+                                        <p>
+                                            1、插入图片时请勿盗用他人图片、以免引起纠纷。<a
+                                                href="http://114.1688.com/kf/detail/3222594.html?tracelog=kf_2012_budian_backofferfabu7"
+                                                target="_blank">如何在详细说明中插入图片？</a>
+                                        </p>
+                                        <p>2、您可添加阿里巴巴内部链接（阿里巴巴、淘宝、支付宝、雅虎），
+                                            加入其它网站链接、系统将自动过滤</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="details_widget"
+                                value="true" /> <input type="hidden"
+                                id="isTemplateUsed"
+                                name="isTemplateUsed" value="false" />
+                        </div>
+                        <div class="mod mod-offer-post-video fd-clr"
+                            data-mod-config='{"vasUrl":"http://media.1688.com/"}'>
+                            <div id="vas_video_wrap"></div>
+                            <input type="hidden" id="offer_video_getvid"
+                                name="videoVId" value="" /> <input
+                                type="hidden" id="offer_video_state"
+                                name="videoState" value="" /> <input
+                                type="hidden" id="offer_video_id"
+                                name="videoId" value="" /> <input
+                                type="hidden" name="video_widget"
+                                value="true" />
+                        </div>
+                    </div>
+
+                    <div class="layout ">
+                        <div id="logistics" class="tit">
+                            <div class="fd-left">
+                                <h3 class="icon-title icon-logistics">物流运费信息</h3>
+                            </div>
+                            <div class="fd-right">
+                                <a class="freight-set-lnk"
+                                    href="http://56.1688.com"
+                                    title="阿里巴巴推荐物流，运费低至8折！">阿里巴巴推荐物流，运费低至8折！</a>
+                            </div>
+                        </div>
+                        <div
+                            class="mod mod-offer-post-logistics-address fd-clr "
+                            data-mod-config='{"formGroup":"logistics-address" }'>
+                            <!-- 发货地址start-->
+                            <div class="form-line">
+                                <div class="form-title fd-clr">
+                                    <span class="icon-must">发货地址<span
+                                        class="note">（产品所在地）</span></span>
+                                </div>
+                                <div class="form-context">
+                                    <select class="list-address sel"
+                                        name="sendGoodsAddressId">
+                                    </select> <a
+                                        class="dpl-btn dpl-btn-s link-address-config"
+                                        href="http://e56.1688.com/foundation/send_goods_address_manage.htm">管理发货地址</a>
+                                    <div class="logistics-err">
+                                        <div class="err">请 选择 发货地址
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden"
+                                name="send_goods_address_widget"
+                                value="true" disabled />
+                            <!-- 发货地址end-->
+                        </div>
+                        <div
+                            class="mod mod-offer-post-logistics-freight fd-clr "
+                            data-mod-config='{"formGroup":"logistics-freight","defaultTemplateId":"1","isCodMember":"false","isCod":"false","freightInfo":{"freightType":"T","offerWeight":"","usedFreightTemplateName":"","usedFreightTemplateId":"0"},"getFreightTemplate":"http://offer.1688.com/offer/asyn/get_full_delivery_template.json","listFreightTemplates":"http://offer.1688.com/offer/asyn/query_delivery_templates.json","getCarriageInfo":"http://offer.1688.com/offer/asyn/carriage_info.json","templateManageURL":"http://e56.1688.com/foundation/template_carriage_manage.htm","templateEditURL":"http://e56.1688.com/foundation/show_freight_template.htm","codGatewayURL":"http://tradeconfig.1688.com/foundation/sign_cod_agreement.htm","templateManageURL":"http://e56.1688.com/foundation/freight_template_manage.htm"}'>
+                            <div class="form-line">
+                                <div class="form-title">
+                                    <span class="icon-must">运费设置：</span>
+                                </div>
+                                <div class="form-context">
+                                    <ul>
+                                        <li><select
+                                            id="used-freight"
+                                            name="freightType"
+                                            class="sel">
+                                                <option value="T">使用运费模板</option>
+                                                <option value="D">使用运费说明</option>
+                                                <option value="F">卖家承担运费</option>
+                                        </select> <span id="used-freight-note">
+                                                <select
+                                                id="freight-list"
+                                                name="freight-list"
+                                                class="sel">
+                                            </select> <a id="create-freight"
+                                                class="fd-hide" href="#">新建模板</a>
+                                        </span> <span
+                                            id="used-instructions-note"
+                                            class="note">推荐使用运费模板，以便买家下单更顺畅</span>
+
+                                        </li>
+                                        <li><input type="checkbox"
+                                            id="cod" name="iscod"
+                                            class="ipt" /><label
+                                            for="cod">支持货到付款</label><span
+                                            class="note"></span></li>
+                                        <li>
+                                            <div id="no-freight-box"
+                                                class="freight-con no-freight-box">
+                                            </div>
+                                            <div id="used-freight-box"
+                                                class="freight-con">
+                                            </div>
+                                            <div
+                                                id="used-instructions-box"
+                                                class="freight-con">
+                                            </div>
+                                            <div id="freight-list-err"
+                                                class="err">请选择运费模板</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="logistics-weight-box"
+                                class="form-line">
+                                <div class="form-title fd-clr">
+                                    <span class="icon-must"
+                                        id="logistics-weight-must">单位重量：</span>
+                                </div>
+                                <div class="form-context">
+                                    <ul>
+                                        <li><input type="text"
+                                            data-isneeded="true"
+                                            value="" name="offerWeight"
+                                            id="weight-input"
+                                            class="weight-input txt"><span>公斤/</span><span
+                                            id="logistics_unit"
+                                            class="unit">件</span> <span
+                                            class="usemod-note"
+                                            id="usemod-note">使用运费模板需要填写单位重量</span>
+                                        </li>
+                                        <li>
+                                            <div
+                                                class="logistics-err fd-clr">
+                                                <div class="err">请填写
+                                                    单位重量</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <input type="hidden" id="freightTemplateId"
+                                name="freightTemplateId" value=""
+                                errorbox="logistics_error_mod" /> <input
+                                type="hidden" id="freightTemplateName"
+                                name="freightTemplateName" value="" /> <input
+                                type="hidden" id="defaultTemplateId"
+                                name="defaultTemplateId" value="1" /> <input
+                                type="hidden"
+                                name="freight_template_widget"
+                                value="true" disabled />
+                        </div>
+                    </div>
+
+                    <div class="layout">
+                        <div id="marketing-info" class="tit">
+                            <div class="fd-left">
+                                <h3 class="icon-title icon-marketing">特色服务</h3>
+                            </div>
+                        </div>
+                        <div class="marketing-info">
+                            <!--分阶段付款start-->
+                            <!--分阶段付款end-->
+                            <div
+                                class="mod mod-offer-post-mixbatch fd-clr"
+                                data-mod-config='{"formGroup":"mixbatch","isOfferSupport":"false","mixBegin":"","mixAmount":"1","mixNumber":"1","mixConfigUrl":"http://marketing.1688.com/marketing/mix_wholesale_set.htm"}'>
+                                <div class="mod-tit icon-mixbatch">混批</div>
+                                <div class="mod-con">
+                                    <div class="submod mix-batch fd-clr"
+                                        data-mod-config='{"submod":"mixBatch","id":"support-mix-batch","fieldType":"boolean","isNeeded":"N","name":"混批设置","value":"N"}'>
+                                        <div class="form-line">
+                                            <div class="form-context">
+                                                <input class="ipt"
+                                                    data-field-name="support-mix-batch"
+                                                    name="mixSupport"
+                                                    id="support-mix-batch"
+                                                    type="checkbox" /><label
+                                                    for="support-mix-batch">支持混批</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-line">
+                                            <div
+                                                class="form-title fd-hide">混批条件：</div>
+                                            <div class="form-context">
+                                                <span
+                                                    class="mix-condition"></span>
+                                                <a class="mix-config"
+                                                    href="#"
+                                                    title="混批规则设置">混批规则设置</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="pic-private fd-clr mod mod-offer-post-private"
+                                data-mod-config='{"formGroup":"private"}'>
+                                <div class="mod-tit">商品加密</div>
+                                <div class="mod-con">
+                                    <div class="submod">
+                                        <ul>
+                                            <li class="pic-privacy-li">
+                                                <div
+                                                    class="submod private-pic"
+                                                    data-mod-config='{"submod":"picPrivate","id":"private-pic-ckbox","fieldType":"boolean","isNeeded":"N","name":"图片查看权限","value":""}'>
+                                                    <div
+                                                        class="form-line">
+                                                        <div
+                                                            class="form-context">
+                                                            <input
+                                                                type="checkbox"
+                                                                class="ipt"
+                                                                id="private-pic-ckbox"
+                                                                data-field-name="private-pic-ckbox"
+                                                                name="isPicAuthOffer"
+                                                                disabled="disabled">
+                                                            <label
+                                                                for="private-pic-ckbox">图片私密</label>
+                                                            <span
+                                                                class="icon-help"
+                                                                title="图片保护商品，只有指定的店铺会员才能看到该商品被保护信息。"></span>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden"
+                                                        name="picture_private_widget"
+                                                        value="true" />
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div
+                                                    class="submod private-price"
+                                                    data-mod-config='{"submod":"pricePrivate","id":"price-private-ckbox","fieldType":"boolean","isNeeded":"N","name":"价格查看权限","value":""}'>
+                                                    <div
+                                                        class="form-line">
+                                                        <div
+                                                            class="form-context">
+                                                            <input
+                                                                type="checkbox"
+                                                                class="ipt price-private-ckbox"
+                                                                id="price-private-ckbox"
+                                                                data-field-name="price-private-ckbox"
+                                                                name="isPriceAuthOffer"
+                                                                disabled="disabled"
+                                                                value="true" />
+                                                            <label
+                                                                for="price-private-ckbox">价格私密</label>
+                                                            <span
+                                                                class="icon-help"
+                                                                title="价格保护商品，只有指定的店铺会员才能看到该商品被保护信息。"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li
+                                                class="special-supply-li">
+                                                <div
+                                                    class="submod special-supply"
+                                                    data-mod-config='{"submod":"specialSupply", "id":"special-supply-ckbox", "fieldType":"boolean", "isNeeded":"N", "name":"特供商品", "value":""}'>
+                                                    <div
+                                                        class="form-line">
+                                                        <div
+                                                            class="form-context">
+                                                            <input
+                                                                type="checkbox"
+                                                                class="ipt"
+                                                                id="special-supply-ckbox"
+                                                                data-field-name="special-supply-ckbox"
+                                                                name="isSpecialSupply" />
+                                                            <label
+                                                                for="special-supply-ckbox">特供商品</label>
+                                                            <span
+                                                                class="icon-help"
+                                                                title="提供给指定买家的商品，买家仅在您的旺铺会员专区才能看到该商品。"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--div
+                                class="mod mod-offer-post-buyer-protect fd-clr"
+                                data-mod-config='{"formGroup":"buyerProtect","openLink":"http://bao.1688.com/service/bps/index.htm?tracelog=offer_publish_chengbao","spsListJson":"http://bao.1688.com/service/spsOfferJson.jsonp","hasProtect":false,"childCategoryId":"1031919","spsCodeList":[]}'>
+                                <div
+                                    class="mod-tit icon-buyer-protect disabled">买家保障</div>
+                                <div class="mod-con"></div>
+                                <input type="hidden"
+                                    name="buyer_protection_widget"
+                                    value="true" />
+                            </div-->
+                        </div>
+                    </div>
+                    <div class="layout">
+                        <div class="tit" id="other-info">
+                            <div class="fd-left">
+                                <h3 class="icon-title icon-other">其他信息</h3>
+                            </div>
+                        </div>
+                        <!-- 自定义分类 -->
+                        <!--div class="fd-clr mod mod-offer-post-mygroup"
+                            data-mod-config='{"formGroup":"mygroup","groupShowtipsUrl":"http://offer.1688.com/offer/asyn/offer_user_def_cat_json.json","openGroupUrl":"http://apps.1688.com/page/offer_user_def_cat_json.htm"}'>
+                            <div class="form-line">
+                                <div class="form-title">
+                                    <span>选择自定义分类：</span>
+                                </div>
+                                <div class="form-context">
+                                    <div class="">
+                                        <div class="select-class-box"
+                                            id="postoffer-class">
+                                            <span>选择分类…</span> <span
+                                                class="tip">(可多选)</span>
+                                            <div class="classlist"
+                                                id="classlist">
+                                                <ul>
+                                                    <li><a href="#"
+                                                        groupid="16920950"
+                                                        class="c1 "
+                                                        pid="0"
+                                                        id="group16920950">女装</a></li>
+                                                    <li><a href="#"
+                                                        groupid="16921263"
+                                                        class="c2  "
+                                                        pid="16920950"
+                                                        id="group16921263">夏装</a></li>
+                                                    <li><a href="#"
+                                                        groupid="17072209"
+                                                        class="c2  "
+                                                        pid="16920950"
+                                                        id="group17072209">牛仔</a></li>
+                                                    <li><a href="#"
+                                                        groupid="17072210"
+                                                        class="c2  "
+                                                        pid="16920950"
+                                                        id="group17072210">T恤</a></li>
+                                                    <li><a href="#"
+                                                        groupid="19592619"
+                                                        class="c2  end  "
+                                                        pid="16920950"
+                                                        id="group19592619">AABBCCD</a></li>
+                                                    <li><a href="#"
+                                                        groupid="17072211"
+                                                        class="c1 "
+                                                        pid="0"
+                                                        id="group17072211">男装</a></li>
+                                                    <li><a href="#"
+                                                        groupid="17072212"
+                                                        class="c2  "
+                                                        pid="17072211"
+                                                        id="group17072212">男装
+                                                            T恤</a></li>
+                                                    <li><a href="#"
+                                                        groupid="17072213"
+                                                        class="c2  end  "
+                                                        pid="17072211"
+                                                        id="group17072213">男装
+                                                            短裤</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div id="selected-class"
+                                            class="selected-class">
+                                            <ul>
+                                            </ul>
+                                        </div>
+
+                                        <div id="use-class-tips"
+                                            class="use-class-tips"
+                                            style="">
+                                            自定义分类尚未启用，将不会在旺铺中显示 <a
+                                                id="use-class-btn"
+                                                class="use-class-btn"
+                                                href="#">马上启用</a>
+                                        </div>
+                                        <input type="hidden"
+                                            name="user_define_category"
+                                            value="true" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div-->
+                        <!-- 自定义分类 end-->
+                        <div class="mod mod-offer-post-validity "
+                            data-mod-config='{"formGroup":"otherInfo","value":"","isNeeded":"Y","name":"信息有效期","id":"info-validity"}'>
+                            <div class="validity">
+                                <div class="form-line">
+                                    <div class="form-title">
+                                        <span class="icon-must">信息有效期：</span>
+                                    </div>
+                                    <div class="form-context">
+                                        <div class="radio-box">
+                                            <input id="info-validity-0"
+                                                type="radio"
+                                                name="info-validity"
+                                                value="10" /> <label
+                                                for="info-validity-0">10天</label>
+                                            <input id="info-validity-1"
+                                                type="radio"
+                                                name="info-validity"
+                                                value="20" /> <label
+                                                for="info-validity-1">20天</label>
+                                            <input id="info-validity-2"
+                                                type="radio"
+                                                name="info-validity"
+                                                value="30" /> <label
+                                                for="info-validity-2">1个月</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-line">
+                                    <div class="err">请选择 信息有效期</div>
+                                </div>
+                                <input type="hidden"
+                                    name="period_validity_widget"
+                                    value="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layout fd-hide">
+                        <!-- 承诺书 -->
+                        <div
+                            class="mod mod-offer-post-commitment fd-hide"
+                            data-mod-config='{"isShow":false,"commitmentUrl":"http://offer.1688.com/offer/asyn/agree_special_category_disclaimer.do?isMedicineCategory=false"}'>
+                            <div id="commitment"
+                                class="widget-dialog dpl-dialog commitment">
+                                <div class="pack dpl-d">
+                                    <div class="dpl-m">
+                                        <h3>您尚未签署《阿里巴巴中国站食品卖家承诺书》，暂不能发布食品类产品
+                                        </h3>
+                                        <p>即日起，在“食品、饮料”的食品类目下发布产品，须签署《阿里巴巴中国站食品卖家承诺书》，否则不能在该类目下发布任何产品。</p>
+                                        <div class="con">
+                                            <h4>阿里巴巴中国站食品卖家承诺书</h4>
+                                            <p>一. 服务承诺内容</p>
+                                            <p>1）卖家承诺不销售国家明令淘汰或者过期、失效、变质的食品。</p>
+                                            <p>2）卖家承诺不销售掺杂、掺假、以假充真、以次充好的食品，不得以不合格食品冒充合格食品。</p>
+                                            <p>3）卖家承诺在销售过程中不出现缺斤少两的情况。</p>
+                                            <p>4）卖家承诺不销售三无产品，食品包装上必须注明制造商名称，生产地址，食品名称，规格，生产日期，保质期等内容，初级农副产品除外。</p>
+                                            <p>5）卖家承诺食品销售时说明是否为临期产品。（“临期”指消费者收到商品时的日期已经超过保质期的2/3时间）</p>
+                                            <p>二、违反服务承诺处罚方式</p>
+                                            <p>1）
+                                                过期变质的食品情况以买家签收之日为准，如果买家收到的食品为过期变质食品，卖家支持退货、退款，并且所有运费（发送和退还）均由卖家承担。若情节严重者，移交相应国家机关按照相应法律法规处理。</p>
+                                            <p>2）
+                                                卖家违反以上任何一项服务承诺，卖家均应支持退货、退款，且所有运费（发送和退还）均由卖家承担，情节严重者，移交相应国家机关按照相应法律法规处理。</p>
+                                        </div>
+                                        <div class="dpl-b">
+                                            <a class="dpl-btn-important"
+                                                href="javascript:;">我已阅读以上承诺书，立即签署</a>
+                                            <a class="dpl-btn"
+                                                href="javascript:;">暂不签署</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 承诺书 end -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-ft">
+                <div class="agreement">
+                    点此阅读<a class="agreement-lnk"
+                        href="http://rule.1688.com/zongze.html?tracelog=aliguize_offer_zongze"
+                        title="阿里巴巴中国网站总则">阿里巴巴中国网站总则</a>
+                </div>
+                <div class="submit-box fd-clr">
+                    <a class="publish-btn dpl-btn-important dpl-btn-l"
+                        href="javascript:;" title="我要发布">我要发布</a>
+                    <!--a class="btn-preview dpl-btn dpl-btn-l" href="#"
+                        title="预览">预览</a--> <span style="display: none"
+                        class="draft-save"> <a
+                        class="dpl-btn dpl-btn-l dpl-btn-disabled"
+                        href="#"><button disabled="disabled"
+                                type="submit">保存到草稿箱</button></a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <input name="catType" value="0" type="hidden" />
+        <!--div id="footer" class="footerBox">
+            <div class="footer">
+                <ul>
+                    <li>阿里巴巴版权所有 1999-2012 <a
+                        href="http://info.1688.com/biznews/pages/alihome/js_zzq.html">著作权与商标声明</a></li>
+                    <li><a
+                        href="http://info.1688.com/biznews/pages/alihome/js_fl.html">法律声明</a></li>
+                    <li><a
+                        href="http://info.1688.com/biznews/pages/alihome/js_fw.html">服务条款</a></li>
+                    <li><a
+                        href="http://info.1688.com/biznews/pages/alihome/js_ys.html">隐私声明</a></li>
+                    <li><a target="_blank"
+                        href="http://page.1688.com/shtml/about/ali_china8.shtml">联系我们</a></li>
+                    <li><a
+                        href="http://page.1688.com/sitemap/sitemap.html">网站地图</a></li>
+                    <li class="no_border"><a
+                        href="http://tiyan.1688.com/">产品体验中心</a></li>
+                </ul>
+                <ul>
+                    <li class="no_border sli"><a
+                        href="http://page.1688.com/shtml/about/ali_group1.shtml"
+                        target="_blank">阿里巴巴集团</a>：阿里巴巴网络&nbsp;-&nbsp;</li>
+                    <a href="http://exodus.1688.com" target="_blank">中国站</a>&nbsp;
+                    <a href="http://www.alibaba.com/" target="_blank">国际站</a>&nbsp;
+                    <a href=" http://seller.aliexpress.com/"
+                        target="_blank">全球速卖通</a>&nbsp;
+                    <a href="http://www.alibaba.co.jp" target="_blank">日文站</a>
+                    <li><a href="http://www.net.cn/">中国万网</a></li>
+                    <li><a href="http://www.taobao.com"
+                        target="_blank">淘宝网</a></li>
+                    <li><a href="http://www.alipay.com"
+                        target="_blank">支付宝</a></li>
+                    <li><a href="http://www.yahoo.com.cn/"
+                        target="_blank">中国雅虎</a></li>
+                    <li><a href="http://www.koubei.com/"
+                        target="_blank">雅虎口碑网</a></li>
+                    <li><a href="http://www.alisoft.com"
+                        target="_blank">阿里软件</a></li>
+                    <li><a href="http://www.alimama.com/"
+                        target="_blank">阿里妈妈</a></li>
+                    <li class="no_border"><a
+                        href="http://view.1688.com/cms/zj/index.html">集团研究中心</a></li>
+                </ul>
+            </div>
+        </div-->
+    </div>
+    <div style="color: #fff; text-align: center;">
+        offer-web2.xyi<br />Server is OK
+    </div>
+    </div>
+</form>
+<script>
+$(function () {
+    var categoryId = '{$categoryId}',
+        editor = CKEDITOR.replace('offer-content');
+
+    // 填充产品属性
+    $.ajax({
+        url: '{:U('Index/getPostFeatures')}',
+        data: {
+            'categoryId': categoryId
+        },
+        success: function (data) {
+            var normalFeaturesString = '', specFeaturesString = '';
+
+            for (var i in data) {
+                var featuresString = '';
+                    feature = data[i];
+
+                if (feature.isSpecExtendedAttr || feature.aspect == '3;') {
+                    if (feature.name == '计量单位') {
+                        var unitString = '';
+
+                        for (var i in feature.featureIdValues) {
+                            unitString += '<option value="' + feature.featureIdValues[i].value + '">' + feature.featureIdValues[i].value + '</option>';
+                        }
+
+                        $('.sel.sel-unit > option').remove();
+                        $('.sel.sel-unit').append(unitString);
+                    }
+
+                    continue;
+                }
+
+                featuresString += '<div class="pro-item fd-clr" id="pro-div-feature' + feature.fid + '" data-isspecpicattr="' + feature.isSpecPicAttr + '">';
+
+                featuresString += '<div class="pro-t">';
+                featuresString += '<span' + (feature.isNeeded == 'Y' ? ' class="icon-must"' : '') + '>' + feature.name + '：</span>'
+                featuresString += '</div>';
+
+                featuresString += '<div class="pro-d">';
+                featuresString += '<em class="pro-form">';
+                switch (feature.showType) {
+                    case '-1':
+                    case '0':
+                          featuresString += '<span class="span-item">';
+                        featuresString += '<input type="text" name="feature' + feature.fid + '" id="' + feature.fid + '"/>';
+                        featuresString += '</span>';
+                        break;
+                    case '1':
+                        featuresString += '<select name="feature' + feature.fid + '" id="' + feature.fid + '">';
+                        for (var j in feature.featureIdValues) {
+                            var valueObj = feature.featureIdValues[j];
+                            featuresString += '<option value="' + valueObj.value + '">' + valueObj.value + '</option>';
+                        }
+                        featuresString += '</select>';
+                        break;
+                    case '2':
+                        for (var j in feature.featureIdValues) {
+                            var valueObj = feature.featureIdValues[j];
+                            featuresString += '<span class="span-item span-item-ipt">';
+                            featuresString += '<input class="ipt" type="checkbox" name="feature' + feature.fid + '" id="pro-feature' + feature.fid + '-' + j + '" value="' + valueObj.value + '"/>';
+                            featuresString += '<label for="pro-feature' + feature.fid + '-' + j + '">' + valueObj.value + '</label>';
+                            featuresString += '</span>';
+                        }
+                        break;
+                    case '3':
+                        break;
+                }
+                featuresString += '</em>';
+                featuresString += '<span class="pro-unit"></span>'
+                featuresString += '</div>';
+
+                featuresString += '</div>';
+
+                featuresString += '<div class="err-div fd-clr">';
+                featuresString += '<span class="err">请填写</span>';
+                featuresString += '</div>';
+
+                if (feature.isSpecAttr) {
+                    specFeaturesString += featuresString;
+                } else {
+                    normalFeaturesString += featuresString;
+                }
+            }
+
+            $('.loading-box').remove();
+            $('.product-props').append(normalFeaturesString);
+            $('.product-speca-props').append(specFeaturesString);
+        }
+    });
+
+    // 获取发货地址
+    $.ajax({
+          url: '{:U('Index/getSendGoodsAddress')}',
+          success: function (data) {
+                    var addressesString = '';
+                    for (var i in data) {
+                        var address = data[i];
+
+                        addressesString += '<option value="' + address.deliveryAddressId + '">';
+                        addressesString += address.location + ' ' + address.address;
+                        addressesString += '</option>';
+                    }
+                    $('.list-address.sel').append(addressesString);
+          }
+    });
+
+    // 获取运费模版
+    $.ajax({
+        url: '{:U('Index/getFreightTemplateList')}',
+        success: function (data) {
+            var templatesString = '';
+            for (var i in data) {
+                var template = data[i];
+
+                templatesString += '<option value="' + template.id + '">';
+                templatesString += template.templateName;
+                templatesString += '</option>';
+            }
+            $('#freight-list').append(templatesString);
+        }
+    });
+
+    // 完成动态表格数据获取
+    $(document).live('click', '.product-speca-props input', function () {
+        var selectedSpecs = [],
+            table,
+            specExtendedAttrs = [{name: '单价(元)', fname: 'price'}, {name: '可售数量', fname: 'amountOnSale'}, {name: '建议零售价', fname: 'retailPrice'}, {name: '单品货号', fname: 'cargoNumber'}],
+            initSkus = {$initSkus};
+
+        $('.product-speca-props input:checked').each(function (index, element) {
+            var $e = $(element),
+                fid = $e.attr('name').substr(7),
+                value = $e.val(),
+                isNewSpec = true;
+
+            for (var i in selectedSpecs) {
+                if (selectedSpecs[i]['fid'] == fid) {
+                    isNewSpec = false;
+                    selectedSpecs[i]['values'].push(value);
+                }
+            }
+
+            if (isNewSpec) {
+                var label = $e.closest('.pro-d').siblings('.pro-t').text(),
+                    name = label.substr(0, label.length - 1);
+
+                selectedSpecs.push({fid: fid, name: name, values: [value]});
+            }
+        });
+
+        if (selectedSpecs.length > 0) {
+            $('.sku-box').siblings('.warn').css('display', 'none');
+                  table = new tradetable($('.sku-box'), selectedSpecs, specExtendedAttrs, initSkus);
+                  table.removeAll();
+                  table.createTable();
+        } else {
+            $('.sku-box').siblings('.warn').css('display', '');
+            $('.sku-box').children().remove();
+        }
+    });
+
+    // 获取相册列表
+    $.ajax({
+        url: '{:U('Index/getAlbumList')}',
+        success: function (data) {
+            var albumListString = '';
+
+            for (var i in data) {
+                albumListString += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+            }
+
+            $('#albumId').append(albumListString);
+        }
+    });
+
+    $('.publish-btn').on('click', function offer() {
+        // TODO: validate form
+        if (false) {
+            return;
+        }
+
+        // 准备产品属性信息
+          var productFeatures = '{';
+        $('.product-props .pro-item').each(function (index, element) {
+            var $e = $(element),
+                $firstInput = $e.find('input:first').length == 0 ? $e.find('select:first') : $e.find('input:first'),
+                fid = $firstInput.attr('name').substr(7),
+                valueString = '',
+                featureString = '';
+
+            if ($firstInput.attr('type') == 'checkbox') {
+                $e.find('input').each(function (i, e) {
+                    if (e.checked) {
+                        valueString += e.value + ';';
+                    }
+                });
+                valueString = valueString.substr(0, valueString.length - 1);
+            } else {
+                valueString = $firstInput.val();
+            }
+
+            featureString = '"' + fid + '":"' + valueString + '",';
+            productFeatures += featureString;
+        });
+        productFeatures = productFeatures.substr(0, productFeatures.length - 1);
+        productFeatures += '}';
+        $('#productFeatures').val(productFeatures);
+
+        // 准备产品规格信息
+        var skuList = '[';
+        $('.tb-speca-quotation > tbody > tr').each(function (index, element) {
+                var $e = $(element);
+
+            skuList += '{"specAttributes":{';
+            $e.find('.spec-attr').each(function(index, element) {
+                var $ee = $(element);
+                skuList += '"' + $ee.attr('fid') + '":"' + $ee.text() + '",';
+            });
+            skuList = skuList.substr(0, skuList.length - 1);
+            skuList += '},';
+
+            $e.find('.spec-extend-attr').each(function(index, element) {
+                var $eee = $(element);
+                skuList += '"' + $eee.attr('fname') + '":' + '"' + $eee.val() + '",'
+            });
+            skuList = skuList.substr(0, skuList.length - 1);
+
+            skuList += '},';
+        });
+        skuList = skuList.substr(0, skuList.length - 1) + ']';
+        $('#skuList').val(skuList);
+
+        document.mainform.submit();
+    });
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+<script type="text/javascript"
+    src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
+<import type="css" file="Css.alibaba-category" basepath="{$basepath}"/>
+<script type="text/javascript">
+$(function () {
+    $('.keybtn-search').on('click', function () {
+        $.ajax({
+                url: '{:U('Index/searchCategory')}',
+                data: {
+                        'keyWord': $('.search-input').val()
+                },
+                success: function (categoryList) {
+                        var itemsString = '';
+                        for (var i = 0; i < categoryList.length; i++) {
+                                var c = categoryList[i];
+                                itemsString += '<li>';
+                                itemsString += '<input id="' + c.catsId + '" type="radio" name="search-radio">';
+                                itemsString += '<label for="' + c.catsId + '">' + c.catsName + '</label>';
+                                itemsString += '<em class="fd-hide"></em>';
+                                itemsString += '</li>';
+                        }
+
+                        $('ul.fd-clr li').remove();
+                        $('ul.fd-clr').append(itemsString);
+                        $('.search-category').removeClass('fd-hide');
+                        $('.tab-b.mod.mod-offer-choose-category').removeClass('fd-hide');
+                }
+        });
+    });
+
+    $('.next-btn').on('click', function () {
+        var categoryId = $('.search-list > .fd-clr input:checked').attr('id');
+
+        if (categoryId) {
+            $('.mainform > .categoryId-input').val(categoryId);
+            $('.mainform').submit();
+        } else {
+                alert('请选择类目再继续！');
+        }
+    });
+
+    $('.keybtn-search').click();
+});
+</script>
+</head>
+<body>
+    <form class="mainform fd-hide" action="{:U('Index/editPage')}" method="POST">
+        <input type="hidden" class="categoryId-input" name="categoryId"/>
+        <input type="hidden" class="taobaoItemId-input" name="taobaoItemId" value="{$taobaoItemId}"/>
+    </form>
+    <div id="doc"
+        data-doc-config='{"_csrf_token":"8abe905bb324aa8417d1b90f91355541","submitUrl":"http://offer.1688.com/offer/post/fill_product_info.htm","submitData":{"_csrf_token":"8abe905bb324aa8417d1b90f91355541","site":"","tradeType":"0","operator":"new","offerDraftId":"","fromWhere":"normal","adGroupId":"","productId":"","details":"","subject":"","unit":"","price":"0.0","picUrl":"","isCategoryChanged":true,"currentPage":"chooseCategory"}}'>
+        <div id="header" class="header">
+            <!--div class="ali-logo">
+                <h1>
+                    <a href="http://exodus.1688.com/"
+                        title="全球最大的采购批发市场">阿里巴巴</a>
+                </h1>
+            </div-->
+            <div class="ali-search">
+                <span>你好，{$memberId}</span> <!--span class="bor">[<a
+                    class="signout" target="_self"
+                    href="http://exodus.1688.com/member/signout.htm"
+                    title="退出">退出</a>]
+                </span> <span class="bor"><a
+                    href="http://work.1688.com/" title="我的阿里">我的阿里</a></span--> <span><a
+                    href="http://114.1688.com/kf/detail/2789732.html?tracelog=kf_2012_budian_backofferfabu5"
+                    title="信息发布规则">信息发布规则</a></span>
+            </div>
+        </div>
+
+        <div id="content" class="content">
+            <div class="content-tit">
+                <div class="layout">
+                    <div class="fd-left">
+                        <h2>发布产品信息</h2>
+                    </div>
+                    <div class="fd-right guide">
+                        <span class="current">选择类目</span> <span
+                            class="arrow">&gt;</span> <span>填写产品详情</span>
+                        <span class="arrow">&gt;</span> <span>提交成功，等待审核</span>
+                    </div>
+                </div>
+            </div>
+            <div class="content-con">
+                <div class="layout">
+                    <div class="notice-box fd-clr">
+                        <span class="notice">为您的产品信息选择合适的类目</span>
+                    </div>
+                    <div class="choose-tab fd-clr">
+                        <ul>
+                            <li class="tab-t current"><a
+                                target="_self" href="#" title="查找类目">查找类目</a><span></span></li>
+                            <!--li class="tab-t"><a target="_self" href="#" title="您常使用的类目">您常使用的类目</a><span></span>
+                                                        </li-->
+                        </ul>
+                        <!--div class="tab-note">
+                            <div class="fd-left mod mod-offer-import-offer"
+                                    data-mod-config='{"tradeType":"0","offerPageListUrl":"http://offer.1688.com/offer/asyn/offer_page_list.json","offerGroupListUrl":"http://offer.1688.com/offer/asyn/group_list.json"}'>
+                                    <a href="#" class="btn-import-offer" target="_self">导入已发布的信息</a>
+                            </div>
+                            <span class="fd-right">对类目设置有建议，请<a
+                                    href="http://club.1688.com/forum/thread/add.html?forum_id=100757&subjectTitle=%CE%D2%B6%D4%C0%E0%C4%BF%C9%E8%D6%C3%B5%C4%BD%A8%D2%E9"
+                                    title="点此反馈">点此反馈</a></span>
+                        </div-->
+                    </div>
+                    <div class="tab-b mod mod-offer-choose-category"
+                        data-mod-config='{"showCateInfo":true,"tradeType":"0", "lastUsedCateUrl":"http://offer.1688.com/offer/asyn/last_used_category_info.do","childCateUrl":"http://offer.1688.com/offer/asyn/category_list.do","fullCateUrl":"http://offer.1688.com/offer/asyn/full_category_info.do","searchCateUrl":"http://offer.1688.com/offer/asyn/recommend_category_list.json","getPostCatInfoUrl":"http://spu.1688.com/spu/ajax/get_post_cat_info.htm","searchSuggestionUrl":"http://suggest.1688.com/bin/suggest","lastTradeType":"1"}'>
+                        <div class="choose-cate-form fd-clr">
+                            <input class="search-input" type="text"
+                                placeholder="请输入产品关键词，我们为你推荐类目"
+                                value="{$taobaoItemTitle}" /> <input
+                                type="button" value="查找类目"
+                                class="keybtn-search">
+                            <!--span>或</span> <a href="#" target="_self" class="choose-tab-hid" title="自选类目">自选类目</a-->
+                            <div class='search-suggestion fd-hide'>
+                                <ul>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="browse-category fd-clr fd-hide">
+                            <!-- 类目筛选 unit-->
+                            <div
+                                class="category-filter unit-category-filter"
+                                data-unit-config='{"label":"类目","hasAmount":false}'>
+                                <label></label> <span
+                                    class="filter selected"><a
+                                    data-trade-type='0' href="#">所有类目<em></em></a></span>
+                                <span>|</span> <span class="filter"><a
+                                    data-trade-type='1' href="#"
+                                    title="发布服装、家居、小商品等现货批发信息">供应产品<em></em></a></span>
+                                <span class="filter"><a
+                                    data-trade-type='2' href="#"
+                                    title="依据买家需求定制、定做、订做的非现货类产品">加工定制<em></em></a></span>
+                                <span class="filter"><a
+                                    data-trade-type='3' href="#"
+                                    title="物流仓储货代、合作加盟转让、认证咨询翻译等">商务服务<em></em></a></span>
+                                <dl class="tips">
+                                    <dt class='leading'></dt>
+                                    <dd>
+                                        这里可以选择发布信息类型! <a href="#">知道了</a>
+                                    </dd>
+                                </dl>
+                                <div class="fd-clr"></div>
+                            </div>
+                            <div class="category-select-list">
+                                <ul class="category-select" level="1">
+                                </ul>
+                                <ul class="category-select" level="2">
+                                </ul>
+                                <ul class="category-select" level="3">
+                                </ul>
+                                <ul class="category-select last"
+                                    level="4">
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="search-category fd-hide">
+                            <!--div
+                                class="category-filter unit-category-filter"
+                                data-unit-config='{"label":"类目","hasAmount":true}'>
+                                <label></label> <span
+                                    class="filter selected"><a
+                                    data-trade-type='0' href="#">所有类目<em></em></a></span>
+                                <span>|</span> <span class="filter"><a
+                                    data-trade-type='1' href="#"
+                                    title="发布服装、家居、小商品等现货批发信息">供应产品<em></em></a></span>
+                                <span class="filter"><a
+                                    data-trade-type='2' href="#"
+                                    title="依据买家需求定制、定做、订做的非现货类产品">加工定制<em></em></a></span>
+                                <span class="filter"><a
+                                    data-trade-type='3' href="#"
+                                    title="物流仓储货代、合作加盟转让、认证咨询翻译等">商务服务<em></em></a></span>
+                                <dl class="tips">
+                                    <dt class='leading'></dt>
+                                    <dd>
+                                        这里可以选择发布信息类型! <a href="#">知道了</a>
+                                    </dd>
+                                </dl>
+                                <div class="fd-clr"></div>
+                            </div-->
+                            <!--查找有结果start-->
+                            <div class="search-result">
+                                <div class="search-list fd-clr">
+                                    <ul class="fd-clr"></ul>
+                                    <!--div class="search-bottom">
+                                        不是您想要的类目？<a class="to-browse"
+                                            href="#" target="_self"
+                                            title="您可以通过浏览来自选类目">您可以通过浏览来自选类目</a>
+                                    </div-->
+                                </div>
+                            </div>
+                            <!--查找有结果end-->
+                            <!--查找无结果start-->
+                            <div class="search-noresult fd-hide">
+                                <div class="tip">
+                                    <p>
+                                        抱歉，没有找到与关键字“<span
+                                            class="noresult-keywords"></span>”相关的类目。
+                                    </p>
+                                    <p>
+                                        请更换关键词<a href="#"
+                                            class="to-browse"
+                                            target="_self"
+                                            title="或通过浏览来自选类目">或通过浏览来自选类目</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <!--查找无结果end-->
+                        </div>
+                    </div>
+
+                    <div
+                        class="tab-b mod mod-offer-oftenuse-category fd-hide"
+                        data-mod-config='{"tradeType":"0", "oftenuseCateUrl":"http://offer.1688.com/offer/asyn/often_use_category.json","getPostCatInfoUrl":"http://spu.1688.com/spu/ajax/get_post_cat_info.htm"}'>
+                        <!-- 类目筛选 unit-->
+                        <div
+                            class="category-filter unit-category-filter"
+                            data-unit-config='{"label":"类目","hasAmount":true}'>
+                            <label></label> <span
+                                class="filter selected"><a
+                                data-trade-type='0' href="#">所有类目<em></em></a></span>
+                            <span>|</span> <span class="filter"><a
+                                data-trade-type='1' href="#"
+                                title="发布服装、家居、小商品等现货批发信息">供应产品<em></em></a></span>
+                            <span class="filter"><a
+                                data-trade-type='2' href="#"
+                                title="依据买家需求定制、定做、订做的非现货类产品">加工定制<em></em></a></span>
+                            <span class="filter"><a
+                                data-trade-type='3' href="#"
+                                title="物流仓储货代、合作加盟转让、认证咨询翻译等">商务服务<em></em></a></span>
+                            <dl class="tips">
+                                <dt class='leading'></dt>
+                                <dd>
+                                    这里可以选择发布信息类型! <a href="#">知道了</a>
+                                </dd>
+                            </dl>
+                            <div class="fd-clr"></div>
+                        </div>
+                        <!-- 类目筛选 unit end -->
+
+                        <div class="oftenuse-result">
+                            <div class="oftenuse-list fd-clr">
+                                <ul class="fd-clr">
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="oftenuse-noresult fd-hide">
+                            <div class="tip">
+                                <p>
+                                    暂无经常使用的类目！请<a href="#"
+                                        target="_self" title="试一试查找类目"
+                                        class="to-search">试一试查找类目</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--当前选择类目start-->
+                    <!--div class="unit-choose-result">
+                        <p class="cate-result">
+                            <span>您当前选择的类目：</span> <span
+                                class="choose-result noresult">尚未选择</span>
+                        </p>
+                        <p class="cate-info fd-hide">
+                            <span>类目说明：</span> <span class="info">尚未选择</span>
+                        </p>
+                    </div-->
+                    <!--当前选择类目end-->
+                    <div class="unit-choose-offertype fd-clr fd-hide">
+                        <span class="offertype-tit">发布产品类型：</span>
+                        <ul class="offertype-con">
+                            <li><input type="radio"
+                                name="offertype" id="type-custom"
+                                value="" /><label for="type-custom">发布加工定制产品</label></li>
+                            <li><input type="radio"
+                                name="offertype" id="type-common"
+                                value="" /><label for="type-common">发布普通现货产品</label></li>
+                        </ul>
+                    </div>
+                    <div class="submit-box fd-clr">
+                        <a class="next-btn dpl-btn-important dpl-btn-l"
+                            next="0" href="javascript:;"
+                            title="下一步，填写信息详情">下一步，填写信息详情</a>
+                    </div>
+                </div>
+            </div>
+            <!--div class="footer">
+                <ul>
+                    <li>阿里巴巴版权所有 1999-2012 <a
+                            href="http://info.1688.com/biznews/pages/alihome/js_zzq.html">著作权与商标声明</a></li>
+                    <li><a
+                            href="http://info.1688.com/biznews/pages/alihome/js_fl.html">法律声明</a></li>
+                    <li><a
+                            href="http://info.1688.com/biznews/pages/alihome/js_fw.html">服务条款</a></li>
+                    <li><a
+                            href="http://info.1688.com/biznews/pages/alihome/js_ys.html">隐私声明</a></li>
+                    <li><a target="_blank"
+                            href="http://page.1688.com/shtml/about/ali_china8.shtml">联系我们</a></li>
+                    <li><a href="http://page.1688.com/sitemap/sitemap.html">网站地图</a></li>
+                    <li class="no_border"><a href="http://tiyan.1688.com/">产品体验中心</a></li>
+                </ul>
+                <ul>
+                    <li class="no_border sli"><a
+                            href="http://page.1688.com/shtml/about/ali_group1.shtml"
+                            target="_blank">阿里巴巴集团</a>：阿里巴巴网络&nbsp;-&nbsp;</li>
+                    <a href="http://exodus.1688.com" target="_blank">中国站</a>&nbsp;
+                    <a href="http://www.alibaba.com/" target="_blank">国际站</a>&nbsp;
+                    <a href=" http://seller.aliexpress.com/" target="_blank">全球速卖通</a>&nbsp;
+                    <a href="http://www.alibaba.co.jp" target="_blank">日文站</a>
+                    <li><a href="http://www.net.cn/">中国万网</a></li>
+                    <li><a href="http://www.taobao.com" target="_blank">淘宝网</a></li>
+                    <li><a href="http://www.alipay.com" target="_blank">支付宝</a></li>
+                    <li><a href="http://www.yahoo.com.cn/" target="_blank">中国雅虎</a></li>
+                    <li><a href="http://www.koubei.com/" target="_blank">雅虎口碑网</a></li>
+                    <li><a href="http://www.alisoft.com" target="_blank">阿里软件</a></li>
+                    <li><a href="http://www.alimama.com/" target="_blank">阿里妈妈</a></li>
+                    <li class="no_border"><a
+                            href="http://view.1688.com/cms/zj/index.html">集团研究中心</a></li>
+                </ul>
+            </div-->
+        </div>
+    </div>
+    <div style="color: #fff; text-align: center;">
+        offer-web6.xyi<br />Server is OK
+    </div>
+    </div>
+</body>
+</html>
