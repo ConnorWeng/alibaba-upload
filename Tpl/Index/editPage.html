@@ -1961,7 +1961,7 @@ $(function () {
     });
 
     // 完成动态表格数据获取
-    $(document).live('click', '.product-speca-props input', function () {
+    $('.product-speca-props').on('click', 'input', function () {
         var selectedSpecs = [],
             table,
             specExtendedAttrs = [{name: '单价(元)', fname: 'price'}, {name: '可售数量', fname: 'amountOnSale'}, {name: '建议零售价', fname: 'retailPrice'}, {name: '单品货号', fname: 'cargoNumber'}],
@@ -2020,7 +2020,7 @@ $(function () {
         }
 
         // 准备产品属性信息
-          var productFeatures = '{';
+        var productFeatures = '{';
         $('.product-props .pro-item').each(function (index, element) {
             var $e = $(element),
                 $firstInput = $e.find('input:first').length == 0 ? $e.find('select:first') : $e.find('input:first'),
