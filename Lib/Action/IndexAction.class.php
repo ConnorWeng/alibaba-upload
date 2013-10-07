@@ -123,8 +123,8 @@ class IndexAction extends Action {
         $picUrl = $_REQUEST['picUrl'];
         $albumId = I('albumId');
         $localImageFile = '@'.OpenAPI::downloadImage($picUrl);
-        $uploadResult = OpenAPI::ibankImageUpload($albumId, uniqid(), $localImgFile)->result->toReturn[0];
-        unlink(substr($localImgFile,1));
+        $uploadResult = OpenAPI::ibankImageUpload($albumId, uniqid(), $localImageFile)->result->toReturn[0];
+        unlink(substr($localImageFile,1));
         $imageUriList = '["http://img.china.alibaba.com/'.$uploadResult->url.'"]';
         /* end */
 
