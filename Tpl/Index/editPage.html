@@ -2020,8 +2020,7 @@ $(function () {
         }
 
         // 准备产品属性信息
-        var productFeatures = '{';
-        $('.product-props .pro-item').each(function (index, element) {
+        var handleProItem = function (index, element) {
             var $e = $(element),
                 $firstInput = $e.find('input:first').length == 0 ? $e.find('select:first') : $e.find('input:first'),
                 fid = $firstInput.attr('name').substr(7),
@@ -2041,7 +2040,11 @@ $(function () {
 
             featureString = '"' + fid + '":"' + valueString + '",';
             productFeatures += featureString;
-        });
+        };
+        var productFeatures = '{';
+
+        $('.product-props .pro-item').each(handleProItem);
+        $('.product-speca-props .pro-item').each(handleProItem);
         productFeatures = productFeatures.substr(0, productFeatures.length - 1);
         productFeatures += '}';
         $('#productFeatures').val(productFeatures);

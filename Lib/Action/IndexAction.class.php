@@ -117,7 +117,7 @@ class IndexAction extends Action {
         $mixWholeSale = Util::check(I('mixSupport'));
         $skuList = $_REQUEST['skuList']; // FIXME: problem
         $periodOfValidity = I('info-validity');
-        $productFeatures = $_REQUEST['productFeatures']; // FIXME: not used
+        $productFeatures = $_REQUEST['productFeatures'];
 
         /* upload image */
         $picUrl = $_REQUEST['picUrl'];
@@ -128,7 +128,7 @@ class IndexAction extends Action {
         $imageUriList = '["http://img.china.alibaba.com/'.$uploadResult->url.'"]';
         /* end */
 
-        $offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"'.$mixWholeSale.'","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$subject.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","sendGoodsAddressId":"'.$sendGoodsAddressId.'","freightTemplateId":"'.$freightTemplateId.'","offerWeight":"'.$offerWeight.'","skuList":'.$skuList.',"periodOfValidity":'.$periodOfValidity.'}';
+        $offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":"true","pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":"true","mixWholeSale":"'.$mixWholeSale.'","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$subject.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.',"sendGoodsAddressId":"'.$sendGoodsAddressId.'","freightTemplateId":"'.$freightTemplateId.'","offerWeight":"'.$offerWeight.'","periodOfValidity":'.$periodOfValidity.'}';
 
         $result = OpenAPI::offerNew(stripslashes($offer));
         if ($result->result->success) {
