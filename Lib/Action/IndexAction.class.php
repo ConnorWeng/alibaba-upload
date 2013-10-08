@@ -65,7 +65,8 @@ class IndexAction extends Action {
             'categoryName' => $categoryName,
             'offerDetail' => $taobaoItem->desc,
             'picUrl' => $taobaoItem->pic_url,
-            'initSkus' => json_encode(Util::parseSkus($taobaoItem->skus->sku))
+            'initSkus' => json_encode(Util::parseSkus($taobaoItem->skus->sku)),
+            'offerWeight' => 1 // FIXME: 应该从淘宝获取重量数据
         ));
 
         $this->display();
@@ -132,7 +133,7 @@ class IndexAction extends Action {
 
         $result = OpenAPI::offerNew(stripslashes($offer));
         if ($result->result->success) {
-            $this->success('发布成功');
+            $this->success('发布成功', U('Index/index'));
         } else {
             dump($result);
             $this->error('发布失败：'.json_encode($result->message));
