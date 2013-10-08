@@ -135,8 +135,7 @@ class IndexAction extends Action {
         if ($result->result->success) {
             $this->success('发布成功', U('Index/index'));
         } else {
-            dump($result);
-            $this->error('发布失败：'.json_encode($result->message));
+            $this->error('发布失败：'.json_encode($result->message), '', 3);
         }
     }
 
