@@ -1849,7 +1849,8 @@ $(function () {
             'categoryId': categoryId
         },
         success: function (data) {
-            var normalFeaturesString = '', specFeaturesString = '';
+            var normalFeaturesString = '', specFeaturesString = '',
+                initSkus = {$initSkus};
 
             for (var i in data) {
                 var featuresString = '';
@@ -1895,9 +1896,12 @@ $(function () {
                         break;
                     case '2':
                         for (var j in feature.featureIdValues) {
-                            var valueObj = feature.featureIdValues[j];
+                            var valueObj = feature.featureIdValues[j],
+                                sku = querySku(initSkus, valueObj.value),
+                                checked = (sku == null ? '' : 'checked="true"');
+
                             featuresString += '<span class="span-item span-item-ipt">';
-                            featuresString += '<input class="ipt" type="checkbox" name="feature' + feature.fid + '" id="pro-feature' + feature.fid + '-' + j + '" value="' + valueObj.value + '"/>';
+                            featuresString += '<input class="ipt" type="checkbox" name="feature' + feature.fid + '" id="pro-feature' + feature.fid + '-' + j + '" value="' + valueObj.value + '" ' + checked + '/>';
                             featuresString += '<label for="pro-feature' + feature.fid + '-' + j + '">' + valueObj.value + '</label>';
                             featuresString += '</span>';
                         }
@@ -1925,6 +1929,8 @@ $(function () {
             $('.loading-box').remove();
             $('.product-props').append(normalFeaturesString);
             $('.product-speca-props').append(specFeaturesString);
+
+            createTable();
         }
     });
 
@@ -1961,7 +1967,9 @@ $(function () {
     });
 
     // 完成动态表格数据获取
-    $('.product-speca-props').on('click', 'input', function () {
+    $('.product-speca-props').on('click', 'input', createTable);
+
+    function createTable() {
         var selectedSpecs = [],
             table,
             specExtendedAttrs = [{name: '单价(元)', fname: 'price'}, {name: '可售数量', fname: 'amountOnSale'}, {name: '建议零售价', fname: 'retailPrice'}, {name: '单品货号', fname: 'cargoNumber'}],
@@ -1997,7 +2005,7 @@ $(function () {
             $('.sku-box').siblings('.warn').css('display', '');
             $('.sku-box').children().remove();
         }
-    });
+    }
 
     // 获取相册列表
     $.ajax({

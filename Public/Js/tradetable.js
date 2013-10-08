@@ -123,8 +123,8 @@ $(function ($) {
 
     };
 
-    // private functions
-    function querySku(skus) {
+    // public functions
+    window.querySku = function (skus) {
         for (var i in skus) {
                 var isThis = true;
                 for (var j = 1; j < arguments.length; j += 1) {
