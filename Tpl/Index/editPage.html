@@ -2030,7 +2030,7 @@ $(function () {
             if ($firstInput.attr('type') == 'checkbox') {
                 $e.find('input').each(function (i, e) {
                     if (e.checked) {
-                        valueString += e.value + ';';
+                        valueString += e.value + '、';
                     }
                 });
                 valueString = valueString.substr(0, valueString.length - 1);
@@ -2052,7 +2052,7 @@ $(function () {
         // 准备产品规格信息
         var skuList = '[';
         $('.tb-speca-quotation > tbody > tr').each(function (index, element) {
-                var $e = $(element);
+            var $e = $(element);
 
             skuList += '{"specAttributes":{';
             $e.find('.spec-attr').each(function(index, element) {
