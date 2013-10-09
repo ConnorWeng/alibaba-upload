@@ -10,26 +10,26 @@
 $(function () {
     $('.keybtn-search').on('click', function () {
         $.ajax({
-                url: '{:U('Index/searchCategory')}',
-                data: {
-                        'keyWord': $('.search-input').val()
-                },
-                success: function (categoryList) {
-                        var itemsString = '';
-                        for (var i = 0; i < categoryList.length; i++) {
-                                var c = categoryList[i];
-                                itemsString += '<li>';
-                                itemsString += '<input id="' + c.catsId + '" type="radio" name="search-radio">';
-                                itemsString += '<label for="' + c.catsId + '">' + c.catsName + '</label>';
-                                itemsString += '<em class="fd-hide"></em>';
-                                itemsString += '</li>';
-                        }
-
-                        $('ul.fd-clr li').remove();
-                        $('ul.fd-clr').append(itemsString);
-                        $('.search-category').removeClass('fd-hide');
-                        $('.tab-b.mod.mod-offer-choose-category').removeClass('fd-hide');
+            url: '{:U('Index/searchCategory')}',
+            data: {
+                'keyWord': $('.search-input').val()
+            },
+            success: function (categoryList) {
+                var itemsString = '';
+                for (var i = 0; i < categoryList.length; i++) {
+                    var c = categoryList[i];
+                    itemsString += '<li>';
+                    itemsString += '<input id="' + c.catsId + '" type="radio" name="search-radio">';
+                    itemsString += '<label for="' + c.catsId + '">' + c.catsName + '</label>';
+                    itemsString += '<em class="fd-hide"></em>';
+                    itemsString += '</li>';
                 }
+
+                $('ul.fd-clr li').remove();
+                $('ul.fd-clr').append(itemsString);
+                $('.search-category').removeClass('fd-hide');
+                $('.tab-b.mod.mod-offer-choose-category').removeClass('fd-hide');
+            }
         });
     });
 
@@ -40,7 +40,7 @@ $(function () {
             $('.mainform > .categoryId-input').val(categoryId);
             $('.mainform').submit();
         } else {
-                alert('请选择类目再继续！');
+            alert('请选择类目再继续！');
         }
     });
 
@@ -63,11 +63,11 @@ $(function () {
                 </h1>
             </div-->
             <div class="ali-search">
-                <span>你好，{$memberId}</span> <!--span class="bor">[<a
+                <span>你好，{$memberId}</span> <span class="bor">[<a
                     class="signout" target="_self"
-                    href="http://exodus.1688.com/member/signout.htm"
+                    href="{:U('Index/signOut')}"
                     title="退出">退出</a>]
-                </span> <span class="bor"><a
+                </span> <!--span class="bor"><a
                     href="http://work.1688.com/" title="我的阿里">我的阿里</a></span--> <span><a
                     href="http://114.1688.com/kf/detail/2789732.html?tracelog=kf_2012_budian_backofferfabu5"
                     title="信息发布规则">信息发布规则</a></span>

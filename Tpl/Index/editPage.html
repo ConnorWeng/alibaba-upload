@@ -23,11 +23,11 @@
                 </h1>
             </div-->
             <div class="ali-search">
-                <span>你好，alitestforisv01</span> <!--span class="bor">[<a
+                <span>你好，{$memberId}</span> <span class="bor">[<a
                     class="signout" target="_self"
-                    href="http://exodus.1688.com/member/signout.htm"
+                    href="{:U('Index/signOut')}"
                     title="退出">退出</a>]
-                </span> <span class="bor"><a
+                </span> <!--span class="bor"><a
                     href="http://work.1688.com/" title="我的阿里">我的阿里</a></span--> <span><a
                     href="http://rule.1688.com/xize/01.html?tracelog=aliguize_offer_publish_rule"
                     title="信息发布规则">信息发布规则</a></span>
@@ -1938,15 +1938,15 @@ $(function () {
     $.ajax({
           url: '{:U('Index/getSendGoodsAddress')}',
           success: function (data) {
-                    var addressesString = '';
-                    for (var i in data) {
-                        var address = data[i];
+              var addressesString = '';
+              for (var i in data) {
+                  var address = data[i];
 
-                        addressesString += '<option value="' + address.deliveryAddressId + '">';
-                        addressesString += address.location + ' ' + address.address;
-                        addressesString += '</option>';
-                    }
-                    $('.list-address.sel').append(addressesString);
+                  addressesString += '<option value="' + address.deliveryAddressId + '">';
+                  addressesString += address.location + ' ' + address.address;
+                  addressesString += '</option>';
+              }
+              $('.list-address.sel').append(addressesString);
           }
     });
 

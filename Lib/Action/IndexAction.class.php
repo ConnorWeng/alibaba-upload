@@ -12,19 +12,26 @@ class IndexAction extends Action {
     // 跳转到alibaba的认证页面
     public function auth() {
         $taobaoItemId = I('taobaoItemId');
-        header('location:'.Util::getAlibabaAuthUrl($taobaoItemId));
+        if (!session('?access_token')) {
+            header('location:'.Util::getAlibabaAuthUrl($taobaoItemId));
+        } else {
+            U('Index/authBack', array('state' => $taobaoItemId), true, true, false);
+        }
     }
 
     // 从alibaba跳转回来的action
     public function authBack() {
-        $code = I('code');
+        if (!session('?access_token')) {
+            $code = I('code');
+            $tokens = Util::getTokens($code);
+
+            session('member_id', $tokens->memberId);
+            session('access_token', $tokens->access_token);
+            cookie('refresh_token', $tokens->refresh_token);
+        }
+
         $taobaoItemId = I('state');
         $taobaoItem = OpenAPI::getTaobaoItem($taobaoItemId);
-        $tokens = Util::getTokens($code);
-
-        session('access_token', $tokens->access_token);
-        session('refresh_token', $tokens->refresh_token);
-        session('member_id', $tokens->memberId);
 
         $this->assign(array(
             'basepath' => str_replace('index.php', 'Public', __APP__),
@@ -59,9 +66,10 @@ class IndexAction extends Action {
         $categoryName = OpenAPI::getPostCatList(I('categoryId'))->result->toReturn[0]->catsName;
         $taobaoItem = OpenAPI::getTaobaoItem(I('taobaoItemId'));
         $this->assign(array(
+            'memberId' => session('member_id'),
             'basepath' => str_replace('index.php', 'Public', __APP__),
             'infoTitle' => $taobaoItem->title,
-                        'categoryId' => I('categoryId'),
+            'categoryId' => I('categoryId'),
             'categoryName' => $categoryName,
             'offerDetail' => $taobaoItem->desc,
             'picUrl' => $taobaoItem->pic_url,
@@ -74,10 +82,10 @@ class IndexAction extends Action {
 
     // 获取发布相关属性
     public function getPostFeatures() {
-                $categoryId = I('categoryId');
-                $features = OpenAPI::offerPostFeatures($categoryId)->result->toReturn;
+        $categoryId = I('categoryId');
+        $features = OpenAPI::offerPostFeatures($categoryId)->result->toReturn;
 
-                $this->ajaxReturn($features, 'JSON');
+        $this->ajaxReturn($features, 'JSON');
     }
 
     // 获取发货地址
@@ -137,6 +145,13 @@ class IndexAction extends Action {
         } else {
             $this->error('发布失败：'.json_encode($result->message), '', 3);
         }
+    }
+
+    // 登出
+    public function signOut() {
+        session(null);
+        cookie(null);
+        U('Index/index', '', true, true, false);
     }
 
 }
