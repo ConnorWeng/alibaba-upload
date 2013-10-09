@@ -32,13 +32,13 @@ class OpenAPI {
 
     public static function getSendGoodsAddressList() {
         $api = 'param2/1/cn.alibaba.open/trade.freight.sendGoodsAddressList.get';
-        return self::callOpenAPI($api, array('memberId' => $_SESSION['member_id'],
+        return self::callOpenAPI($api, array('memberId' => session('member_id'),
                                              'returnFields' => 'deliveryAddressId,isCommonUse,location,address'), false);
     }
 
     public static function getFreightTemplateList() {
         $api = 'param2/1/cn.alibaba.open/trade.freight.freightTemplateList.get';
-        return self::callOpenAPI($api, array('memberId' => $_SESSION['member_id']), false);
+        return self::callOpenAPI($api, array('memberId' => session('member_id')), false);
     }
 
     public static function ibankImageUpload($albumId, $name, $imageBytes) {
@@ -86,7 +86,7 @@ class OpenAPI {
 
     private static function makeUrl($api, $paramsArray, $urlencode) {
         $timestamp = time() * 1000;
-        $accessToken = $_SESSION['access_token'];
+        $accessToken = session('access_token');
         $params = '';
         foreach ($paramsArray as $key => $val) {
             $value = $val;
@@ -123,7 +123,7 @@ class OpenAPI {
 
     private static function makeShortUrl($api, $paramsArray) {
         $timestamp = time() * 1000;
-        $accessToken = $_SESSION['access_token'];
+        $accessToken = session('access_token');
         $url = C('open_url').'/'.$api.'/'.C('app_id').'?_aop_timestamp='.
                $timestamp.'&access_token='.$accessToken.'&_aop_signature='.
                Util::signDefault(C('open_url'), $api, array_merge($paramsArray, array('_aop_timestamp' => $timestamp, 'access_token' => $accessToken)));
