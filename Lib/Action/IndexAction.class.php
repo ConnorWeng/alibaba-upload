@@ -65,6 +65,7 @@ class IndexAction extends Action {
     public function editPage() {
         $categoryName = OpenAPI::getPostCatList(I('categoryId'))->result->toReturn[0]->catsName;
         $taobaoItem = OpenAPI::getTaobaoItem(I('taobaoItemId'));
+
         $this->assign(array(
             'memberId' => session('member_id'),
             'basepath' => str_replace('index.php', 'Public', __APP__),
@@ -74,7 +75,7 @@ class IndexAction extends Action {
             'offerDetail' => $taobaoItem->desc,
             'picUrl' => $taobaoItem->pic_url,
             'initSkus' => json_encode(Util::parseSkus($taobaoItem->skus->sku)),
-            'offerWeight' => 1 // FIXME: 应该从淘宝获取重量数据
+            'offerWeight' => $taobaoItem->item_weight
         ));
 
         $this->display();
