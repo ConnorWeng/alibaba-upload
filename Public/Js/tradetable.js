@@ -60,9 +60,21 @@ $(function ($) {
             var html = '';
             for (var i = 0; i < this.selectedSpecs[0].values.length; i++) {
                 html += '<tr>';
-                html += '<td>' + this.selectedSpecs[0].values[i] + '</td>';
+                html += '<td class="spec-attr" fid="' + this.selectedSpecs[0].fid + '">' + this.selectedSpecs[0].values[i] + '</td>';
+
+                var sku = querySku(this.initSkus, this.selectedSpecs[0].values[i]);
+
                 for (var o in this.specExtendedAttrs) {
-                    html += '<td><input class="txt" type="text"/></td>';
+                    var val = '';
+                    if (sku != null) {
+                        if (this.specExtendedAttrs[o].fname == 'price') {
+                            val = sku.price
+                        }
+                        if (this.specExtendedAttrs[o].fname == 'amountOnSale') {
+                            val = sku.quantity;
+                        }
+                    }
+                    html += '<td><input class="txt spec-extend-attr" fname="' + this.specExtendedAttrs[o].fname + '" type="text" value="' + val + '"/></td>';
                 }
                 html += '</tr>';
             }
@@ -84,12 +96,12 @@ $(function ($) {
                     for (var o in this.specExtendedAttrs) {
                         var val = '';
                         if (sku != null) {
-                                if (this.specExtendedAttrs[o].fname == 'price') {
-                                        val = sku.price;
-                                }
-                                if (this.specExtendedAttrs[o].fname == 'amountOnSale') {
-                                        val = sku.quantity;
-                                }
+                            if (this.specExtendedAttrs[o].fname == 'price') {
+                                val = sku.price;
+                            }
+                            if (this.specExtendedAttrs[o].fname == 'amountOnSale') {
+                                val = sku.quantity;
+                            }
                         }
                         html += '<td>';
                         html += '<input class="txt spec-extend-attr" fname="' + this.specExtendedAttrs[o].fname + '" type="text" value="' + val + '"/>';
@@ -126,16 +138,16 @@ $(function ($) {
     // public functions
     window.querySku = function (skus) {
         for (var i in skus) {
-                var isThis = true;
-                for (var j = 1; j < arguments.length; j += 1) {
-                        if (skus[i].propertiesName.indexOf(arguments[j]) == -1) {
-                                isThis = false;
-                                break;
-                        }
+            var isThis = true;
+            for (var j = 1; j < arguments.length; j += 1) {
+                if (skus[i].propertiesName.indexOf(arguments[j]) == -1) {
+                    isThis = false;
+                    break;
                 }
-                if (isThis) {
-                        return skus[i];
-                }
+            }
+            if (isThis) {
+                return skus[i];
+            }
         }
         return null;
     }

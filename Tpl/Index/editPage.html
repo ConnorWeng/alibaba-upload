@@ -2023,7 +2023,7 @@ $(function () {
 
     $('.publish-btn').on('click', function offer() {
         // TODO: validate form
-        if (false) {
+        if (!validate()) {
             return;
         }
 
@@ -2083,6 +2083,10 @@ $(function () {
 
         document.mainform.submit();
     });
+
+    function validate() {
+        return true;
+    }
 
 });
 </script>
