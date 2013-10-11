@@ -2085,7 +2085,68 @@ $(function () {
     });
 
     function validate() {
+        // 校验属性是否全部加载完毕
+        if ($('.loading-box').length > 0) {
+            alert('尚有信息还在加载中，请稍候再提交');
+            return false;
+        }
+
+        // 校验required
+        $('.err').css('display', 'none');
+        var props = $('.pro-item');
+        for (var i = 0; i < props.length; i++) {
+            var $p = $(props[i]);
+            if ($p.find('.icon-must').length > 0) {
+                var $input = $p.find('input');
+                if ($input.length > 0) {
+                    if ($input.attr('type') == 'text') {
+                        if ($input.val() == '') {
+                            jumpToErrorPosition($p, '请填写');
+                            return false;
+                        }
+                    } else if ($input.attr('type') == 'checkbox') {
+                        if ($p.find('input:checked').length == 0) {
+                            jumpToErrorPosition($p, '请填写');
+                            return false;
+                        }
+                    }
+                } else {
+                    var $select = $p.find('select');
+                    if ($select.length > 0) {
+                        if ($select.val() == null) {
+                            jumpToErrorPosition($p, '请填写');
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        // FIXME: 应该更通用
+        if ($('#weight-input').val() == '') {
+            jumpToErrorPosition($('#weight-input').closest('ul').find('.logistics-err'));
+            return false;
+        }
+
         return true;
+    }
+
+    function jumpToErrorPosition($control, errorMessage) {
+        var top = $control[0].offsetTop,
+            $errDiv = $control.next('.err-div'),
+            $err = $errDiv.find('.err');
+
+        if ($err.length == 0) {
+            $err = $control.find('.err');
+        }
+
+        if ($err.length > 0) {
+            if (errorMessage) {
+                $err.text(errorMessage);
+            }
+            $err.css('display', 'block');
+        }
+
+        window.scroll(0, top);
     }
 
 });
