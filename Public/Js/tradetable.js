@@ -68,10 +68,13 @@ $(function ($) {
                     var val = '';
                     if (sku != null) {
                         if (this.specExtendedAttrs[o].fname == 'price') {
-                            val = sku.price
+                            val = sku.price;
                         }
                         if (this.specExtendedAttrs[o].fname == 'amountOnSale') {
                             val = sku.quantity;
+                        }
+                        if (this.specExtendedAttrs[o].fname == 'retailPrice') {
+                            val = sku.price * 2;
                         }
                     }
                     html += '<td><input class="txt spec-extend-attr" fname="' + this.specExtendedAttrs[o].fname + '" type="text" value="' + val + '"/></td>';
@@ -101,6 +104,9 @@ $(function ($) {
                             }
                             if (this.specExtendedAttrs[o].fname == 'amountOnSale') {
                                 val = sku.quantity;
+                            }
+                            if (this.specExtendedAttrs[o].fname == 'retailPrice') {
+                                val = sku.price * 2;
                             }
                         }
                         html += '<td>';
