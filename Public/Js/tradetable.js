@@ -1,13 +1,14 @@
 $(function ($) {
 
     // Only support 2 level specs only, which means selectedSpecs length must be 2.
-    window.tradetable = function (parent, selectedSpecs, specExtendedAttrs, initSkus) {
+    window.tradetable = function (parent, selectedSpecs, specExtendedAttrs, initSkus, propsAlias) {
         // selectedSpecs: [{fid:'',name:'',values:[]}, {fid:'',name:'',values:[]}]
         // specExtendedAttrs: [{fid:'',name:'',showType:''}]
         this.parent = parent;
         this.selectedSpecs = selectedSpecs;
         this.specExtendedAttrs = specExtendedAttrs;
         this.initSkus = initSkus;
+        this.propsAlias = propsAlias;
     }
 
     window.tradetable.prototype = {
@@ -62,7 +63,7 @@ $(function ($) {
                 html += '<tr>';
                 html += '<td class="spec-attr" fid="' + this.selectedSpecs[0].fid + '">' + this.selectedSpecs[0].values[i] + '</td>';
 
-                var sku = querySku(this.initSkus, this.selectedSpecs[0].values[i]);
+                var sku = querySku(this.initSkus, this.propsAlias, this.selectedSpecs[0].values[i]);
 
                 for (var o in this.specExtendedAttrs) {
                     var val = '';
@@ -94,7 +95,7 @@ $(function ($) {
                     html += '<td class="spec-attr" fid="' + this.selectedSpecs[0].fid + '">' + this.selectedSpecs[0].values[i] + '</td>';
                     html += '<td class="spec-attr" fid="' + this.selectedSpecs[1].fid + '">' + this.selectedSpecs[1].values[j] + '</td>';
 
-                    var sku = querySku(this.initSkus, this.selectedSpecs[0].values[i], this.selectedSpecs[1].values[j]);
+                    var sku = querySku(this.initSkus, this.propsAlias, this.selectedSpecs[0].values[i], this.selectedSpecs[1].values[j]);
 
                     for (var o in this.specExtendedAttrs) {
                         var val = '';
@@ -142,11 +143,12 @@ $(function ($) {
     };
 
     // public functions
-    window.querySku = function (skus) {
+    window.querySku = function (skus, propsAlias) {
         for (var i in skus) {
             var isThis = true;
-            for (var j = 1; j < arguments.length; j += 1) {
-                if (skus[i].propertiesName.indexOf(arguments[j]) == -1) {
+            for (var j = 2; j < arguments.length; j += 1) {
+                var vid = getVidByAlias(propsAlias, arguments[j]);
+                if (skus[i].propertiesName.indexOf(vid == null ? arguments[j] : vid) == -1) {
                     isThis = false;
                     break;
                 }
@@ -156,6 +158,30 @@ $(function ($) {
             }
         }
         return null;
+    }
+
+    window.getPropsAlias = function (propsAlias, propVid) {
+        var position = propsAlias.indexOf(propVid);
+
+        if (position != -1) {
+            var nextPosition = propsAlias.indexOf(';', position),
+                propString = propsAlias.substring(position, nextPosition == -1 ? propsAlias.length : nextPosition);
+
+            return propString.split(':')[1];
+        }
+
+        return null;
+    }
+
+    window.getVidByAlias = function (propsAlias, alias) {
+        var position = propsAlias.indexOf(alias),
+            vid = null;
+
+        if (position !== -1) {
+            vid =  propsAlias.substring(propsAlias.lastIndexOf(':', position - 2), position - 1);
+        }
+
+        return vid;
     }
 
 });

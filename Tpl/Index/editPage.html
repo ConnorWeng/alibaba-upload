@@ -1850,7 +1850,8 @@ $(function () {
         },
         success: function (data) {
             var normalFeaturesString = '', specFeaturesString = '',
-                initSkus = {$initSkus};
+                initSkus = {$initSkus},
+                propsAlias = '{$propsAlias}';
 
             for (var i in data) {
                 var featuresString = '';
@@ -1882,7 +1883,7 @@ $(function () {
                 switch (feature.showType) {
                     case '-1':
                     case '0':
-                          featuresString += '<span class="span-item">';
+                        featuresString += '<span class="span-item">';
                         featuresString += '<input type="text" name="feature' + feature.fid + '" id="' + feature.fid + '"/>';
                         featuresString += '</span>';
                         break;
@@ -1896,12 +1897,10 @@ $(function () {
                         break;
                     case '2':
                         for (var j in feature.featureIdValues) {
-                            var valueObj = feature.featureIdValues[j],
-                                sku = querySku(initSkus, valueObj.value),
-                                checked = (sku == null ? '' : 'checked="true"');
+                            var valueObj = feature.featureIdValues[j];
 
                             featuresString += '<span class="span-item span-item-ipt">';
-                            featuresString += '<input class="ipt" type="checkbox" name="feature' + feature.fid + '" id="pro-feature' + feature.fid + '-' + j + '" value="' + valueObj.value + '" ' + checked + '/>';
+                            featuresString += '<input class="ipt" type="checkbox" name="feature' + feature.fid + '" id="pro-feature' + feature.fid + '-' + j + '" value="' + valueObj.value + '" />';
                             featuresString += '<label for="pro-feature' + feature.fid + '-' + j + '">' + valueObj.value + '</label>';
                             featuresString += '</span>';
                         }
@@ -1929,6 +1928,49 @@ $(function () {
             $('.loading-box').remove();
             $('.product-props').append(normalFeaturesString);
             $('.product-speca-props').append(specFeaturesString);
+
+            // 匹配sku
+            for (var i in initSkus) {
+                var sku = initSkus[i],
+                    propsName = sku.propertiesName,
+                    props = propsName.split(';');
+
+                for (var j in props) {
+                    var prop = props[j],
+                        parts = prop.split(':'),
+                        vid = parts[1],
+                        fname = parts[2],
+                        vname = parts[3];
+
+                    $('.product-speca-props .pro-item').each(function (index, element) {
+                        var $e = $(element),
+                            propName = $e.text().split('：')[0];
+
+                        if (fname.indexOf(propName) !== -1) {
+                            var alias = getPropsAlias(propsAlias, vid);
+
+                            if (alias != null) {
+                                var newSpecString = '',
+                                    fid = $e.attr('id').substr(15);
+                                newSpecString += '<span class="span-item span-item-ipt">';
+                                newSpecString += '<input class="ipt" type="checkbox" name="feature' + fid + '" id="pro-feature' + fid + '-' + j + '" value="' + alias + '" checked="true" />';
+                                newSpecString += '<label for="pro-feature' + fid + '-">' + alias + '</label>';
+                                newSpecString += '</span>';
+
+                                $e.find('em').append(newSpecString);
+                            } else {
+                                $e.find('.pro-form span').each(function (i, e) {
+                                    var $$e = $(e);
+
+                                    if ($$e.text().indexOf(vname) !== -1) {
+                                        $$e.find('input').attr('checked', 'true');
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            }
 
             createTable();
         }
@@ -1973,7 +2015,8 @@ $(function () {
         var selectedSpecs = [],
             table,
             specExtendedAttrs = [{name: '单价(元)', fname: 'price'}, {name: '可售数量', fname: 'amountOnSale'}, {name: '建议零售价', fname: 'retailPrice'}, {name: '单品货号', fname: 'cargoNumber'}],
-            initSkus = {$initSkus};
+            initSkus = {$initSkus},
+            propsAlias = '{$propsAlias}';
 
         $('.product-speca-props input:checked').each(function (index, element) {
             var $e = $(element),
@@ -1998,7 +2041,7 @@ $(function () {
 
         if (selectedSpecs.length > 0) {
             $('.sku-box').siblings('.warn').css('display', 'none');
-                  table = new tradetable($('.sku-box'), selectedSpecs, specExtendedAttrs, initSkus);
+                  table = new tradetable($('.sku-box'), selectedSpecs, specExtendedAttrs, initSkus, propsAlias);
                   table.removeAll();
                   table.createTable();
         } else {

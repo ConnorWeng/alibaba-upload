@@ -75,6 +75,7 @@ class IndexAction extends Action {
             'offerDetail' => $taobaoItem->desc,
             'picUrl' => $taobaoItem->pic_url,
             'initSkus' => json_encode(Util::parseSkus($taobaoItem->skus->sku)),
+            'propsAlias' => $taobaoItem->property_alias,
             'offerWeight' => '0.2'
         ));
 
