@@ -144,13 +144,32 @@ $(function ($) {
 
     // public functions
     window.querySku = function (skus, propsAlias) {
+        var args = querySku.arguments;
         for (var i in skus) {
             var isThis = true;
-            for (var j = 2; j < arguments.length; j += 1) {
-                var vid = getVidByAlias(propsAlias, arguments[j]);
-                if (skus[i].propertiesName.indexOf(vid == null ? arguments[j] : vid) == -1) {
-                    isThis = false;
-                    break;
+            for (var j = 2; j < args.length; j += 1) {
+                var vid = getVidByAlias(propsAlias, args[j]),
+                    skuPropertiesNames = skus[i].propertiesName.split(';');
+
+                if (vid !== null) {
+                    if (skus[i].propertiesName.indexOf(vid) == -1) {
+                        isThis = false;
+                        break;
+                    }
+                } else {
+                    var found = false;
+                    for (var k in skuPropertiesNames) {
+                        var parts = skuPropertiesNames[k].split(':'),
+                            skuPropertyName = parts[3];
+
+                        if (skuPropertyName == args[j]) {
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        isThis = false;
+                        break;
+                    }
                 }
             }
             if (isThis) {
@@ -174,14 +193,19 @@ $(function ($) {
     }
 
     window.getVidByAlias = function (propsAlias, alias) {
-        var position = propsAlias.indexOf(alias),
-            vid = null;
+        var propsAliasArray = propsAlias.split(';');
 
-        if (position !== -1) {
-            vid =  propsAlias.substring(propsAlias.lastIndexOf(':', position - 2), position - 1);
+        for (var i in propsAliasArray) {
+            var parts = propsAliasArray[i].split(':'),
+                destVid = parts[1],
+                destAlias = parts[2];
+
+            if (alias === destAlias) {
+                return destVid;
+            }
         }
 
-        return vid;
+        return null;
     }
 
 });

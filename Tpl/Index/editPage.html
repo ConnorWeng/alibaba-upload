@@ -1946,7 +1946,7 @@ $(function () {
                         var $e = $(element),
                             propName = $e.text().split('：')[0];
 
-                        if (fname.indexOf(propName) !== -1) {
+                        if (fname[0] == propName[0]) {
                             var alias = getPropsAlias(propsAlias, vid);
 
                             if (alias != null && $e.find('.pro-d').text().indexOf(alias) === -1) {
@@ -1960,9 +1960,10 @@ $(function () {
                                 $e.find('em').append(newSpecString);
                             } else {
                                 $e.find('.pro-form span').each(function (i, e) {
-                                    var $$e = $(e);
+                                    var $$e = $(e),
+                                        allSpanText = $$e.text();
 
-                                    if ($$e.text().indexOf(vname) !== -1) {
+                                    if (allSpanText === vname || allSpanText === alias) {
                                         $$e.find('input').attr('checked', 'true');
                                     }
                                 });
