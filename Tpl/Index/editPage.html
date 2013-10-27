@@ -1949,7 +1949,11 @@ $(function () {
                         if (fname[0] == propName[0]) {
                             var alias = getPropsAlias(propsAlias, vid);
 
-                            if (alias != null && $e.find('.pro-d').text().indexOf(alias) === -1) {
+                            if (alias === null) {
+                                alias = vname;
+                            }
+
+                            if ($e.find('.pro-d').text().indexOf(alias) === -1) {
                                 var newSpecString = '',
                                     fid = $e.attr('id').substr(15);
                                 newSpecString += '<span class="span-item span-item-ipt">';
