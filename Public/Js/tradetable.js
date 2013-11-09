@@ -9,6 +9,35 @@ $(function ($) {
         this.specExtendedAttrs = specExtendedAttrs;
         this.initSkus = initSkus;
         this.propsAlias = propsAlias;
+
+        $(document).on('change', '.same-checkbox', function (e) {
+            var checkbox = e.target
+                $checkbox = $(checkbox);
+            if (checkbox.checked) {
+                var $allSameCheckbox = $('.same-checkbox'),
+                    index = 0;
+                for (; index < $allSameCheckbox.length; index++) {
+                    if ($allSameCheckbox[index] === checkbox) {
+                        break;
+                    }
+                }
+
+                var value = '';
+                $('.tb-speca-quotation tbody tr').each(function (i, tr) {
+                    var $tr = $(tr),
+                        val = $tr.find('input').eq(index).val();
+                    if (val != '') {
+                        value = val;
+                    }
+                });
+                if (value !== '') {
+                    $('.tb-speca-quotation tbody tr').each(function (i, tr) {
+                        var $tr = $(tr);
+                        $tr.find('input').eq(index).val(value);
+                    });
+                }
+            }
+        });
     }
 
     window.tradetable.prototype = {
@@ -29,11 +58,11 @@ $(function ($) {
                 html += '<th class="t-' + (level + i + 1) + '">';
 
                 html += '<span>' + this.specExtendedAttrs[i].name + '</span>';
-              /*html += '<br/>';
+                html += '<br/>';
                 html += '<span>';
-                html += '<input type="checkbox"></input>';
+                html += '<input class="same-checkbox" type="checkbox"></input>';
                 html += '<label>全部相同</label>';
-                html += '</span>';*/
+                html += '</span>';
 
                 html += '</th>';
             }
