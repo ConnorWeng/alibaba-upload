@@ -67,6 +67,7 @@ class IndexAction extends Action {
         $taobaoItem = OpenAPI::getTaobaoItem(I('taobaoItemId'));
 
         $this->assign(array(
+            'taobaoItemId' => I('taobaoItemId'),
             'memberId' => session('member_id'),
             'basepath' => str_replace('index.php', 'Public', __APP__),
             'infoTitle' => $taobaoItem->title,
