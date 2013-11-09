@@ -143,10 +143,22 @@ class IndexAction extends Action {
 
         $result = OpenAPI::offerNew(stripslashes($offer));
         if ($result->result->success) {
-            $this->success('发布成功', U('Index/index'));
+            $offerId = $result->result->toReturn[0];
+            $itemUrl = "http://detail.1688.com/offer/$offerId.html";
+            $this->assign(array(
+                'result' => '发布成功啦！',
+                'message' => '宝贝已顺利上架哦！祝生意欣荣，财源广进！',
+                'itemUrl' => '<li><a href="'.$itemUrl.'">来看看刚上架的宝贝吧！</a></li>'
+            ));
         } else {
-            $this->error('发布失败：'.json_encode($result->message), '', 3);
+            $this->assign(array(
+                'result' => '发布失败！',
+                'message' => '宝贝没有顺利上架，请不要泄气哦，换个宝贝试试吧！祝生意欣荣，财源广进！',
+                'itemUrl' => ''
+            ));
         }
+
+        $this->display();
     }
 
     // 登出
