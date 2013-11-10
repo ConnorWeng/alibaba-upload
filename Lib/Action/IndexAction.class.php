@@ -145,15 +145,18 @@ class IndexAction extends Action {
         /* end */
 
         /* auto off */
-        $encNumIid = '51chk'.base64_encode(I('taobaoItemId'));
-        $autoOffJpg = 'http://51wangpi.com/'.$encNumIid.'.jpg';
-        $autoOffWarnHtml = '<img align="middle" src="'.$autoOffJpg.'"/><br/>';
-        if (get_magic_quotes_gpc() == 0) {
-            $autoOffWarnHtml = addslashes(addslashes($autoOffWarnHtml));
-        } else {
-            $autoOffWarnHtml = addslashes($autoOffWarnHtml);
+        $autoOff = Util::check(I('autoOff'));
+        if ($autoOff == 'true') {
+            $encNumIid = '51chk'.base64_encode(I('taobaoItemId'));
+            $autoOffJpg = 'http://51wangpi.com/'.$encNumIid.'.jpg';
+            $autoOffWarnHtml = '<img align="middle" src="'.$autoOffJpg.'"/><br/>';
+            if (get_magic_quotes_gpc() == 0) {
+                $autoOffWarnHtml = addslashes(addslashes($autoOffWarnHtml));
+            } else {
+                $autoOffWarnHtml = addslashes($autoOffWarnHtml);
+            }
+            $detail = $autoOffWarnHtml.$detail;
         }
-        $detail = $autoOffWarnHtml.$detail;
         /* end */
 
         $offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":'.$supportOnline.',"pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":'.$skuTradeSupported.',"mixWholeSale":"'.$mixWholeSale.'","priceRanges":"'.$priceRanges.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$subject.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.',"sendGoodsAddressId":"'.$sendGoodsAddressId.'","freightTemplateId":"'.$freightTemplateId.'","offerWeight":"'.$offerWeight.'","skuList":'.$skuList.',"periodOfValidity":'.$periodOfValidity.'}';
