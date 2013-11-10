@@ -144,6 +144,18 @@ class IndexAction extends Action {
         $imageUriList = '["http://img.china.alibaba.com/'.$uploadResult->url.'"]';
         /* end */
 
+        /* auto off */
+        $encNumIid = '51chk'.base64_encode(I('taobaoItemId'));
+        $autoOffJpg = 'http://51wangpi.com/'.$encNumIid.'.jpg';
+        $autoOffWarnHtml = '<img align="middle" src="'.$autoOffJpg.'"/><br/>';
+        if (get_magic_quotes_gpc() == 0) {
+            $autoOffWarnHtml = addslashes(addslashes($autoOffWarnHtml));
+        } else {
+            $autoOffWarnHtml = addslashes($autoOffWarnHtml);
+        }
+        $detail = $autoOffWarnHtml.$detail;
+        /* end */
+
         $offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":'.$supportOnline.',"pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":'.$skuTradeSupported.',"mixWholeSale":"'.$mixWholeSale.'","priceRanges":"'.$priceRanges.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$subject.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.',"sendGoodsAddressId":"'.$sendGoodsAddressId.'","freightTemplateId":"'.$freightTemplateId.'","offerWeight":"'.$offerWeight.'","skuList":'.$skuList.',"periodOfValidity":'.$periodOfValidity.'}';
 
         $result = OpenAPI::offerNew(stripslashes($offer));
@@ -157,7 +169,7 @@ class IndexAction extends Action {
             ));
         } else {
             $this->assign(array(
-                'result' => '发布失败！',
+                'result' => '发布失败！'.json_encode($result->message),
                 'message' => '宝贝没有顺利上架，请不要泄气哦，换个宝贝试试吧！祝生意欣荣，财源广进！',
                 'itemUrl' => ''
             ));
