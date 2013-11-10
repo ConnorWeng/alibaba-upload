@@ -13,6 +13,7 @@
 <form name="mainform" class="mainform" action="{:U('Index/offerNew')}" method="POST">
 <input type="hidden" name="productFeatures" id="productFeatures"/>
 <input type="hidden" name="skuList" id="skuList"/>
+<input type="hidden" name="priceRanges" id="priceRanges"/>
     <div id="doc"
         data-doc-config='{"isProcessing":"false","offerScoreUrl":"http://offer.1688.com/offer/increment/calculate_score.htm?_input_charset=UTF-8","draftSubmitUrl":"http://offer.1688.com/offer/draft/save.htm?_input_charset=UTF-8","submitUrl":"http://offer.1688.com/offer/post/fill_product_info.htm","submitData":{"_widget_data_post_":true,"site":"","featureFilter":false,"catType":"0","_csrf_token":"3a1203d336ab038359e9f952a3a038b0","action":"OfferPostAction","offerDraftId":"","tradeType":"1","topCategoryId":"3","secondCategoryId":"10166","thirdCategoryId":"1031919","operator":"new","fromWhere":"","adGroupId":"","productId":""}}'>
         <div id="header" class="header">
@@ -782,7 +783,7 @@
                                 </div>
 
                                 <div
-                                    class="submod price-interval fd-clr"
+                                    class="submod price-interval fd-hide fd-clr"
                                     data-mod-config='{"submod":"priceInterval","isWholeSalePop":true,"beginAmountValue":1,"id":"feature4341","fieldType":"string","isNeeded":"N","name":"价格区间","value":[]}'>
                                     <div class="form-line">
                                         <div class="form-title">
@@ -815,6 +816,7 @@
                                                                     class="txt"
                                                                     data-field-name="price-interval-num-0"
                                                                     name="wb"
+                                                                    value="1"
                                                                     maxlength="10" /><span
                                                                     class="unit"></span>及以上：
                                                                 </td>
@@ -824,6 +826,7 @@
                                                                     class="txt"
                                                                     data-field-name="price-interval-price-0"
                                                                     name="wprice"
+                                                                    value="{$price}"
                                                                     maxlength="10" /><span
                                                                     class="price-unit"></span><span
                                                                     class="per">/</span><span
@@ -1010,7 +1013,7 @@
                                         <div class="err"></div>
                                     </div>
                                 </div>
-                                <div class="submod selling fd-clr"
+                                <div class="submod selling fd-hide fd-clr"
                                     data-mod-config='{"submod":"selling","isEdit":false,"bookedAmount":"0","id":"total-num","fieldType":"int","isNeeded":"N","name":"可售数量","value":""}'>
                                     <div class="form-line">
                                         <div class="form-title">
@@ -1072,13 +1075,14 @@
                                                     <input class="ipt"
                                                     type="radio"
                                                     value="false"
+                                                    checked="true"
                                                     name="sales-type"
                                                     id="sales-type-default" /><label
                                                     for="sales-type-default">普通售卖</label>
                                                     <input class="ipt"
                                                     type="radio"
                                                     value="true"
-                                                    checked="checked"
+                                                    disabled="disabled"
                                                     name="sales-type"
                                                     id="sales-type-batch" /><label
                                                     for="sales-type-batch">批量售卖</label>
@@ -1147,7 +1151,7 @@
                                     </div>
                                 </div>
 
-                                <div class="submod retailprice fd-clr"
+                                <div class="submod retailprice fd-hide fd-clr"
                                     data-mod-config='{"submod":"retailprice","id":"retailprice","fieldType":"string","isNeeded":"N","name":"建议零售价","value":""}'>
                                     <div class="form-line">
                                         <div class="form-title">
@@ -2072,6 +2076,49 @@ $(function () {
         }
     });
 
+    $('span.unit').text($('.sel.sel-unit').val());
+
+    // 按产品数量报价
+    $('#quotation-sku').on('change', function (e) {
+        var radio = e.target;
+        if (radio.checked) {
+            $('div.price-interval').addClass('fd-hide');
+        }
+    });
+
+    // 按产品规格报价
+    $('#quotation-num').on('change', function (e) {
+        var radio = e.target;
+        if (radio.checked) {
+            $('div.price-interval').removeClass('fd-hide');
+        }
+    });
+
+    // 增加价格区间
+    $('div.price-interval a.btn-add').on('click', function () {
+        var $hidePriceLines = $('.price-interval-line.fd-hide'),
+            length = $hidePriceLines.length;
+        if (length > 0) {
+            var num = 2, price = {$price} - 1;
+            if (length == 1) {
+                num = 3;
+                price = price - 1;
+            }
+            $hidePriceLines.eq(0).find('input').eq(0).val(num);
+            $hidePriceLines.eq(0).find('input').eq(1).val(price);
+            $hidePriceLines.eq(0).removeClass('fd-hide');
+        } else {
+            alert('目前最多支持3个价格区间！');
+        }
+    });
+
+    // 删除一个价格区间
+    $('div.price-interval a.del').on('click', function (e) {
+        var del = e.target;
+        $(del).closest('.price-interval-line').addClass('fd-hide');
+        $(del).closest('.price-interval-line').find('input').val('');
+    });
+
     $('.publish-btn').on('click', function offer() {
         // TODO: validate form
         if (!validate()) {
@@ -2133,8 +2180,29 @@ $(function () {
         skuList = skuList.substr(0, skuList.length - 1) + ']';
         $('#skuList').val(skuList);
 
+        handlePriceInterval();
+
         document.mainform.submit();
     });
+
+    // 按产品数量报价，处理价格区间，准备提交
+    function handlePriceInterval() {
+        if ($('#quotation-num')[0].checked) {
+            var allPrice = '';
+            $('.price-interval-line').each(function (i, e) {
+                var $line = $(e),
+                    num = $line.find('input').eq(0).val(),
+                    price = $line.find('input').eq(1).val();
+                if (num !== '' && price !== '') {
+                    allPrice += num + ':' + price + '`';
+                }
+            });
+            if (allPrice !== '') {
+                allPrice = allPrice.substr(0, allPrice.length - 1);
+            }
+            $('#priceRanges').val(allPrice);
+        }
+    }
 
     function validate() {
         // 校验属性是否全部加载完毕

@@ -68,6 +68,7 @@ class IndexAction extends Action {
 
         $this->assign(array(
             'taobaoItemId' => I('taobaoItemId'),
+            'price' => $taobaoItem->price,
             'memberId' => session('member_id'),
             'basepath' => str_replace('index.php', 'Public', __APP__),
             'infoTitle' => $taobaoItem->title,
@@ -122,6 +123,7 @@ class IndexAction extends Action {
             $detail = addslashes(($_REQUEST['details']));
         }
         $subject = I('subject');
+        $priceRanges = I('priceRanges');
         $supportOnline = Util::check(I('support-online'));
         $skuTradeSupported = Util::check(I('isSkuTradeSupported'));
         $sendGoodsAddressId = I('sendGoodsAddressId');
@@ -142,7 +144,7 @@ class IndexAction extends Action {
         $imageUriList = '["http://img.china.alibaba.com/'.$uploadResult->url.'"]';
         /* end */
 
-        $offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":'.$supportOnline.',"pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":'.$skuTradeSupported.',"mixWholeSale":"'.$mixWholeSale.'","priceRanges":"1:'.$price.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$subject.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.',"sendGoodsAddressId":"'.$sendGoodsAddressId.'","freightTemplateId":"'.$freightTemplateId.'","offerWeight":"'.$offerWeight.'","skuList":'.$skuList.',"periodOfValidity":'.$periodOfValidity.'}';
+        $offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":'.$supportOnline.',"pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":'.$skuTradeSupported.',"mixWholeSale":"'.$mixWholeSale.'","priceRanges":"'.$priceRanges.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$subject.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.',"sendGoodsAddressId":"'.$sendGoodsAddressId.'","freightTemplateId":"'.$freightTemplateId.'","offerWeight":"'.$offerWeight.'","skuList":'.$skuList.',"periodOfValidity":'.$periodOfValidity.'}';
 
         $result = OpenAPI::offerNew(stripslashes($offer));
         if ($result->result->success) {
