@@ -66,6 +66,8 @@ class IndexAction extends Action {
         $categoryName = OpenAPI::getPostCatList(I('categoryId'))->result->toReturn[0]->catsName;
         $taobaoItem = OpenAPI::getTaobaoItem(I('taobaoItemId'));
 
+        $khn = $this->getKHN($taobaoItem->title);
+
         $this->assign(array(
             'taobaoItemId' => I('taobaoItemId'),
             'price' => $taobaoItem->price,
@@ -78,10 +80,30 @@ class IndexAction extends Action {
             'picUrl' => $taobaoItem->pic_url,
             'initSkus' => json_encode(Util::parseSkus($taobaoItem->skus->sku)),
             'propsAlias' => $taobaoItem->property_alias,
-            'offerWeight' => '0.2'
+            'offerWeight' => '0.2',
+            'khn' => $khn
         ));
 
         $this->display();
+    }
+
+    private function getKHN($title) {
+        $pKh='/[A-Z]?\d+/';
+        preg_match_all($pKh,$title,$pKuanhao);
+        $pKhnum=count($pKuanhao[0]);
+        if($pKhnum>0)
+        {
+            for($i=0;$i < $pKhnum;$i++)
+            {
+                if(strlen($pKuanhao[0][$i])==3 || (strlen($pKuanhao[0][$i])==4 && substr($pKuanhao[0][$i], 0,3)!= "201"))
+                {
+                    $khn = $pKuanhao[0][$i];
+                    break;
+                }
+            }
+        }
+
+        return $khn;
     }
 
     // 获取发布相关属性
