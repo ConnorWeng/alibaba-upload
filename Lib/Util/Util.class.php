@@ -69,6 +69,15 @@ class Util {
         return $parsedSkus;
     }
 
+    public static function parseItemImgs($itemImgs) {
+        $parsedItemImgs = array();
+        $count = count($itemImgs);
+        for ($i = 0; $i < $count; $i += 1) {
+            array_push($parsedItemImgs, self::extractValue($itemImgs[$i]->url->asXML()));
+        }
+        return $parsedItemImgs;
+    }
+
     private static function extractValue($xml) {
         $s1 = substr($xml, stripos($xml, '>') + 1);
         $s2 = substr($s1, 0, stripos($s1, '<'));

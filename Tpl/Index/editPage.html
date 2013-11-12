@@ -1232,21 +1232,21 @@
                                             <label>(上传产品图片有助于买家直观了解您的产品细节)</label>
                                         </div>
                                         <ol class="imgs">
-                                            <li class="pic-list full">
+                                            <li class="pic-list">
                                                 <div class="img-cont">
                                                     <span></span><img
-                                                        class="cont-img" src="{$picUrl}" style="margin-left: -50px; margin-top:-50px; weight:100px; height:100px;"/>
+                                                        class="cont-img" style="margin-left: -50px; margin-top:-50px; weight:100px; height:100px;"/>
                                                 </div>
                                                 <div class="ctrl">
                                                     <a href="#remove"
                                                         title="删除">删除</a>
                                                 </div>
                                             </li>
-                                            <!--li class="pic-list">
+                                            <li class="pic-list">
                                                 <div
                                                     class="img-cont second">
                                                     <span></span><img
-                                                        class="cont-img" />
+                                                        class="cont-img" style="margin-left: -50px; margin-top:-50px; weight:100px; height:100px;"/>
                                                 </div>
                                                 <div class="ctrl">
                                                     <a href="#remove"
@@ -1257,13 +1257,13 @@
                                                 <div
                                                     class="img-cont third">
                                                     <span></span><img
-                                                        class="cont-img" />
+                                                        class="cont-img" style="margin-left: -50px; margin-top:-50px; weight:100px; height:100px;"/>
                                                 </div>
                                                 <div class="ctrl">
                                                     <a href="#remove"
                                                         title="删除">删除</a>
                                                 </div>
-                                            </li-->
+                                            </li>
                                         </ol>
                                         <div
                                             class="unit-pic-preview-box">
@@ -1278,11 +1278,11 @@
                                 </div>
                             </div>
                             <input type="hidden" id="picture1"
-                                name="picUrl" value="{$picUrl}" /> <input
+                                name="pictureUrl1" value="" /> <input
                                 type="hidden" id="picture2"
-                                name="pictureUrl" value="" /> <input
+                                name="pictureUrl2" value="" /> <input
                                 type="hidden" id="picture3"
-                                name="pictureUrl" value="" /> <input
+                                name="pictureUrl3" value="" /> <input
                                 type="hidden" name="picture_widget"
                                 value="true" />
                         </div>
@@ -1869,6 +1869,15 @@
 $(function () {
     var categoryId = '{$categoryId}',
         editor = CKEDITOR.replace('offer-content');
+
+    // 填充主图
+    var itemImgs = {$itemImgs};
+    for (var i = 0; i < itemImgs.length && i < 3; i++) { // 因为一共只有3个pic-list
+        var $picList = $('.pic-list').eq(i);
+        $picList.addClass('full');
+        $picList.find('img').attr('src', itemImgs[i]);
+        $('#picture' + (i + 1)).val(itemImgs[i]);
+    }
 
     // 填充产品属性
     $.ajax({

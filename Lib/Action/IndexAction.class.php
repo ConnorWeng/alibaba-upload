@@ -78,6 +78,7 @@ class IndexAction extends Action {
             'categoryName' => $categoryName,
             'offerDetail' => $taobaoItem->desc,
             'picUrl' => $taobaoItem->pic_url,
+            'itemImgs' => json_encode(Util::parseItemImgs($taobaoItem->item_imgs->item_img)),
             'initSkus' => json_encode(Util::parseSkus($taobaoItem->skus->sku)),
             'propsAlias' => $taobaoItem->property_alias,
             'offerWeight' => '0.2',
@@ -158,12 +159,19 @@ class IndexAction extends Action {
         $productFeatures = $_REQUEST['productFeatures'];
 
         /* upload image */
-        $picUrl = $_REQUEST['picUrl'];
-        $albumId = I('albumId');
-        $localImageFile = '@'.OpenAPI::downloadImage($picUrl);
-        $uploadResult = OpenAPI::ibankImageUpload($albumId, uniqid(), $localImageFile)->result->toReturn[0];
-        unlink(substr($localImageFile,1));
-        $imageUriList = '["http://img.china.alibaba.com/'.$uploadResult->url.'"]';
+        $imageUriList = '[';
+        for ($i = 1; $i <= 3; $i += 1) { // 因为一共三个input: pictureUrl1,pictureUrl2,pictureUrl3
+            $picUrl = $_REQUEST['pictureUrl'.$i];
+            if ($picUrl != '') {
+                $albumId = I('albumId');
+                $localImageFile = '@'.OpenAPI::downloadImage($picUrl);
+                $uploadResult = OpenAPI::ibankImageUpload($albumId, uniqid(), $localImageFile)->result->toReturn[0];
+                unlink(substr($localImageFile,1));
+                $imageUriList .= '"http://img.china.alibaba.com/'.$uploadResult->url.'",';
+            }
+        }
+        $imageUriList = substr($imageUriList, 0, strlen($imageUriList) - 1);
+        $imageUriList .= ']';
         /* end */
 
         /* auto off */
