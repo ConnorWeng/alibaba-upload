@@ -22,14 +22,16 @@ $(function ($) {
                     }
                 }
 
-                var value = '';
-                $('.tb-speca-quotation tbody tr').each(function (i, tr) {
-                    var $tr = $(tr),
+                var value = '',
+                    $trs = $('.tb-speca-quotation tbody tr');
+                for (var i = 0; i < $trs.length; i++) {
+                    var $tr = $trs.eq(i),
                         val = $tr.find('input').eq(index).val();
                     if (val != '') {
                         value = val;
+                        break;
                     }
-                });
+                }
                 if (value !== '') {
                     $('.tb-speca-quotation tbody tr').each(function (i, tr) {
                         var $tr = $(tr);
