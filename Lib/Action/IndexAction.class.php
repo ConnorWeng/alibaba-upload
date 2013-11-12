@@ -197,7 +197,7 @@ class IndexAction extends Action {
             $itemUrl = "http://detail.1688.com/offer/$offerId.html";
             $this->assign(array(
                 'result' => '发布成功啦！',
-                'message' => '宝贝已顺利上架哦！祝生意欣荣，财源广进！',
+                'message' => '宝贝已经顺利上架哦！亲，感谢你对51网的大力支持！',
                 'itemUrl' => '<li><a href="'.$itemUrl.'">来看看刚上架的宝贝吧！</a></li>'
             ));
         } else {
