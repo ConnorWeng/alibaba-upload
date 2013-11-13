@@ -30,7 +30,7 @@ class IndexAction extends Action {
             cookie('refresh_token', $tokens->refresh_token);
         }
 
-        $taobaoItemId = I('state');
+        $taobaoItemId = $_REQUEST['state'];
         $taobaoItem = OpenAPI::getTaobaoItem($taobaoItemId);
 
         $this->assign(array(
