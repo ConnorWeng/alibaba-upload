@@ -171,7 +171,9 @@ class IndexAction extends Action {
                 $localImageFile = '@'.OpenAPI::downloadImage($picUrl);
                 $uploadResult = OpenAPI::ibankImageUpload($albumId, uniqid(), $localImageFile)->result->toReturn[0];
                 unlink(substr($localImageFile,1));
-                $imageUriList .= '"http://img.china.alibaba.com/'.$uploadResult->url.'",';
+                if ($uploadResult != null) {
+                    $imageUriList .= '"http://img.china.alibaba.com/'.$uploadResult->url.'",';
+                }
             }
         }
         $imageUriList = substr($imageUriList, 0, strlen($imageUriList) - 1);
