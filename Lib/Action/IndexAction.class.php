@@ -66,14 +66,18 @@ class IndexAction extends Action {
         $categoryName = OpenAPI::getPostCatList(I('categoryId'))->result->toReturn[0]->catsName;
         $taobaoItem = OpenAPI::getTaobaoItem(I('taobaoItemId'));
 
-        $khn = $this->getKHN($taobaoItem->title);
+        $title = $taobaoItem->title;
+        $khn = $this->getKHN($title);
+        $title = str_replace($khn, '', $title);
+        $title = str_replace('#', '', $title);
+        $title = str_replace('*', '', $title);
 
         $this->assign(array(
             'taobaoItemId' => I('taobaoItemId'),
             'price' => $taobaoItem->price,
             'memberId' => session('member_id'),
             'basepath' => str_replace('index.php', 'Public', __APP__),
-            'infoTitle' => $taobaoItem->title,
+            'infoTitle' => $title,
             'categoryId' => I('categoryId'),
             'categoryName' => $categoryName,
             'offerDetail' => $taobaoItem->desc,
