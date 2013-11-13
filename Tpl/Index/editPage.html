@@ -1865,7 +1865,9 @@
 <script>
 $(function () {
     var categoryId = '{$categoryId}',
-        editor = CKEDITOR.replace('offer-content');
+        editor = CKEDITOR.replace('offer-content')
+        AJAX_NUMBER = 4;
+        ajaxCount = 0;
 
     // 填充主图
     var itemImgs = {$itemImgs};
@@ -1957,6 +1959,8 @@ $(function () {
                 } else {
                     normalFeaturesString += featuresString;
                 }
+
+                ajaxCount += 1;
             }
 
             $('.loading-box').remove();
@@ -2031,6 +2035,8 @@ $(function () {
                   addressesString += '</option>';
               }
               $('.list-address.sel').append(addressesString);
+
+              ajaxCount += 1;
           }
     });
 
@@ -2047,6 +2053,8 @@ $(function () {
                 templatesString += '</option>';
             }
             $('#freight-list').append(templatesString);
+
+            ajaxCount += 1;
         }
     });
 
@@ -2103,6 +2111,8 @@ $(function () {
             }
 
             $('#albumId').append(albumListString);
+
+            ajaxCount += 1;
         }
     });
 
@@ -2150,6 +2160,10 @@ $(function () {
     });
 
     $('.publish-btn').on('click', function offer() {
+        if (ajaxCount < AJAX_NUMBER) {
+            alert('尚有属性还在从淘宝中获取，请稍候几秒再提交！');
+        }
+
         // TODO: validate form
         if (!validate()) {
             return;
