@@ -9,8 +9,8 @@ return array(
     'host' => 'http://localhost',
     'redirect_uri' => 'Index/authBack',
     'open_url' => 'http://gw.open.1688.com/openapi',
-    'taobao_app_key' => '21545953',
-    'taobao_secret_key' => '6da0d607c561e9826e0ff7a8e1f92259',
+    'taobao_app_key' => '21641002',
+    'taobao_secret_key' => 'd0bc50ee135a8c61456d4ecfe085b7f5',
     'title_suffix' => '- 面包西点'
 );
 ?>

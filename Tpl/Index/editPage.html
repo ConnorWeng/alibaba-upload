@@ -1984,7 +1984,7 @@ $(function () {
                         var $e = $(element),
                             propName = $e.text().split('：')[0];
 
-                        if (fname[0] == propName[0]) {
+                        if (fname[0] == propName[0] || fname.indexOf(propName) !== -1) {
                             var alias = getPropsAlias(propsAlias, vid);
 
                             if (alias === null) {
