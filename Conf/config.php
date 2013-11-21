@@ -11,6 +11,15 @@ return array(
     'open_url' => 'http://gw.open.1688.com/openapi',
     'taobao_app_key' => '21641002',
     'taobao_secret_key' => 'd0bc50ee135a8c61456d4ecfe085b7f5',
-    'title_suffix' => '- 面包西点'
+    'title_suffix' => '- 面包西点',
+
+    //数据库配置
+    'DB_TYPE' => 'mysql',
+    'DB_HOST' => 'rdsqr7ne2m2ifjm.mysql.rds.aliyuncs.com',
+    'DB_NAME' => 'test2',
+    'DB_USER' => 'test2',
+    'DB_PWD' => 'xiaoweng51wangpi',
+    'DB_PORT' => '3306',
+    'DB_PREFIX' => 'ecm_',
 );
 ?>
