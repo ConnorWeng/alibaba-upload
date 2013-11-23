@@ -92,11 +92,12 @@ class Util {
         }
     }
 
-    public static function changeTaoAppkey($taobaoItemId) {
+    public static function changeTaoAppkey($taobaoItemId, $oldAppKey = null) {
         $taoapi = D('Taoapi');
-        $taoappkey = $taoapi->getAppKey($taobaoItemId);
+        $taoappkey = $taoapi->getAppKey($taobaoItemId, $oldAppKey);
         session('taobao_app_key', $taoappkey['appkey']);
         session('taobao_secret_key', $taoappkey['appsecret']);
+        session('current_taobao_app_key_id', $taoappkey['id']);
     }
 
     public static function changeAliAppkey($taobaoItemId) {

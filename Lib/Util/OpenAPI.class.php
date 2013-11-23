@@ -140,16 +140,17 @@ class OpenAPI {
         $req->setNumIid($numIid);
         $resp = $c->execute($req, null);
 
-        /*
+        $taoapi = D('Taoapi');
         if ($resp->code == '7') { // accesscontrol.limited-by-app-access-count
-            Util::changeTaoAppkey($numIid);
+            $taoapi->appKeyFail(session('current_taobao_app_key_id'));
+            Util::changeTaoAppkey($numIid, session('taobao_app_key'));
             return self::getTaobaoItem($numIid);
-        } else {
+        } else if (isset($resp->item)) {
+            $taoapi->appKeySuccess(session('current_taobao_app_key_id'));
             return $resp->item;
+        } else {
+            echo('<h6 style="color:red;">错误:'.$resp->msg.'</h6>');
         }
-        */
-
-        return $resp->item;
     }
 
 }
