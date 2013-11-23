@@ -6,8 +6,6 @@ import('@.Util.OpenAPI');
 class IndexAction extends Action {
 
     public function index() {
-        $a = D('Taoapi');
-        $a->getAppKey('35521273507');
         $this->display();
     }
 
@@ -15,11 +13,19 @@ class IndexAction extends Action {
     public function auth() {
         $taobaoItemId = I('taobaoItemId');
         if (!session('?access_token')) {
+            // fetch taobao appkey
             $taoapi = D('Taoapi');
-            $appkey = $taoapi->getAppKey($taobaoItemId);
-            session('taobao_app_key', $appkey['appkey']);
-            session('taobao_secret_key', $appkey['appsecret']);
+            $taoappkey = $taoapi->getAppKey($taobaoItemId);
+            session('taobao_app_key', $taoappkey['appkey']);
+            session('taobao_secret_key', $taoappkey['appsecret']);
 
+            // fetch alibaba appkey
+            $aliapi = D('Aliapi');
+            $aliappkey = $aliapi->getAppKey($taobaoItemId);
+            session('alibaba_app_key', $aliappkey['appkey']);
+            session('alibaba_secret_key', $aliappkey['appsecret']);
+
+            // auth
             header('location:'.Util::getAlibabaAuthUrl($taobaoItemId));
         } else {
             U('Index/authBack', array('state' => $taobaoItemId), true, true, false);

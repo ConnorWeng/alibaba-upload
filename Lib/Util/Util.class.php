@@ -17,12 +17,12 @@ class Util {
     }
 
     public static function signDefault($url, $api, $params) {
-        return self::sign(C('app_id'), C('secret_id'), $url, $api . '/' . C('app_id'), $params);
+        return self::sign(session('alibaba_app_key'), session('alibaba_secret_key'), $url, $api . '/' . session('alibaba_app_key'), $params);
     }
 
     public static function getAlibabaAuthUrl($state) {
-        $appKey = C('app_id');
-        $appSecret = C('secret_id');
+        $appKey = session('alibaba_app_key');
+        $appSecret = session('alibaba_secret_key');
         $redirectUrl = urlencode(C('host').U(C('redirect_uri')));
         $stateEncoded = urlencode($state);
 
@@ -42,9 +42,9 @@ class Util {
     }
 
     public static function getTokens($code) {
-        $url = 'https://gw.open.1688.com/openapi/http/1/system.oauth2/getToken/'.C('app_id').
-            '?grant_type=authorization_code&need_refresh_token=true&client_id='.C('app_id').
-            '&client_secret='.C('secret_id').'&redirect_uri='.urlencode(C('host').U(C('redirect_uri'))).
+        $url = 'https://gw.open.1688.com/openapi/http/1/system.oauth2/getToken/'.session('alibaba_app_key').
+            '?grant_type=authorization_code&need_refresh_token=true&client_id='.session('alibaba_app_key').
+            '&client_secret='.session('alibaba_secret_key').'&redirect_uri='.urlencode(C('host').U(C('redirect_uri'))).
             '&code=' . $code;
 
         $ch = curl_init();
