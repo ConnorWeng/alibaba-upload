@@ -14,16 +14,10 @@ class IndexAction extends Action {
         $taobaoItemId = I('taobaoItemId');
         if (!session('?access_token')) {
             // fetch taobao appkey
-            $taoapi = D('Taoapi');
-            $taoappkey = $taoapi->getAppKey($taobaoItemId);
-            session('taobao_app_key', $taoappkey['appkey']);
-            session('taobao_secret_key', $taoappkey['appsecret']);
+            Util::changeTaoAppkey($taobaoItemId);
 
             // fetch alibaba appkey
-            $aliapi = D('Aliapi');
-            $aliappkey = $aliapi->getAppKey($taobaoItemId);
-            session('alibaba_app_key', $aliappkey['appkey']);
-            session('alibaba_secret_key', $aliappkey['appsecret']);
+            Util::changeAliAppkey($taobaoItemId);
 
             // auth
             header('location:'.Util::getAlibabaAuthUrl($taobaoItemId));

@@ -140,6 +140,15 @@ class OpenAPI {
         $req->setNumIid($numIid);
         $resp = $c->execute($req, null);
 
+        /*
+        if ($resp->code == '7') { // accesscontrol.limited-by-app-access-count
+            Util::changeTaoAppkey($numIid);
+            return self::getTaobaoItem($numIid);
+        } else {
+            return $resp->item;
+        }
+        */
+
         return $resp->item;
     }
 

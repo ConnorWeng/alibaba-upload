@@ -84,12 +84,26 @@ class Util {
         return $s2;
     }
 
-    public function check($v) {
+    public static function check($v) {
         if ($v == 'on') {
             return 'true';
         } else {
             return 'false';
         }
+    }
+
+    public static function changeTaoAppkey($taobaoItemId) {
+        $taoapi = D('Taoapi');
+        $taoappkey = $taoapi->getAppKey($taobaoItemId);
+        session('taobao_app_key', $taoappkey['appkey']);
+        session('taobao_secret_key', $taoappkey['appsecret']);
+    }
+
+    public static function changeAliAppkey($taobaoItemId) {
+        $aliapi = D('Aliapi');
+        $aliappkey = $aliapi->getAppKey($taobaoItemId);
+        session('alibaba_app_key', $aliappkey['appkey']);
+        session('alibaba_secret_key', $aliappkey['appsecret']);
     }
 
 }
