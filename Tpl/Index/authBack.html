@@ -6,6 +6,7 @@
 <script type="text/javascript"
     src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
 <import type="css" file="Css.alibaba-category" basepath="{$basepath}"/>
+<import type="js" file="Js.common" basepath="{$basepath}"/>
 <script type="text/javascript">
 $(function () {
     $('.keybtn-search').on('click', function () {
@@ -15,6 +16,7 @@ $(function () {
                 'keyWord': $('.search-input').val()
             },
             success: function (categoryList) {
+                checkResponse(categoryList);
                 var itemsString = '';
                 for (var i = 0; i < categoryList.length; i++) {
                     var c = categoryList[i];

@@ -3,7 +3,7 @@
 import('@.Util.Util');
 import('@.Util.OpenAPI');
 
-class IndexAction extends Action {
+class IndexAction extends CommonAction {
 
     public function index() {
         $this->display();
@@ -28,6 +28,9 @@ class IndexAction extends Action {
 
     // 从alibaba跳转回来的action
     public function authBack() {
+        $taobaoItemId = $_REQUEST['state'];
+        session('current_taobao_item_id', $taobaoItemId);
+
         if (!session('?access_token')) {
             $code = I('code');
             $tokens = Util::getTokens($code);
@@ -35,9 +38,10 @@ class IndexAction extends Action {
             session('member_id', $tokens->memberId);
             session('access_token', $tokens->access_token);
             cookie('refresh_token', $tokens->refresh_token);
+
+            $response = $this->checkApiResponse(OpenAPI::memberGet(session('member_id')));
         }
 
-        $taobaoItemId = $_REQUEST['state'];
         $taobaoItem = OpenAPI::getTaobaoItem($taobaoItemId);
 
         $this->assign(array(
@@ -53,7 +57,7 @@ class IndexAction extends Action {
     // 通过关键字查询分类
     public function searchCategory() {
         $keyWord = I('keyWord');
-        $searchResult = OpenAPI::categorySearch($keyWord)->result;
+        $searchResult = $this->checkApiResponseAjax(OpenAPI::categorySearch($keyWord))->result;
         $categoryIds = '';
         if ($searchResult->total > 0) {
             foreach ($searchResult->toReturn as $val) {
@@ -63,15 +67,16 @@ class IndexAction extends Action {
         if (stripos($categoryIds, ',')) {
             $categoryIds = substr($categoryIds, 0, strlen($categoryIds) - 1);
         }
-        $categoryList = OpenAPI::getPostCatList($categoryIds)->result->toReturn;
+        $categoryList = $this->checkApiResponseAjax(OpenAPI::getPostCatList($categoryIds))->result->toReturn;
 
         $this->ajaxReturn($categoryList, 'JSON');
     }
 
     // 编辑页面
     public function editPage() {
-        $categoryName = OpenAPI::getPostCatList(I('categoryId'))->result->toReturn[0]->catsName;
-        $taobaoItem = OpenAPI::getTaobaoItem(I('taobaoItemId'));
+        $taobaoItemId = session('current_taobao_item_id');
+        $categoryName = $this->checkApiResponse(OpenAPI::getPostCatList(I('categoryId')))->result->toReturn[0]->catsName;
+        $taobaoItem = OpenAPI::getTaobaoItem($taobaoItemId);
 
         $title = $taobaoItem->title;
         $khn = $this->getKHN($title);
@@ -80,7 +85,7 @@ class IndexAction extends Action {
         $title = str_replace('*', '', $title);
 
         $this->assign(array(
-            'taobaoItemId' => I('taobaoItemId'),
+            'taobaoItemId' => $taobaoItemId,
             'price' => $taobaoItem->price,
             'memberId' => session('member_id'),
             'basepath' => str_replace('index.php', 'Public', __APP__),
@@ -121,29 +126,29 @@ class IndexAction extends Action {
     // 获取发布相关属性
     public function getPostFeatures() {
         $categoryId = I('categoryId');
-        $features = OpenAPI::offerPostFeatures($categoryId)->result->toReturn;
+        $features = $this->checkApiResponseAjax(OpenAPI::offerPostFeatures($categoryId))->result->toReturn;
 
         $this->ajaxReturn($features, 'JSON');
     }
 
     // 获取发货地址
     public function getSendGoodsAddress() {
-        $addressList = OpenAPI::getSendGoodsAddressList()->result->toReturn;
+        $addressList = $this->checkApiResponseAjax(OpenAPI::getSendGoodsAddressList())->result->toReturn;
 
         $this->ajaxReturn($addressList, 'JSON');
     }
 
     // 获取运费模版
     public function getFreightTemplateList() {
-        $freightTemplateList = OpenAPI::getFreightTemplateList()->result->toReturn;
+        $freightTemplateList = $this->checkApiResponseAjax(OpenAPI::getFreightTemplateList())->result->toReturn;
 
         $this->ajaxReturn($freightTemplateList, 'JSON');
     }
 
     // 获取相册列表
     public function getAlbumList() {
-        $myAlbumList = OpenAPI::ibankAlbumList('MY')->result->toReturn;
-        $customAlbumList = OpenAPI::ibankAlbumList('CUSTOM')->result->toReturn;
+        $myAlbumList = $this->checkApiResponseAjax(OpenAPI::ibankAlbumList('MY'))->result->toReturn;
+        $customAlbumList = $this->checkApiResponseAjax(OpenAPI::ibankAlbumList('CUSTOM'))->result->toReturn;
 
         $this->ajaxReturn(array_merge($myAlbumList, $customAlbumList), 'JSON');
     }
@@ -168,6 +173,7 @@ class IndexAction extends Action {
         $skuList = $_REQUEST['skuList']; // FIXME: problem
         $periodOfValidity = I('info-validity');
         $productFeatures = $_REQUEST['productFeatures'];
+        $taobaoItemId = session('current_taobao_item_id');
 
         /* upload image */
         $imageUriList = '[';
@@ -176,7 +182,7 @@ class IndexAction extends Action {
             if ($picUrl != '') {
                 $albumId = I('albumId');
                 $localImageFile = '@'.OpenAPI::downloadImage($picUrl);
-                $uploadResult = OpenAPI::ibankImageUpload($albumId, uniqid(), $localImageFile)->result->toReturn[0];
+                $uploadResult = $this->checkApiResponse(OpenAPI::ibankImageUpload($albumId, uniqid(), $localImageFile))->result->toReturn[0];
                 unlink(substr($localImageFile,1));
                 if ($uploadResult != null) {
                     $imageUriList .= '"http://img.china.alibaba.com/'.$uploadResult->url.'",';
@@ -190,7 +196,7 @@ class IndexAction extends Action {
         /* auto off */
         $autoOff = Util::check(I('autoOff'));
         if ($autoOff == 'true') {
-            $encNumIid = '51chk'.base64_encode(I('taobaoItemId'));
+            $encNumIid = '51chk'.base64_encode($taobaoItemId);
             $autoOffJpg = 'http://51wangpi.com/'.$encNumIid.'.jpg';
             $autoOffWarnHtml = '<img align="middle" src="'.$autoOffJpg.'"/><br/>';
             if (get_magic_quotes_gpc() == 0) {
@@ -204,7 +210,7 @@ class IndexAction extends Action {
 
         $offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":'.$supportOnline.',"pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":'.$skuTradeSupported.',"mixWholeSale":"'.$mixWholeSale.'","priceRanges":"'.$priceRanges.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$subject.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.',"sendGoodsAddressId":"'.$sendGoodsAddressId.'","freightTemplateId":"'.$freightTemplateId.'","offerWeight":"'.$offerWeight.'","skuList":'.$skuList.',"periodOfValidity":'.$periodOfValidity.'}';
 
-        $result = OpenAPI::offerNew(stripslashes($offer));
+        $result = $this->checkApiResponse(OpenAPI::offerNew(stripslashes($offer)));
         if ($result->result->success) {
             $offerId = $result->result->toReturn[0];
             $itemUrl = "http://detail.1688.com/offer/$offerId.html";

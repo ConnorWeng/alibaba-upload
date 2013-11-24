@@ -7,6 +7,7 @@
     src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
 <import type="js" file="Js.ckeditor.ckeditor" basepath="{$basepath}"/>
 <import type="js" file="Js.tradetable" basepath="{$basepath}"/>
+<import type="js" file="Js.common" basepath="{$basepath}"/>
 <import type="css" file="Css.alibaba-edit" basepath="{$basepath}"/>
 </head>
 <body>
@@ -1885,6 +1886,7 @@ $(function () {
             'categoryId': categoryId
         },
         success: function (data) {
+            checkResponse(data);
             var normalFeaturesString = '', specFeaturesString = '',
                 initSkus = {$initSkus},
                 propsAlias = '{$propsAlias}';
@@ -2026,6 +2028,7 @@ $(function () {
     $.ajax({
           url: '{:U('Index/getSendGoodsAddress')}',
           success: function (data) {
+              checkResponse(data);
               var addressesString = '';
               for (var i in data) {
                   var address = data[i];
@@ -2044,6 +2047,7 @@ $(function () {
     $.ajax({
         url: '{:U('Index/getFreightTemplateList')}',
         success: function (data) {
+            checkResponse(data);
             var templatesString = '';
             for (var i in data) {
                 var template = data[i];
@@ -2104,6 +2108,7 @@ $(function () {
     $.ajax({
         url: '{:U('Index/getAlbumList')}',
         success: function (data) {
+            checkResponse(data);
             var albumListString = '';
 
             for (var i in data) {

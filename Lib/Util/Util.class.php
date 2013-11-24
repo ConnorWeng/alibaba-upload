@@ -100,11 +100,13 @@ class Util {
         session('current_taobao_app_key_id', $taoappkey['id']);
     }
 
-    public static function changeAliAppkey($taobaoItemId) {
+    public static function changeAliAppkey($taobaoItemId, $oldAppKey = null) {
         $aliapi = D('Aliapi');
-        $aliappkey = $aliapi->getAppKey($taobaoItemId);
+        $aliappkey = $aliapi->getAppKey($taobaoItemId, $oldAppKey);
         session('alibaba_app_key', $aliappkey['appkey']);
         session('alibaba_secret_key', $aliappkey['appsecret']);
+        session('current_alibaba_app_key_id', $aliappkey['id']);
+        session('access_token', null);
     }
 
 }

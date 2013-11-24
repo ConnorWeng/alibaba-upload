@@ -5,6 +5,12 @@ vendor('taobao-sdk.TopSdk');
 
 class OpenAPI {
 
+    public static function memberGet($memberId) {
+        $api = 'param2/1/cn.alibaba.open/member.get';
+        return self::callOpenAPI($api, array('memberId' => $memberId,
+                                             'returnFields' => 'memberId,winportAddress,domainAddress'), false);
+    }
+
     public static function offerNew($offer) {
         $api = 'param2/1/cn.alibaba.open/offer.new';
         return self::callOpenAPIWithShortUrl($api, array('offer' => $offer));
@@ -69,7 +75,14 @@ class OpenAPI {
     private static function callOpenAPI($api, $params, $urlencode) {
         $url = self::makeUrl($api, $params, $urlencode);
         $data = self::sendRequest($url);
-        return json_decode($data);
+        $response = json_decode($data);
+
+        if (isset($response->error_code) && $response->error_code == '403') {
+            Util::changeAliAppkey('', session('current_alibaba_app_key_id'));
+            return 'reauth';
+        } else {
+            return $response;
+        }
     }
 
     private static function sendRequest($url) {
@@ -105,8 +118,14 @@ class OpenAPI {
     private static function callOpenAPIWithShortUrl($api, $params) {
         $url = self::makeShortUrl($api, $params);
         $data = self::sendRequestWithShortUrl($url, $params);
+        $response = json_decode($data);
 
-        return json_decode($data);
+        if (isset($response->error_code) && $response->error_code == '403') {
+            Util::changeAliAppkey('', session('current_alibaba_app_key_id'));
+            return 'reauth';
+        } else {
+            return $response;
+        }
     }
 
     private static function sendRequestWithShortUrl($url, $params) {
