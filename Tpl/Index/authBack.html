@@ -7,30 +7,45 @@
     src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
 <import type="css" file="Css.alibaba-category" basepath="{$basepath}"/>
 <import type="js" file="Js.common" basepath="{$basepath}"/>
+<style>
+#search-by-name {
+  margin-left: 10px;
+}
+</style>
 <script type="text/javascript">
 $(function () {
-    $('.keybtn-search').on('click', function () {
+    $('.keybtn-search').on('click', function (e) {
+        var $e = $(e.target),
+            keyWord = $('.search-input').val();
+        if ($e.attr('id') == 'search-by-name') {
+            keyWord = $('.taobao-item-title').text();
+        }
         $.ajax({
             url: '{:U('Index/searchCategory')}',
             data: {
-                'keyWord': $('.search-input').val()
+                'keyWord': keyWord
             },
             success: function (categoryList) {
                 checkResponse(categoryList);
                 var itemsString = '';
-                for (var i = 0; i < categoryList.length; i++) {
-                    var c = categoryList[i];
-                    itemsString += '<li>';
-                    itemsString += '<input id="' + c.catsId + '" type="radio" name="search-radio">';
-                    itemsString += '<label for="' + c.catsId + '">' + c.catsName + '</label>';
-                    itemsString += '<em class="fd-hide"></em>';
-                    itemsString += '</li>';
-                }
+                if (categoryList != null) {
+                    for (var i = 0; i < categoryList.length; i++) {
+                        var c = categoryList[i];
+                        itemsString += '<li>';
+                        itemsString += '<input id="' + c.catsId + '" type="radio" name="search-radio"' + (i == 0 ? ' checked="true"':'')  + '>';
+                        itemsString += '<label for="' + c.catsId + '">' + c.catsName + '</label>';
+                        itemsString += '<em class="fd-hide"></em>';
+                        itemsString += '</li>';
+                    }
 
-                $('ul.fd-clr li').remove();
-                $('ul.fd-clr').append(itemsString);
-                $('.search-category').removeClass('fd-hide');
-                $('.tab-b.mod.mod-offer-choose-category').removeClass('fd-hide');
+                    $('ul.fd-clr li').remove();
+                    $('ul.fd-clr').append(itemsString);
+                    $('.search-category').removeClass('fd-hide');
+                    $('.tab-b.mod.mod-offer-choose-category').removeClass('fd-hide');
+                    $('ul.fd-clr input').eq(0).click();
+                } else {
+                    $('ul.fd-clr li').remove();
+                }
             }
         });
     });
@@ -46,7 +61,7 @@ $(function () {
         }
     });
 
-    $('.keybtn-search').click();
+    $('#search-by-cat').click();
 });
 </script>
 </head>
@@ -111,14 +126,16 @@ $(function () {
                                     title="点此反馈">点此反馈</a></span>
                         </div-->
                     </div>
-                    <div class="tab-b mod mod-offer-choose-category"
-                        data-mod-config='{"showCateInfo":true,"tradeType":"0", "lastUsedCateUrl":"http://offer.1688.com/offer/asyn/last_used_category_info.do","childCateUrl":"http://offer.1688.com/offer/asyn/category_list.do","fullCateUrl":"http://offer.1688.com/offer/asyn/full_category_info.do","searchCateUrl":"http://offer.1688.com/offer/asyn/recommend_category_list.json","getPostCatInfoUrl":"http://spu.1688.com/spu/ajax/get_post_cat_info.htm","searchSuggestionUrl":"http://suggest.1688.com/bin/suggest","lastTradeType":"1"}'>
+                    <div class="tab-b mod mod-offer-choose-category">
+                        <span>宝贝名称： <span class="taobao-item-title">{$taobaoItemTitle}</span></span>
                         <div class="choose-cate-form fd-clr">
                             <input class="search-input" type="text"
                                 placeholder="请输入产品关键词，我们为你推荐类目"
-                                value="{$taobaoItemTitle}" /> <input
+                                value="{$taobaoItemCat}" /> <input
                                 type="button" value="查找类目"
-                                class="keybtn-search">
+                                class="keybtn-search" id="search-by-cat"> <input
+                                type="button" value="按宝贝名称"
+                                class="keybtn-search" id="search-by-name">
                             <!--span>或</span> <a href="#" target="_self" class="choose-tab-hid" title="自选类目">自选类目</a-->
                             <div class='search-suggestion fd-hide'>
                                 <ul>

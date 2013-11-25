@@ -155,7 +155,7 @@ class OpenAPI {
         $c->appkey = session('taobao_app_key');
         $c->secretKey = session('taobao_secret_key');
         $req = new ItemGetRequest;
-        $req->setFields("title,desc,pic_url,sku,item_weight,property_alias,price,item_img.url");
+        $req->setFields("title,desc,pic_url,sku,item_weight,property_alias,price,item_img.url,cid");
         $req->setNumIid($numIid);
         $resp = $c->execute($req, null);
 
@@ -167,6 +167,28 @@ class OpenAPI {
         } else if (isset($resp->item)) {
             $taoapi->appKeySuccess(session('current_taobao_app_key_id'));
             return $resp->item;
+        } else {
+            echo('<h6 style="color:red;">错误:'.$resp->msg.'</h6>');
+        }
+    }
+
+    public static function getTaobaoItemCat($cid) {
+        $c = new TopClient;
+        $c->appkey = session('taobao_app_key');
+        $c->secretKey = session('taobao_secret_key');
+        $req = new ItemcatsGetRequest;
+        $req->setFields("name");
+        $req->setCids($cid);
+        $resp = $c->execute($req, null);
+
+        $taoapi = D('Taoapi');
+        if ($resp->code == '7') { // accesscontrol.limited-by-app-access-count
+            $taoapi->appKeyFail(session('current_taobao_app_key_id'));
+            Util::changeTaoAppkey($numIid, session('taobao_app_key'));
+            return self::getTaobaoItemCat($cid);
+        } else if (isset($resp->item_cats->item_cat)) {
+            $taoapi->appKeySuccess(session('current_taobao_app_key_id'));
+            return Util::extractValue($resp->item_cats->item_cat->name->asXML());
         } else {
             echo('<h6 style="color:red;">错误:'.$resp->msg.'</h6>');
         }

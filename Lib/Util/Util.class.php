@@ -78,7 +78,7 @@ class Util {
         return $parsedItemImgs;
     }
 
-    private static function extractValue($xml) {
+    public static function extractValue($xml) {
         $s1 = substr($xml, stripos($xml, '>') + 1);
         $s2 = substr($s1, 0, stripos($s1, '<'));
         return $s2;

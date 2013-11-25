@@ -43,12 +43,14 @@ class IndexAction extends CommonAction {
         }
 
         $taobaoItem = OpenAPI::getTaobaoItem($taobaoItemId);
+        $taobaoItemCat = OpenAPI::getTaobaoItemCat($taobaoItem->cid);
 
         $this->assign(array(
             'basepath' => str_replace('index.php', 'Public', __APP__),
             'memberId' => session('member_id'),
             'taobaoItemId' => $taobaoItemId,
-            'taobaoItemTitle' => $taobaoItem->title
+            'taobaoItemTitle' => $taobaoItem->title,
+            'taobaoItemCat' => $taobaoItemCat,
         ));
 
         $this->display();
