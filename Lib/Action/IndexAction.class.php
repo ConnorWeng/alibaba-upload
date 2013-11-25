@@ -221,6 +221,7 @@ class IndexAction extends CommonAction {
                 'message' => '宝贝已经顺利上架哦！亲，感谢你对51网的大力支持！',
                 'itemUrl' => '<li><a href="'.$itemUrl.'">来看看刚上架的宝贝吧！</a></li>'
             ));
+            $this->uploadCount(session('member_id'), get_client_ip());
         } else {
             $this->assign(array(
                 'result' => '发布失败！'.json_encode($result->message),
@@ -230,6 +231,11 @@ class IndexAction extends CommonAction {
         }
 
         $this->display();
+    }
+
+    private function uploadCount($memberId, $ip) {
+        $userdataAli = D('UserdataAli');
+        $userdataAli->uploadCount($memberId, $ip);
     }
 
     // 登出
