@@ -15,15 +15,14 @@
 <script type="text/javascript">
 $(function () {
     $('.keybtn-search').on('click', function (e) {
-        var $e = $(e.target),
-            keyWord = $('.search-input').val();
+        var $e = $(e.target);
         if ($e.attr('id') == 'search-by-name') {
-            keyWord = $('.taobao-item-title').text();
+            $('.search-input').val($('.taobao-item-title').text());
         }
         $.ajax({
             url: '{:U('Index/searchCategory')}',
             data: {
-                'keyWord': keyWord
+                'keyWord': $('.search-input').val()
             },
             success: function (categoryList) {
                 checkResponse(categoryList);
