@@ -73,6 +73,10 @@ class OpenAPI {
     }
 
     private static function callOpenAPI($api, $params, $urlencode) {
+        if (!session('?access_token')) {
+            return 'timeout';
+        }
+
         $url = self::makeUrl($api, $params, $urlencode);
         $data = self::sendRequest($url);
         $response = json_decode($data);
@@ -116,6 +120,10 @@ class OpenAPI {
     }
 
     private static function callOpenAPIWithShortUrl($api, $params) {
+        if (!session('?access_token')) {
+            return 'timeout';
+        }
+
         $url = self::makeShortUrl($api, $params);
         $data = self::sendRequestWithShortUrl($url, $params);
         $response = json_decode($data);

@@ -240,9 +240,10 @@ class IndexAction extends CommonAction {
 
     // 登出
     public function signOut() {
+        $taobaoItemId = session('current_taobao_item_id');
         session(null);
         cookie(null);
-        U('Index/index', '', true, true, false);
+        U('Index/auth', array('taobaoItemId' => $taobaoItemId), true, true, false);
     }
 
 }
