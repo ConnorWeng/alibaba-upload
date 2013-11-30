@@ -77,6 +77,10 @@ class OpenAPI {
             return 'timeout';
         }
 
+        if (self::needVerify()) {
+            return 'verify';
+        }
+
         $url = self::makeUrl($api, $params, $urlencode);
         $data = self::sendRequest($url);
         $response = json_decode($data);
@@ -124,6 +128,10 @@ class OpenAPI {
             return 'timeout';
         }
 
+        if (self::needVerify()) {
+            return 'verify';
+        }
+
         $url = self::makeShortUrl($api, $params);
         $data = self::sendRequestWithShortUrl($url, $params);
         $response = json_decode($data);
@@ -159,6 +167,10 @@ class OpenAPI {
     }
 
     public static function getTaobaoItem($numIid) {
+        if (self::needVerify()) {
+            return 'verify';
+        }
+
         $c = new TopClient;
         $c->appkey = session('taobao_app_key');
         $c->secretKey = session('taobao_secret_key');
@@ -181,6 +193,10 @@ class OpenAPI {
     }
 
     public static function getTaobaoItemCat($cid) {
+        if (self::needVerify()) {
+            return 'verify';
+        }
+
         $c = new TopClient;
         $c->appkey = session('taobao_app_key');
         $c->secretKey = session('taobao_secret_key');
@@ -200,6 +216,31 @@ class OpenAPI {
         } else {
             echo('<h6 style="color:red;">错误:'.$resp->msg.'</h6>');
         }
+    }
+
+    private static function needVerify() {
+        $date = getdate();
+        $minutes = $date['minutes'];
+        $times = 0;
+        if (session('?upload_times_in_minutes')) {
+            $times = session('upload_times_in_minutes');
+        } else {
+            session('upload_times_in_minutes', $times);
+        }
+        if (session('which_minutes') == $minutes) {
+            $times++;
+            if ($times > C('max_api_times_per_minute')) {
+                session('need_verify_code', true);
+                return true;
+            }
+            session('upload_times_in_minutes', $times);
+        } else {
+            if (session('?need_verify_code') && !session('need_verify_code')) {
+                session('upload_times_in_minutes', 1);
+            }
+        }
+        session('which_minutes', $minutes);
+        return false;
     }
 
 }

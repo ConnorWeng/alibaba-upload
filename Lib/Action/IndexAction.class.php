@@ -42,8 +42,8 @@ class IndexAction extends CommonAction {
             $response = $this->checkApiResponse(OpenAPI::memberGet(session('member_id')));
         }
 
-        $taobaoItem = OpenAPI::getTaobaoItem($taobaoItemId);
-        $taobaoItemCat = OpenAPI::getTaobaoItemCat($taobaoItem->cid);
+        $taobaoItem = $this->checkApiResponse(OpenAPI::getTaobaoItem($taobaoItemId));
+        $taobaoItemCat = $this->checkApiResponse(OpenAPI::getTaobaoItemCat($taobaoItem->cid));
 
         $this->assign(array(
             'basepath' => str_replace('index.php', 'Public', __APP__),
@@ -78,7 +78,7 @@ class IndexAction extends CommonAction {
     public function editPage() {
         $taobaoItemId = session('current_taobao_item_id');
         $categoryName = $this->checkApiResponse(OpenAPI::getPostCatList(I('categoryId')))->result->toReturn[0]->catsName;
-        $taobaoItem = OpenAPI::getTaobaoItem($taobaoItemId);
+        $taobaoItem = $this->checkApiResponse(OpenAPI::getTaobaoItem($taobaoItemId));
 
         $title = $taobaoItem->title;
         $khn = $this->getKHN($title);
@@ -233,6 +233,29 @@ class IndexAction extends CommonAction {
         $this->display();
     }
 
+    public function verifyCode() {
+        $this->assign(array(
+            'message' => '抱歉，您操作过于频繁，请输入验证码',
+            'state' => session('current_taobao_item_id'),
+        ));
+        $this->display();
+    }
+
+    public function checkVerifyCode() {
+        if($_SESSION['verify'] != md5($_POST['verifyCode'])) {
+            $this->error('验证码错误！');
+        } else {
+            session('need_verify_code', false);
+            session('upload_times_in_minutes', 0);
+            U('Index/authBack', array('state' => session('current_taobao_item_id')), true, true, false);
+        }
+    }
+
+    public function verify() {
+        import('ORG.Util.Image');
+        Image::buildImageVerify();
+    }
+
     private function uploadCount($memberId, $ip) {
         $userdataAli = D('UserdataAli');
         $userdataAli->uploadCount($memberId, $ip);
@@ -244,6 +267,12 @@ class IndexAction extends CommonAction {
         session(null);
         cookie(null);
         U('Index/auth', array('taobaoItemId' => $taobaoItemId), true, true, false);
+    }
+
+    public function showError() {
+        $msg = I('msg');
+        $url = I('url');
+        $this->error($msg, $url);
     }
 
 }

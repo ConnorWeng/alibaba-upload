@@ -9,7 +9,9 @@ class ApiModel extends Model {
         }
         $times++;
         if ($times > C('max_try_api_times')) {
-            $this->error('抱歉，尝试获取接口失败，请稍后再试!', U('Index/signOut'));
+            session('try_api_times', null);
+            U('Index/showError', array('msg' => urlencode('抱歉，尝试获取接口失败，请稍后再试!'),
+                                       'url' => urlencode(U('Index/signOut'))), true, true, false);
         }
         session('try_api_times', $times);
 
