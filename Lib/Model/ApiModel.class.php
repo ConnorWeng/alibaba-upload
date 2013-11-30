@@ -3,6 +3,16 @@
 class ApiModel extends Model {
 
     public function getAppKey($taobaoItemId, $oldAppKey = null) {
+        $times = 0;
+        if (session('?try_api_times')) {
+            $times = session('try_api_times');
+        }
+        $times++;
+        if ($times > C('max_try_api_times')) {
+            $this->error('抱歉，尝试获取接口失败，请稍后再试!', U('Index/signOut'));
+        }
+        session('try_api_times', $times);
+
         if ($oldAppKey == null) {
             $where['id'] = $this->getFirstId($taobaoItemId);
             $rs = $this->where($where)->select();

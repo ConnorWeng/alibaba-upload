@@ -12,6 +12,7 @@ return array(
     'taobao_app_key' => '21641002',
     'taobao_secret_key' => 'd0bc50ee135a8c61456d4ecfe085b7f5',
     'title_suffix' => '- 面包西点',
+    'max_try_api_times' => 6,
 
     //数据库配置
     'DB_TYPE' => 'mysql',
