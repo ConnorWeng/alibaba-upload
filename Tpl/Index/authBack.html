@@ -8,21 +8,25 @@
 <import type="css" file="Css.alibaba-category" basepath="{$basepath}"/>
 <import type="js" file="Js.common" basepath="{$basepath}"/>
 <style>
-#search-by-name {
+#auto-match {
   margin-left: 10px;
 }
 </style>
 <script type="text/javascript">
 $(function () {
     $('.keybtn-search').on('click', function (e) {
-        var $e = $(e.target);
-        if ($e.attr('id') == 'search-by-name') {
-            $('.search-input').val($('.taobao-item-title').text());
+        var $e = $(e.target),
+            keyWord = $('.taobao-item-title').text();
+        if ($e.attr('id') == 'auto-match') {
+            keyWord = '{$taobaoItemCat}';
+            $e.css('border', '1px solid gray');
+        } else {
+            $('#auto-match').css('border', 'none');
         }
         $.ajax({
             url: '{:U('Index/searchCategory')}',
             data: {
-                'keyWord': $('.search-input').val()
+                'keyWord': keyWord
             },
             success: function (categoryList) {
                 checkResponse(categoryList);
@@ -60,7 +64,7 @@ $(function () {
         }
     });
 
-    $('#search-by-cat').click();
+    $('#auto-match').click();
 });
 </script>
 </head>
@@ -130,11 +134,11 @@ $(function () {
                         <div class="choose-cate-form fd-clr">
                             <input class="search-input" type="text"
                                 placeholder="请输入产品关键词，我们为你推荐类目"
-                                value="{$taobaoItemCat}" /> <input
-                                type="button" value="查找类目"
-                                class="keybtn-search" id="search-by-cat"> <input
-                                type="button" value="按宝贝名称"
-                                class="keybtn-search" id="search-by-name">
+                                value="{$taobaoItemTitle}" /> <input
+                                type="button" value="搜索类目"
+                                class="keybtn-search" id="search-by-name"> <input
+                                type="button" value="自动匹配"
+                                class="keybtn-search" id="auto-match">
                             <!--span>或</span> <a href="#" target="_self" class="choose-tab-hid" title="自选类目">自选类目</a-->
                             <div class='search-suggestion fd-hide'>
                                 <ul>
