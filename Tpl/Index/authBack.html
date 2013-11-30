@@ -16,7 +16,7 @@
 $(function () {
     $('.keybtn-search').on('click', function (e) {
         var $e = $(e.target),
-            keyWord = $('.taobao-item-title').text();
+            keyWord = $('.search-input').val();
         if ($e.attr('id') == 'auto-match') {
             keyWord = '{$taobaoItemCat}';
             $e.css('border', '1px solid gray');
