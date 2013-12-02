@@ -86,9 +86,16 @@ class IndexAction extends CommonAction {
         $title = str_replace('#', '', $title);
         $title = str_replace('*', '', $title);
 
+        $profit = '0.00';
+        $userdataAli = D('UserdataAli');
+        $userdata = $userdataAli->where('nick="'.session('member_id').'"')->find();
+        if ($userdata && $userdata != null) {
+            $profit = $userdata['profit'];
+        }
+
         $this->assign(array(
             'taobaoItemId' => $taobaoItemId,
-            'price' => $taobaoItem->price,
+            'price' => floatval($taobaoItem->price) + floatval($profit),
             'memberId' => session('member_id'),
             'basepath' => str_replace('index.php', 'Public', __APP__),
             'infoTitle' => $title,
@@ -100,7 +107,8 @@ class IndexAction extends CommonAction {
             'initSkus' => json_encode(Util::parseSkus($taobaoItem->skus->sku)),
             'propsAlias' => $taobaoItem->property_alias,
             'offerWeight' => '0.2',
-            'khn' => $khn
+            'khn' => $khn,
+            'profit' => $profit
         ));
 
         $this->display();
@@ -259,6 +267,13 @@ class IndexAction extends CommonAction {
     private function uploadCount($memberId, $ip) {
         $userdataAli = D('UserdataAli');
         $userdataAli->uploadCount($memberId, $ip);
+    }
+
+    public function updateProfit() {
+        $memberId = session('member_id');
+        $profit = I('profit');
+        $userdataAli = D('UserdataAli');
+        $this->ajaxReturn($userdataAli->updateProfit($memberId, $profit), 'JSON');
     }
 
     // 登出

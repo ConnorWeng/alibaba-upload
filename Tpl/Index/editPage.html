@@ -9,6 +9,34 @@
 <import type="js" file="Js.tradetable" basepath="{$basepath}"/>
 <import type="js" file="Js.common" basepath="{$basepath}"/>
 <import type="css" file="Css.alibaba-edit" basepath="{$basepath}"/>
+<style>
+.settings-container {
+  width: 100%;
+  height: 25px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.settings {
+  width: 948px;
+  height: 25px;
+  padding: 0 21px 0 21px;
+  background: white;
+  margin: 0 auto;
+  line-height: 25px;
+  border: 1px solid rgb(215,215,215);
+}
+.settings span {
+  font-weight: bolder;
+}
+.settings a {
+  text-decoration: underline;
+}
+.settings input {
+  text-align: right;
+  width: 60px;
+}
+</style>
 </head>
 <body>
 <form name="mainform" class="mainform" action="{:U('Index/offerNew')}" method="POST">
@@ -16,6 +44,14 @@
 <input type="hidden" name="productFeatures" id="productFeatures"/>
 <input type="hidden" name="skuList" id="skuList"/>
 <input type="hidden" name="priceRanges" id="priceRanges"/>
+<div class="settings-container">
+  <div class="settings">
+    <span>设置:</span>
+    <label>自动加价</label>
+    <input id="profit-input" type="text" value="{$profit}"/>元
+    <a id="updateProfitLink" href="#">保存</a>
+  </div>
+</div>
     <div id="doc"
         data-doc-config='{"isProcessing":"false","offerScoreUrl":"http://offer.1688.com/offer/increment/calculate_score.htm?_input_charset=UTF-8","draftSubmitUrl":"http://offer.1688.com/offer/draft/save.htm?_input_charset=UTF-8","submitUrl":"http://offer.1688.com/offer/post/fill_product_info.htm","submitData":{"_widget_data_post_":true,"site":"","featureFilter":false,"catType":"0","_csrf_token":"3a1203d336ab038359e9f952a3a038b0","action":"OfferPostAction","offerDraftId":"","tradeType":"1","topCategoryId":"3","secondCategoryId":"10166","thirdCategoryId":"1031919","operator":"new","fromWhere":"","adGroupId":"","productId":""}}'>
         <div id="header" class="header">
@@ -1865,6 +1901,8 @@
 </form>
 <script>
 $(function () {
+    window.profit = '{$profit}';
+
     var categoryId = '{$categoryId}',
         editor = CKEDITOR.replace('offer-content')
         AJAX_NUMBER = 4;
@@ -2233,6 +2271,22 @@ $(function () {
         handlePriceInterval();
 
         document.mainform.submit();
+    });
+
+    $('#updateProfitLink').click(function () {
+        $.ajax({
+            url: '{:U('Index/updateProfit')}',
+            data: {
+                'profit': $('#profit-input').val()
+            },
+            success: function (data) {
+                if (data != 'false') {
+                    alert('设置成功');
+                } else {
+                    alert(data);
+                }
+            }
+        });
     });
 
     // 按产品数量报价，处理价格区间，准备提交

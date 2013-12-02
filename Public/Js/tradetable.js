@@ -100,7 +100,7 @@ $(function ($) {
                     var val = '';
                     if (sku != null) {
                         if (this.specExtendedAttrs[o].fname == 'price') {
-                            val = sku.price;
+                            val = parseFloat(sku.price) + parseFloat(window.profit);
                         }
                         if (this.specExtendedAttrs[o].fname == 'amountOnSale') {
                             val = sku.quantity;
@@ -132,7 +132,7 @@ $(function ($) {
                         var val = '';
                         if (sku != null) {
                             if (this.specExtendedAttrs[o].fname == 'price') {
-                                val = sku.price;
+                                val = parseFloat(sku.price) + parseFloat(window.profit);
                             }
                             if (this.specExtendedAttrs[o].fname == 'amountOnSale') {
                                 val = sku.quantity;
