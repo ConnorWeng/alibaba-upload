@@ -6,9 +6,9 @@ class UserdataAliModel extends Model {
 
     public function uploadCount($nick, $ip) {
         $where['nick'] = $nick;
-        $where['ip'] = $ip;
         $result = $this->where($where)->setInc('upCnt');
         if (!$result) {
+            $where['ip'] = $ip;
             $result = $this->add($where);
             $result = $this->where($where)->setInc('upCnt');
         }
