@@ -40,6 +40,7 @@
 </head>
 <body>
 <form name="mainform" class="mainform" action="{:U('Index/offerNew')}" method="POST">
+<input type="hidden" name="userCategorys" id="userCategorys"/>
 <input type="hidden" name="taobaoItemId" id="taobaoItemId" value="{$taobaoItemId}"/>
 <input type="hidden" name="productFeatures" id="productFeatures"/>
 <input type="hidden" name="skuList" id="skuList"/>
@@ -1667,8 +1668,7 @@
                             </div>
                         </div>
                         <!-- 自定义分类 -->
-                        <!--div class="fd-clr mod mod-offer-post-mygroup"
-                            data-mod-config='{"formGroup":"mygroup","groupShowtipsUrl":"http://offer.1688.com/offer/asyn/offer_user_def_cat_json.json","openGroupUrl":"http://apps.1688.com/page/offer_user_def_cat_json.htm"}'>
+                        <div class="fd-clr mod mod-offer-post-mygroup">
                             <div class="form-line">
                                 <div class="form-title">
                                     <span>选择自定义分类：</span>
@@ -1682,7 +1682,7 @@
                                             <div class="classlist"
                                                 id="classlist">
                                                 <ul>
-                                                    <li><a href="#"
+                                                    <!--li><a href="#"
                                                         groupid="16920950"
                                                         class="c1 "
                                                         pid="0"
@@ -1723,18 +1723,18 @@
                                                         class="c2  end  "
                                                         pid="17072211"
                                                         id="group17072213">男装
-                                                            短裤</a></li>
+                                                            短裤</a></li-->
                                                 </ul>
                                             </div>
                                         </div>
 
                                         <div id="selected-class"
-                                            class="selected-class">
+                                            class="selected-class fd-hide">
                                             <ul>
                                             </ul>
                                         </div>
 
-                                        <div id="use-class-tips"
+                                        <!--div id="use-class-tips"
                                             class="use-class-tips"
                                             style="">
                                             自定义分类尚未启用，将不会在旺铺中显示 <a
@@ -1744,7 +1744,7 @@
                                         </div>
                                         <input type="hidden"
                                             name="user_define_category"
-                                            value="true" />
+                                            value="true" /-->
                                     </div>
 
                                 </div>
@@ -1902,6 +1902,42 @@
 <script>
 $(function () {
     window.profit = '{$profit}';
+
+    /* 处理自定义分类 */
+    var selfCatlist = {$selfCatlist|default="[]"};
+    for (var i in selfCatlist) {
+        var selfCat = selfCatlist[i];
+        $('.classlist ul').append('<li><a href="javascript:;" groupid="' + selfCat.id + '" class="c1 " pid="0" id="group' + selfCat.id + '">' + selfCat.name + '</a></li>');
+        if (selfCat.children.length > 0) {
+            for (var j in selfCat.children) {
+                var child = selfCat.children[j];
+                $('.classlist ul').append('<li><a href="javascript:;" groupid="' + child.id + '" class="c2 " pid="' +selfCat.id + '" id="group' + child.id + '">' + child.name + '</a></li>');
+            }
+        }
+    }
+    $('a.c1, a.c2').on('click', function (event) {
+        var $target = $(event.target);
+        $('.selected-class ul').append('<li>' + $target.text() + ' <a href="javascript:;" class="del" groupid="' + $target.attr('groupid') + '">移除</a><input type="hidden" class="userDefineCatId" value="' + $target.attr('pid') + ':' + $target.attr('groupid') + '" /></li>');
+        $('.selected-class').removeClass('fd-hide');
+    });
+    $(document).on('click', '.selected-class a.del', function (event) {
+        var $target = $(event.target);
+        $target.closest('li').remove();
+        if ($('.selected-class li').length == 0) {
+            $('.selected-class').addClass('fd-hide');
+        }
+    });
+    $('#postoffer-class').on('click', function (event) {
+        event.stopPropagation();
+        $('.classlist').css('display', 'block');
+    });
+    $('body').on('click', function () {
+        var $classlist = $('.classlist');
+        if ($classlist.css('display') == 'block') {
+            $classlist.css('display', 'none');
+        }
+    });
+    /* end */
 
     var categoryId = '{$categoryId}',
         editor = CKEDITOR.replace('offer-content')
@@ -2212,6 +2248,22 @@ $(function () {
         if (!validate()) {
             return;
         }
+
+        //准备自定义分类信息
+        var userCategorys = '[';
+        $('.userDefineCatId').each(function () {
+            var value = $(this).val();
+            if (value.indexOf('0:') == 0) {
+                userCategorys += '"' + value.substr(2) + '",';
+            } else {
+                userCategorys += '"' + value + '",';
+            }
+        });
+        if (userCategorys.indexOf(',') != -1) {
+            userCategorys = userCategorys.substr(0, userCategorys.length - 1);
+        }
+        userCategorys += ']';
+        $('#userCategorys').val(userCategorys);
 
         // 准备产品属性信息
         var handleProItem = function (index, element) {

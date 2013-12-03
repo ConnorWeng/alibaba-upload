@@ -93,6 +93,11 @@ class IndexAction extends CommonAction {
             $profit = $userdata['profit'];
         }
 
+        $offerGroupHasOpened = $this->checkApiResponse(OpenAPI::offerGroupHasOpened())->result->toReturn[0]->isOpened;
+        if ($offerGroupHasOpened) {
+            $selfCatlist = $this->checkApiResponse(OpenAPI::getSelfCatlist())->result->toReturn[0]->sellerCats;
+        }
+
         $this->assign(array(
             'taobaoItemId' => $taobaoItemId,
             'price' => floatval($taobaoItem->price) + floatval($profit),
@@ -108,7 +113,8 @@ class IndexAction extends CommonAction {
             'propsAlias' => $taobaoItem->property_alias,
             'offerWeight' => '0.2',
             'khn' => $khn,
-            'profit' => $profit
+            'profit' => $profit,
+            'selfCatlist' => json_encode($selfCatlist)
         ));
 
         $this->display();
@@ -184,6 +190,7 @@ class IndexAction extends CommonAction {
         $periodOfValidity = I('info-validity');
         $productFeatures = $_REQUEST['productFeatures'];
         $taobaoItemId = session('current_taobao_item_id');
+        $userCategorys = $_REQUEST['userCategorys'];
 
         /* upload image */
         $imageUriList = '[';
@@ -218,7 +225,7 @@ class IndexAction extends CommonAction {
         }
         /* end */
 
-        $offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":'.$supportOnline.',"pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":'.$skuTradeSupported.',"mixWholeSale":"'.$mixWholeSale.'","priceRanges":"'.$priceRanges.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$subject.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.',"sendGoodsAddressId":"'.$sendGoodsAddressId.'","freightTemplateId":"'.$freightTemplateId.'","offerWeight":"'.$offerWeight.'","skuList":'.$skuList.',"periodOfValidity":'.$periodOfValidity.'}';
+        $offer = '{"bizType":"1","categoryID":"'.$categoryId.'","supportOnlineTrade":'.$supportOnline.',"pictureAuthOffer":"false","priceAuthOffer":"false","skuTradeSupport":'.$skuTradeSupported.',"mixWholeSale":"'.$mixWholeSale.'","priceRanges":"'.$priceRanges.'","amountOnSale":"100","offerDetail":"'.$detail.'","subject":"'.$subject.'","imageUriList":'.$imageUriList.',"freightType":"'.$freightType.'","productFeatures":'.$productFeatures.',"sendGoodsAddressId":"'.$sendGoodsAddressId.'","freightTemplateId":"'.$freightTemplateId.'","offerWeight":"'.$offerWeight.'","skuList":'.$skuList.',"periodOfValidity":'.$periodOfValidity.',"userCategorys":'.$userCategorys.'}';
 
         $result = $this->checkApiResponse(OpenAPI::offerNew(stripslashes($offer)));
         if ($result->result->success) {

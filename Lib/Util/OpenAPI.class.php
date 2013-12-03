@@ -64,6 +64,16 @@ class OpenAPI {
         return json_decode($data);
     }
 
+    public static function offerGroupHasOpened() {
+        $api = 'param2/1/cn.alibaba.open/offerGroup.hasOpened';
+        return self::callOpenAPI($api, array('memberId' => session('member_id')), false);
+    }
+
+    public static function getSelfCatlist() {
+        $api = 'param2/1/cn.alibaba.open/category.getSelfCatlist';
+        return self::callOpenAPI($api, array('memberId' => session('member_id')), false);
+    }
+
     public static function downloadImage($picUrl) {
         $tmpFile = APP_PATH.'Upload/'.uniqid().'.jpg';
         $content = file_get_contents($picUrl);
