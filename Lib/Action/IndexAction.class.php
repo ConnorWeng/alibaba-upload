@@ -80,6 +80,20 @@ class IndexAction extends CommonAction {
         $categoryName = $this->checkApiResponse(OpenAPI::getPostCatList(I('categoryId')))->result->toReturn[0]->catsName;
         $taobaoItem = $this->checkApiResponse(OpenAPI::getTaobaoItem($taobaoItemId));
 
+        $price = floatval($taobaoItem->price);
+        $seePrice = '';
+        $store = M('store');
+        $storeInfo = $store->where('im_ww="'.$taobaoItem->nick.'"')->find();
+        if ($storeInfo && $store != null) {
+            $seePrice = $storeInfo['see_price'];
+        }
+        if ($seePrice == '减半') {
+            $price = $price / 2.0;
+        } else {
+            $delta = substr($seePrice, 3);
+            $price = $price - floatval($delta);
+        }
+
         $title = $taobaoItem->title;
         $khn = $this->getKHN($title);
         $title = str_replace($khn, '', $title);
@@ -100,7 +114,7 @@ class IndexAction extends CommonAction {
 
         $this->assign(array(
             'taobaoItemId' => $taobaoItemId,
-            'price' => floatval($taobaoItem->price) + floatval($profit),
+            'price' => $price + floatval($profit),
             'memberId' => session('member_id'),
             'basepath' => str_replace('index.php', 'Public', __APP__),
             'infoTitle' => $title,
@@ -114,7 +128,8 @@ class IndexAction extends CommonAction {
             'offerWeight' => '0.2',
             'khn' => $khn,
             'profit' => $profit,
-            'selfCatlist' => json_encode($selfCatlist)
+            'selfCatlist' => json_encode($selfCatlist),
+            'seePrice' => $seePrice
         ));
 
         $this->display();

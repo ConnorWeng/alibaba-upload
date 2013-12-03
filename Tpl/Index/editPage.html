@@ -2169,7 +2169,7 @@ $(function () {
 
         if (selectedSpecs.length > 0) {
             $('.sku-box').siblings('.warn').css('display', 'none');
-                  table = new tradetable($('.sku-box'), selectedSpecs, specExtendedAttrs, initSkus, propsAlias);
+                  table = new tradetable($('.sku-box'), selectedSpecs, specExtendedAttrs, initSkus, propsAlias, '{$seePrice}');
                   table.removeAll();
                   table.createTable();
         } else {
