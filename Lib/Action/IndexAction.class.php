@@ -107,14 +107,15 @@ class IndexAction extends CommonAction {
             $profit = $userdata['profit'];
         }
 
-        $offerGroupHasOpened = $this->checkApiResponse(OpenAPI::offerGroupHasOpened())->result->toReturn[0]->isOpened;
-        if ($offerGroupHasOpened) {
-            $selfCatlist = $this->checkApiResponse(OpenAPI::getSelfCatlist())->result->toReturn[0]->sellerCats;
-        }
+        // $offerGroupHasOpened = $this->checkApiResponse(OpenAPI::offerGroupHasOpened())->result->toReturn[0]->isOpened;
+        // if ($offerGroupHasOpened) {
+        $selfCatlist = $this->checkApiResponse(OpenAPI::getSelfCatlist())->result->toReturn[0]->sellerCats;
+        // }
 
         $this->assign(array(
             'taobaoItemId' => $taobaoItemId,
             'price' => $price + floatval($profit),
+            'rawPrice' => $price,
             'memberId' => session('member_id'),
             'basepath' => str_replace('index.php', 'Public', __APP__),
             'infoTitle' => $title,
