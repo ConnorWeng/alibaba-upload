@@ -254,6 +254,10 @@ class IndexAction extends CommonAction {
             ));
             $this->uploadCount(session('member_id'), get_client_ip());
         } else {
+            Log::write('session[access_token]:' . session('access_token'));
+            Log::write('offer params:' . $offer);
+            dump(session('access_token'));
+            dump($offer);
             $this->assign(array(
                 'result' => '发布失败！'.json_encode($result->message),
                 'message' => '宝贝没有顺利上架，请不要泄气哦，换个宝贝试试吧！祝生意欣荣，财源广进！',

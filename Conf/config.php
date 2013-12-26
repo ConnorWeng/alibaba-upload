@@ -23,5 +23,9 @@ return array(
     'DB_PWD' => 'xiaoweng51wangpi',
     'DB_PORT' => '3306',
     'DB_PREFIX' => 'ecm_',
+
+    //开启日志
+    'LOG_RECORD' => true,
+    'LOG_LEVEL' => 'ERR',
 );
 ?>
