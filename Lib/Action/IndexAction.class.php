@@ -250,18 +250,18 @@ class IndexAction extends CommonAction {
             $this->assign(array(
                 'result' => '发布成功啦！',
                 'message' => '宝贝已经顺利上架哦！亲，感谢你对51网的大力支持！',
-                'itemUrl' => '<li><a href="'.$itemUrl.'">来看看刚上架的宝贝吧！</a></li>'
+                'itemUrl' => '<li><a href="'.$itemUrl.'">来看看刚上架的宝贝吧！</a></li>',
+                'error' => 'false'
             ));
             $this->uploadCount(session('member_id'), get_client_ip());
         } else {
             Log::write('session[access_token]:' . session('access_token'));
             Log::write('offer params:' . $offer);
-            dump(session('access_token'));
-            dump($offer);
             $this->assign(array(
                 'result' => '发布失败！'.json_encode($result->message),
                 'message' => '宝贝没有顺利上架，请不要泄气哦，换个宝贝试试吧！祝生意欣荣，财源广进！',
-                'itemUrl' => ''
+                'itemUrl' => '',
+                'error' => 'true'
             ));
         }
 

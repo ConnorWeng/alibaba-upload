@@ -1917,9 +1917,11 @@ $(function () {
         }
     }
     $('a.c1, a.c2').on('click', function (event) {
+        event.stopPropagation();
         var $target = $(event.target);
         $('.selected-class ul').append('<li>' + $target.text() + ' <a href="javascript:;" class="del" groupid="' + $target.attr('groupid') + '">移除</a><input type="hidden" class="userDefineCatId" value="' + $target.attr('pid') + ':' + $target.attr('groupid') + '" /></li>');
         $('.selected-class').removeClass('fd-hide');
+        $('.classlist').css('display', 'none');
     });
     $(document).on('click', '.selected-class a.del', function (event) {
         var $target = $(event.target);

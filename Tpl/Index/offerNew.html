@@ -104,5 +104,19 @@
               </tr>
             </tbody>
           </table>
+          <script>
+            (function(){
+                if ({$error}) {
+                    var wait = 3,href = "{:U('Index/signOut')}";
+                    var interval = setInterval(function(){
+                        var time = --wait;
+                        if(time <= 0) {
+                            location.href = href;
+                            clearInterval(interval);
+                        };
+                    }, 1000);
+                }
+            })();
+          </script>
         </body>
       </html>
