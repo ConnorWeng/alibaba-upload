@@ -80,6 +80,8 @@ class IndexAction extends CommonAction {
         $categoryName = $this->checkApiResponse(OpenAPI::getPostCatList(I('categoryId')))->result->toReturn[0]->catsName;
         $taobaoItem = $this->checkApiResponse(OpenAPI::getTaobaoItem($taobaoItemId));
 
+        $imgsInDesc = $this->parseDescImages($taobaoItem->desc);
+
         $price = floatval($taobaoItem->price);
         $seePrice = '';
         $store = M('store');
@@ -130,10 +132,17 @@ class IndexAction extends CommonAction {
             'khn' => $khn,
             'profit' => $profit,
             'selfCatlist' => json_encode($selfCatlist),
-            'seePrice' => $seePrice
+            'seePrice' => $seePrice,
+            'imgsInDesc' => $imgsInDesc
         ));
 
         $this->display();
+    }
+
+    private function parseDescImages($desc) {
+        $pattern="/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg]))[\'|\"].*?[\/]?>/";
+        preg_match_all($pattern, $desc, $matches);//带引号
+        return json_encode($matches[1]);
     }
 
     private function getKHN($title) {

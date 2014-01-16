@@ -1269,9 +1269,9 @@
                                         </div>
                                         <ol class="imgs">
                                             <li class="pic-list">
-                                                <div class="img-cont">
+                                                <div seq="1" class="img-cont">
                                                     <span></span><img
-                                                        class="cont-img" style="margin-left: -50px; margin-top:-50px; weight:100px; height:100px;"/>
+                                                        class="cont-img" style="margin-left: -50px; margin-top:-50px; weight:100px; height:100px;" src=""/>
                                                 </div>
                                                 <div class="ctrl">
                                                     <a href="#remove"
@@ -1279,10 +1279,10 @@
                                                 </div>
                                             </li>
                                             <li class="pic-list">
-                                                <div
+                                                <div seq="2"
                                                     class="img-cont second">
                                                     <span></span><img
-                                                        class="cont-img" style="margin-left: -50px; margin-top:-50px; weight:100px; height:100px;"/>
+                                                        class="cont-img" style="margin-left: -50px; margin-top:-50px; weight:100px; height:100px;" src=""/>
                                                 </div>
                                                 <div class="ctrl">
                                                     <a href="#remove"
@@ -1290,10 +1290,10 @@
                                                 </div>
                                             </li>
                                             <li class="pic-list">
-                                                <div
+                                                <div seq="3"
                                                     class="img-cont third">
                                                     <span></span><img
-                                                        class="cont-img" style="margin-left: -50px; margin-top:-50px; weight:100px; height:100px;"/>
+                                                        class="cont-img" style="margin-left: -50px; margin-top:-50px; weight:100px; height:100px;" src=""/>
                                                 </div>
                                                 <div class="ctrl">
                                                     <a href="#remove"
@@ -1955,6 +1955,24 @@ $(function () {
         $picList.find('img').attr('src', itemImgs[i]);
         $('#picture' + (i + 1)).val(itemImgs[i]);
     }
+
+    // 主图替换
+    var imgsInDesc = {$imgsInDesc};
+    $('.img-cont').click(function (event) {
+        var $div = $(event.currentTarget),
+            index = $div.attr('seq'),
+            $preview = $div.find('.cont-img'),
+            result = window.showModalDialog('picdemo1/propic.php',
+                                            ['{$infoTitle}', $preview.attr('src'), imgsInDesc],
+                                            'center:yes;resizable:no;dialogHeight:600px;dialogWidth:1080px');
+        if (result == null) {
+            alert("您没有更改主图!若点击下一页不出现图片，请等待图片下载完成后再次点击更改主图按钮");
+        } else {
+            $preview.attr('src', result[2].toString());
+            $('#picture' + index).val(result[2].toString());
+            $('.pic-list').eq(index - 1).addClass('full');
+        }
+    });
 
     // 填充产品属性
     $.ajax({
