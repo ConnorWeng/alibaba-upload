@@ -3,6 +3,8 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>跳转提示</title>
+    <script type="text/javascript"
+            src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
     <style type="text/css">
       body
       {
@@ -105,7 +107,7 @@
             </tbody>
           </table>
           <script>
-            (function(){
+            (function() {
                 if ({$error}) {
                     var wait = 3,href = "{:U('Index/signOut')}";
                     var interval = setInterval(function(){
@@ -116,6 +118,14 @@
                         };
                     }, 1000);
                 }
+
+                var hexToDec = function(str) {
+                    str=str.replace(/\\/g,"%");
+                    return unescape(str);
+                };
+
+                var result = $('#LID1').text();
+                $('#LID1').text(hexToDec(result));
             })();
           </script>
         </body>
