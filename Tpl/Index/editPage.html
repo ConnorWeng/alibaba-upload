@@ -1424,8 +1424,8 @@
                                             id="used-freight"
                                             name="freightType"
                                             class="sel">
-                                                <option value="F">卖家承担运费</option>
                                                 <option value="T">使用运费模板</option>
+                                                <option value="F">卖家承担运费</option>
                                                 <option value="D">使用运费说明</option>
                                         </select> <span id="used-freight-note">
                                                 <select
@@ -2147,7 +2147,7 @@ $(function () {
             for (var i in data) {
                 var template = data[i];
 
-                templatesString += '<option value="' + template.id + '">';
+                templatesString += '<option value="' + template.templateId + '">';
                 templatesString += template.templateName;
                 templatesString += '</option>';
             }

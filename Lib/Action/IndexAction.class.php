@@ -181,7 +181,7 @@ class IndexAction extends CommonAction {
 
     // 获取运费模版
     public function getFreightTemplateList() {
-        $freightTemplateList = $this->checkApiResponseAjax(OpenAPI::getFreightTemplateList())->result->toReturn;
+        $freightTemplateList = $this->checkApiResponseAjax(OpenAPI::getFreightTemplateList())->result;
 
         $this->ajaxReturn($freightTemplateList, 'JSON');
     }

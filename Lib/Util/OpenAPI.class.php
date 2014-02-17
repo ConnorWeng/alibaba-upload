@@ -43,7 +43,7 @@ class OpenAPI {
     }
 
     public static function getFreightTemplateList() {
-        $api = 'param2/1/cn.alibaba.open/trade.freight.freightTemplateList.get';
+        $api = 'param2/1/cn.alibaba.open/e56.delivery.template.list';
         return self::callOpenAPI($api, array('memberId' => session('member_id')), false);
     }
 
