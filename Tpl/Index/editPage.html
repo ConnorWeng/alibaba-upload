@@ -2297,7 +2297,7 @@ $(function () {
             if ($firstInput.attr('type') == 'checkbox') {
                 $e.find('input').each(function (i, e) {
                     if (e.checked) {
-                        valueString += e.value + '、';
+                        valueString += e.value + '|';
                     }
                 });
                 valueString = valueString.substr(0, valueString.length - 1);
