@@ -9,7 +9,7 @@ class AliapiModel extends ApiModel {
     protected function getFirstId($taobaoItemId) {
         $len = strlen($taobaoItemId);
         $id = substr($taobaoItemId, $len-2, $len);
-        $id = $id % $apiCount;
+        $id = $id % $this->apiCount;
         return $id;
     }
 
