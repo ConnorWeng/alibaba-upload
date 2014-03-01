@@ -125,7 +125,7 @@
                 };
 
                 var makeReadable = function(result) {
-                    if (resule.indexOf('but 15') !== -1) {
+                    if (result.indexOf('but 15') !== -1) {
                         return '您所选的相册已经满500张啦，请在编辑页面选择另一个相册吧！'
                     } else {
                         return result;
@@ -133,7 +133,7 @@
                 }
 
                 var result = $('#LID1').text();
-                $('#LID1').text(hexToDec(result));
+                $('#LID1').text(makeReadable(hexToDec(result)));
             })();
           </script>
         </body>
