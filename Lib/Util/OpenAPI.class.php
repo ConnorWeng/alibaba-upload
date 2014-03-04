@@ -202,6 +202,22 @@ class OpenAPI {
         }
     }
 
+    public static function getTaobaoItemWithoutVerify($numIid) {
+        $c = new TopClient;
+        $c->appkey = session('taobao_app_key');
+        $c->secretKey = session('taobao_secret_key');
+        $req = new ItemGetRequest;
+        $req->setFields("title,desc,pic_url,sku,item_weight,property_alias,price,item_img.url,cid,nick");
+        $req->setNumIid($numIid);
+        $resp = $c->execute($req, null);
+
+        if (isset($resp->item)) {
+            return $resp->item;
+        } else {
+            echo('<h6 style="color:red;">错误:'.$resp->msg.'</h6>');
+        }
+    }
+
     public static function getTaobaoItemCat($cid) {
         if (self::needVerify()) {
             return 'verify';
