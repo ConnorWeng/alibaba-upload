@@ -5,10 +5,11 @@
 <title>Insert title here</title>
 <script type="text/javascript"
     src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
-<import type="js" file="Js.ckeditor.ckeditor" basepath="{$basepath}"/>
+<import type="js" file="Js.CLEditor1_4_4.cleditor" basepath="{$basepath}"/>
 <import type="js" file="Js.tradetable" basepath="{$basepath}"/>
 <import type="js" file="Js.common" basepath="{$basepath}"/>
 <import type="css" file="Css.alibaba-edit" basepath="{$basepath}"/>
+<import type="css" file="Js.CLEditor1_4_4.cleditor" basepath="{$basepath}"/>
 <style>
 .settings-container {
   width: 100%;
@@ -1943,8 +1944,8 @@ $(function () {
     /* end */
 
     var categoryId = '{$categoryId}',
-        editor = CKEDITOR.replace('offer-content')
-        AJAX_NUMBER = 4;
+        editor = $('#offer-content').cleditor(),
+        AJAX_NUMBER = 4,
         ajaxCount = 0;
 
     // 填充主图
