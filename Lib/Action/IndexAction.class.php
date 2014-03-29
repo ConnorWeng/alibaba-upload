@@ -133,7 +133,8 @@ class IndexAction extends CommonAction {
             'profit' => $profit,
             'selfCatlist' => json_encode($selfCatlist),
             'seePrice' => $seePrice,
-            'imgsInDesc' => $imgsInDesc
+            'imgsInDesc' => $imgsInDesc,
+            'propsName' => $taobaoItem->props_name
         ));
 
         $this->display();

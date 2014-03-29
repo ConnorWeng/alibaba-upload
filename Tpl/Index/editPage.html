@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>51阿里传</title>
 <script type="text/javascript"
     src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
 <import type="js" file="Js.CLEditor1_4_4.cleditor" basepath="{$basepath}"/>
@@ -2023,6 +2023,7 @@ $(function () {
                         break;
                     case '1':
                         featuresString += '<select name="feature' + feature.fid + '" id="' + feature.fid + '">';
+                        featuresString += '<option value="">请选择</option>';
                         for (var j in feature.featureIdValues) {
                             var valueObj = feature.featureIdValues[j];
                             featuresString += '<option value="' + valueObj.value + '">' + valueObj.value + '</option>';
@@ -2121,6 +2122,20 @@ $(function () {
 
             // 设置货号
             $('#1398').val('{$khn}');
+            // 设置货源
+            $('#100000691').val('现货');
+            // 设置主图来源
+            $('#20418023').val('其他来源');
+            // 设置面料
+            var propsName = '{$propsName}';
+            var mianIndex = propsName.split(':').indexOf('面料');
+            if (mianIndex != -1) {
+                $('#1991').val(propsName.split(':')[mianIndex+1].split(';')[0]);
+            }
+            // 设置产地
+            $('#346').val('广州');
+            // 设置品牌
+            $('#2176').val('其他');
         }
     });
 
@@ -2415,7 +2430,7 @@ $(function () {
                 } else {
                     var $select = $p.find('select');
                     if ($select.length > 0) {
-                        if ($select.val() == null) {
+                        if ($select.val() == null || $select.val() == '') {
                             jumpToErrorPosition($p, '请填写');
                             return false;
                         }
