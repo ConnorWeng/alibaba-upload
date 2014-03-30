@@ -2120,18 +2120,23 @@ $(function () {
 
             createTable();
 
+            // 匹配淘宝属性
+            var propsName = '{$propsName}';
+            $('.product-props .pro-item').each(function () {
+                var $this = $(this),
+                    itemTextWithColon = $this.find('.pro-t').text(),
+                    itemText = itemTextWithColon.substr(0, itemTextWithColon.length-1),
+                    propsNameIndex = propsName.split(':').indexOf(itemText);
+                if (propsNameIndex != -1) {
+                    $this.find('select').val(propsName.split(':')[propsNameIndex+1].split(';')[0]);
+                }
+            });
             // 设置货号
             $('#1398').val('{$khn}');
             // 设置货源
             $('#100000691').val('现货');
             // 设置主图来源
             $('#20418023').val('其他来源');
-            // 设置面料
-            var propsName = '{$propsName}';
-            var mianIndex = propsName.split(':').indexOf('面料');
-            if (mianIndex != -1) {
-                $('#1991').val(propsName.split(':')[mianIndex+1].split(';')[0]);
-            }
             // 设置产地
             $('#346').val('广州');
             // 设置品牌
