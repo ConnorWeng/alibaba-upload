@@ -2120,6 +2120,8 @@ $(function () {
 
             createTable();
 
+            // 默认其他
+            $('.product-props .pro-item select').val('其他');
             // 匹配淘宝属性
             var propsName = '{$propsName}';
             $('.product-props .pro-item').each(function () {
@@ -2128,7 +2130,9 @@ $(function () {
                     itemText = itemTextWithColon.substr(0, itemTextWithColon.length-1),
                     propsNameIndex = propsName.split(':').indexOf(itemText);
                 if (propsNameIndex != -1) {
-                    $this.find('select').val(propsName.split(':')[propsNameIndex+1].split(';')[0]);
+                    var taobaoProp = propsName.split(':')[propsNameIndex+1].split(';')[0];
+                    $this.find('select').parent().append('<span style="border: 1px solid black">'+taobaoProp+'</span>')
+                    $this.find('select').val(taobaoProp);
                 }
             });
             // 设置货号
