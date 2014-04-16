@@ -2236,10 +2236,13 @@ $(function () {
         url: '{:U('Index/getAlbumList')}',
         success: function (data) {
             checkResponse(data);
-            var albumListString = '';
+            var albumListString = '',
+                sortedAlbum = data.sort(function (a, b) {
+                    return a.imageCount - b.imageCount;
+                });
 
-            for (var i in data) {
-                albumListString += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+            for (var i in sortedAlbum) {
+                albumListString += '<option value="' + sortedAlbum[i].id + '">' + sortedAlbum[i].name + '</option>';
             }
 
             $('#albumId').append(albumListString);
