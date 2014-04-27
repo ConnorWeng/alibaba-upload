@@ -2349,6 +2349,11 @@ $(function () {
         $('.product-speca-props .pro-item').each(handleProItem);
         $('.submod.beginamount').each(handleProItem);
         productFeatures = productFeatures.substr(0, productFeatures.length - 1);
+        // 情侣装类目的产品类别下有子属性袖长,不知道怎么获取选项,所以写死
+        if (categoryId == '1037038') {
+            productFeatures += ',"7001":"短袖"'
+        }
+
         productFeatures += '}';
         $('#productFeatures').val(productFeatures);
 
