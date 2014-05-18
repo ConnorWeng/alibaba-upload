@@ -11,7 +11,7 @@ class GoodsModel extends ApiModel {
 
     public function updateWithDetails($goodsId, $taobaoItemId, $taobaoItem) {
         $where['goods_id'] = $goodsId;
-        $data['description'] = mysql_real_escape_string($taobaoItem->desc);
+        $data['description'] = ''.$taobaoItem->desc;
         $data['type'] = 'material';
         return $this->where($where)->save($data);
     }
