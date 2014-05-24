@@ -2134,6 +2134,7 @@ $(function () {
                         $select = $this.find('select');
                     $select.val(taobaoProp);
                     if ($select.val() === '') {
+                        $select.val('其他');
                         $select.parent().append('<span style="border: 1px solid black">'+taobaoProp+'</span>');
                     }
                 }
