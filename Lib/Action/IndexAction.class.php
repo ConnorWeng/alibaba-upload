@@ -327,4 +327,19 @@ class IndexAction extends CommonAction {
         $this->error($msg, $url);
     }
 
+    private function movePic($detail, $albumId) {
+        $pattern="/<[img|IMG].*?src=[\'|\"](.*?(?:[\.jpg|\.JPG]))[\'|\"].*?[\/]?>/";
+        preg_match_all($pattern, $detail, $matches);
+        $picNum = count($matches[0]);
+        for($i=0;$i< $picNum ;$i++) {
+            $picUrl = $matches[1][$i];
+            $localImagePath = OpenAPI::downloadImage($picUrl);
+            $localImage = '@'.$localImagePath;
+            $resp = $this->checkApiResponse(OpenAPI::ibankImageUpload($albumId, uniqid(), $localImage))->result->toReturn[0];
+            $newUrl = 'http://img.china.alibaba.com/'.$resp->url;
+            $detail = str_replace($picUrl, $newUrl, $detail);
+            unlink($localImagePath);
+        }
+        return $detail;
+    }
 }
